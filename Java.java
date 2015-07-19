@@ -15,7 +15,7 @@
 
 /* Math */
   Math.max(one, two);
-  Math.min(one ,two);
+  Math.min(one, two);
   Math.pow(one, two); // one^two
   Math.sqrt(num);
   Math.floor(aFloat);
@@ -23,10 +23,14 @@
 
 /* Strings */
   int length = String.length();
-  String.trim()                     // remove leading and trailing whitespaces
-  String.replaceAll("\\s+", " ");   // remove multiple sequential whitespaces
-  Integer.toString(10, 2);          // parse int to bin string: convert 10 to "1010"
-  StringBuffer                      // append(), reverse(), length(), substring(), charAt(), deleteCharAt(), delete(start, end_exclusive)
+  String.trim()                       // remove leading and trailing whitespaces
+  String.replaceAll("\\s+", " ");     // remove multiple sequential whitespaces
+  Integer.toString(10, 2);            // parse int to bin string: convert 10 to "1010"
+  StringBuffer                        // append(), reverse(), length(), substring(), charAt(), deleteCharAt(), delete(start, end_exclusive)
+  char[] charArr = str.toCharArray(); // convert string to char array
+  String str = new String(charArr);   // convert char array to string
+  toLowerCase();
+  toUpperCase();
 
 /* Characters */
   char two = '0' + 2;                     // parse int to char: convert 2 to '2'
