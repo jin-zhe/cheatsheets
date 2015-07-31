@@ -47,20 +47,49 @@
   System.arraycopy(src_arr, src_start, dest_arr, dest_start, copy_length);  // makes copy of array
   Arrays.sort(arr);     // sorts array in-place
   Arrays.toString(arr); // e.g. [1,2,3] => "1, 2, 3"
+  Arrays.fill(arr, deafault_val); // initializes all cells with the default value given
 
-/* Comparators */
-  Comparator myComparator = new Comparator<Integer>(){
-      public int compare(Integer o1, Integer o2){
-          return o2 - o1; // biggest to smallest (smallest to biggest is o1 - o2)
-      }
+/* Iterators */
+  ArrayList<Integer> al = ...
+  Iterator<Integer> itr = al.iterator();
+  while(itr.hasNext()) {
+    Integer curr = itr.next();
+    // do something with curr
   }
 
-  /* Sorts using custom comparison function */
-  Collections.sort(list, new Comparator() {
-    public int compare(Object a, Object b) {
-      return ( new Integer(((MyClass) a).getNumber()) ).compareTo( new Integer(((MyClass) b).getNumber()));
+/* Comparators: classes for comparison between objects. see http://www.mkyong.com/java/java-object-sorting-example-comparable-and-comparator/ */
+  /* using anonymous classes */
+    Comparator<Integer> myComparator = new Comparator<Integer>() {
+        public int compare(Integer o1, Integer o2){
+            return o2 - o1; // biggest to smallest (smallest to biggest is o1 - o2)
+            // return o1.compareTo(o2); // using the class' natural comparator and in ascending order
+        }
+    };
+
+  /* using actual classes */
+    class ColorComparator implements Comparator<CarSort> {
+       public int compare(CarSort c1, CarSort c2) {
+           return c1.getColor().compareTo(c2.getColor());
+       }
     }
-  });
+
+/* Comparable */
+  Class MyClass implements Comparable<MyClass> {
+    int value;
+    ...
+    public int compareTo(MyClass something) {
+      return this.value - something.value;  // ascending order
+    }
+  }
+
+/* collections */
+  /* Sorts collection using custom comparison class */
+    Collections.sort(list, new Comparator<Integer>(){
+        public int compare(Integer o1, Integer o2){
+            return o1 - o2;             // ascending (descending is o2 - o1)
+            // return o1.compareTo(o2); // using the class' natural comparator and in ascending order
+        }
+    });
 
 /* Data Structures */
   TreeMap<K,V> BST = new TreeMap<K,V>(new Comparator);  // BST: put(key, value), get(key), size(), isEmpty()
@@ -84,3 +113,79 @@
 
 /* Hashset */
   HashMap<Key_Class> set; // add(item), remove(object), contains(item), size()
+
+/* Generics */
+  /* Wildcard */
+    public void printArrayList(ArrayList<?> list) {
+      Iterator<?> itr = list.iterator();
+      while(itr.hasNext()) {
+        System.out.print(itr.next() + " ");
+      }
+      System.out.println();
+    }
+
+/* Anonymous classes */
+  HelloWorld frenchGreeting = new HelloWorld() {
+    String name = "tout le monde";
+    public void greet() {
+        greetSomeone("tout le monde");
+    }
+    public void greetSomeone(String someone) {
+        name = someone;
+        System.out.println("Salut " + name);
+    }
+  };
+
+/* Exceptions */
+  /* Exception heirarchy:
+   *        [Throwable]
+   *        /         \
+   * [Error]          [Exception]
+   *                  /         \
+   *     [IOException]          [RuntimeException]
+   */
+  
+  /* Userful throwable methods */
+    getMessage();                 // Returns a detailed message about the exception that has occurred. This message is initialized in the Throwable constructor.
+    Throwable cause = getCause(); // Returns the cause of the exception as represented by a Throwable object.
+    toString();                   // Returns the name of the class concatenated with the result of getMessage()
+    printStackTrace();            // Prints the result of toString() along with the stack trace to System.err, the error output stream
+
+  /* Try/Catch block */
+    try {
+      //Protected code
+    }
+    catch(ExceptionType1 e1) {
+      //Catch block
+    }
+    catch(ExceptionType2 e2) {
+      //Catch block
+    }
+    catch(ExceptionType3 e3) {
+      //Catch block
+    }
+    finally {
+      //(optional)The finally block always executes, whether or not an exception has occurred
+    }
+
+  /* throws/throw */
+    public class className {
+      public void deposit(double amount) throws RemoteException {
+        // Method implementation
+        if (condition) {
+          throw new RemoteException();
+        }
+      }
+       //Remainder of class definition
+    }
+
+  /* user-defined exception classes */
+    public class InsufficientFundsException extends Exception {
+      private double amount;
+      public InsufficientFundsException(double amount) {
+        this.amount = amount;
+      } 
+      public double getAmount() {
+        return amount;
+      }
+    }
