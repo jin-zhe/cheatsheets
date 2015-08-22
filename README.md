@@ -8,6 +8,7 @@ Here is an assortment of programming cheatsheets that have helped me over the ye
 * [Java](Java.java)
 * [JavaScript](JavaScript.js)
 * [Python](Python.py)
+* [Regular expression](regex.txt)
 * [Ruby](Ruby.rb)
 * [Ruby on Rails](RoR.txt)
 * [UNIX commands](UNIX.txt)
