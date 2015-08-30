@@ -3,15 +3,18 @@
   python -m -v doctest filename.py  # doctests are a quick way of writing tests (v: verbose)
 # single line comment
 """
-  Phyton is indentation-based i.e. indentation indicates scope
+  Multiple line comment
 """
-print "Welcome to Python!"  # newline
-print "foo %s bar %s" % (string_1, string_2)
-print str1, print str2    # prints on same line seperated by space
-print str1, str2      # same as above
-print anArray       # prints an array
+# Python is indentation-based i.e. indentation defines scope
 
-#  \ continuation character, following line is considered a continuation of the current line
+# printing
+  print "Welcome to Python!"  # newline
+  print "foo %s bar %s" % (string_1, string_2)
+  print str1, print str2      # prints on same line seperated by space
+  print str1, str2            # same as above
+  print anArray               # prints an array
+
+# \ continuation character, following line is considered a continuation of the current line
   print "hello" + \
   "word"
 
@@ -24,8 +27,8 @@ print anArray       # prints an array
 
 # typecast
   int("1010", 2) == 2
-  str(2) == "2" # parse to string
-  float(2)    # case int 2 into float
+  str(2) == "2"         # parse to string
+  float(2)              # case int 2 into float
 
 # inbuilt functions
   max(*args)  # e.g. max(2,3,4,5)
@@ -35,9 +38,9 @@ print anArray       # prints an array
   type(arg) # e.g. type('spam') returns <type 'str'>, type(1) is int == True
 
 # modules
-  import math           # import math module
+  import math                   # import math module
   from datetime import datetime # import datetime function from datetime module
-  from math import *        # import all functions from math module
+  from math import *            # import all functions from math module
   """
      you have a function of your very own named sqrt and you import math, 
      your function is safe: there is your sqrt and there is math.sqrt.
@@ -45,6 +48,12 @@ print anArray       # prints an array
      namely, two different functions with the exact same name.
   """
   dir(module) # returns an array of strings listing all the function names in module
+
+  # os module
+  import os
+  os.getcwd()           # get current working directory
+  os.chdir("d/jinzhe")  # change directory
+  os.listdir(".")       # list files in current working directory
 
 # Boolean
   myBool = True # boolean
@@ -99,15 +108,15 @@ print anArray       # prints an array
   filter(lambda x: x % 3 == 0, my_list)
 
  # array == list == stack
-  numbers = [5, 6, 7, 8]    # declaration method 1
-  numbers = [1] * 10      # declaration method 2
-  numbers.index(6) == 2     # first index that contains the object
+  numbers = [5, 6, 7, 8]      # declaration method 1
+  numbers = [1] * 10          # declaration method 2
+  numbers.index(6) == 2       # first index that contains the object
   numbers.insert(index, obj)  # inserts obj at position index, suceeding elements are pushed down
-  anArray.append(obj)     # append object
-  anArray.remove(obj)     # remove object (method does not return anything)
-  anArray.pop(index)      # removes object at index and returns it (if not index provided, will pop last)
-  del(anArray[index])     # same as pop expect it doesn't return the object
-  [1,1,1].count(1) == 3     # counts the number of given parameter in array 
+  anArray.append(obj)         # append object
+  anArray.remove(obj)         # remove object (method does not return anything)
+  anArray.pop(index)          # removes object at index and returns it (if not index provided, will pop last)
+  del(anArray[index])         # same as pop expect it doesn't return the object
+  [1,1,1].count(1) == 3       # counts the number of given parameter in array 
 
   """
   Slice
@@ -137,25 +146,25 @@ print anArray       # prints an array
   for i in reversed(anArray)
 
 # hashmap
-  hashmap = {}                  # initialisation (optional)
-  hashmap = {'key1' : 1, 'key2' : 2, 'key3' : 3}  # same as js but note that keys are NOT considered as attributes
+  hashmap = {}                        # initialisation (optional)
+  hashmap = {'key1' : 1, 'key2' : 2}  # same as js but note that keys are NOT considered as attributes
   hashmap[key] = new_value            # adding/updating value
   del dict_name[key_name]             # delete key,val
-  for key in hashmap:               # iterates each key (not guaranteed same order everytime)
+  for key in hashmap:                 # iterates each key (not guaranteed same order everytime)
     # Do stuff
   for key, value in hashmap.items()
-  key in hashmap == True/False          # test if key is in hashmap
-  hashmap.items()                 # returns an array of (key, value) tuples, not in any order
-  hashmap.keys()                  # returns an array of keys, not in any order
-  hashmap.values()                # return an array of values, not in any order
-  sorted(hashmap)                 # returns sorted list of keys
+  key in hashmap == True/False        # test if key is in hashmap
+  hashmap.items()                     # returns an array of (key, value) tuples, not in any order
+  hashmap.keys()                      # returns an array of keys, not in any order
+  hashmap.values()                    # return an array of values, not in any order
+  sorted(hashmap)                     # returns sorted list of keys
 
   [value for (key, value) in sorted(hashmap.items())] # returns [1, 2, 3]
 
 # sorting
-  anArray.sort()        # in-place sorting
+  anArray.sort()                      # in-place sorting
   tuples = [(5,99), (4,54), (3,12), (2,44)]
-  sorted(tuples)            # returns (2,44), (3,12), (4,54), (5,99)
+  sorted(tuples)                      # returns (2,44), (3,12), (4,54), (5,99)
   sorted(tuples, key=lambda x: x[1])  # returns (3,12), (2,44), (4,54), (5,99)
 
  # loops
@@ -185,11 +194,11 @@ print anArray       # prints an array
   from random import randint
   randint(low, high)  # generates random interger between low to high inclusive
 
- # range(start, stop, step) for generating a list of numbers
+# range(start, stop, step) for generating a list of numbers
   range(6)          # => [0,1,2,3,4,5]
-  range(1,6)          # => [1,2,3,4,5]
-  range(1,6,3)        # => [1,4]
-  range(10,-1,-1)       # => [10,9,8,7,6,5,4,3,2,1,0]
+  range(1,6)        # => [1,2,3,4,5]
+  range(1,6,3)      # => [1,4]
+  range(10,-1,-1)   # => [10,9,8,7,6,5,4,3,2,1,0]
 
   3 in range(1,4) == True
   3 not in range(1,4) == False
@@ -257,10 +266,10 @@ print anArray       # prints an array
   """
   aFile = open("output.txt", "w")
   aFile.write("something" + "\n") # write a line
-  aFile.read()          # read entire file
-  aFile.readline()        # read a line (progressive after each call)
+  aFile.read()                    # read entire file
+  aFile.readline()                # read a line (progressive after each call)
   aFille.close()
-  aFile.closed == True      # test if a file is closed
+  aFile.closed == True            # test if a file is closed
   
   for line in aFile:
     
@@ -284,7 +293,7 @@ print anArray       # prints an array
 
 # Misc
   len(anObject) # returns length attribute of the object
-  pass      # placeholder for expressions
+  pass          # placeholder for expressions
 
 # NLTK
   s = '''' Good muffins cost $3.88\nin New York.  Please buy me
@@ -297,5 +306,45 @@ print anArray       # prints an array
   """
 
 # commandline
-python code.py          # interpets python code
-python -m http.server 8080    # runs python localhost:8080
+  python code.py              # interpets python code
+  python -m http.server 8080  # runs python localhost:8080
+
+# numpy
+  import numpy as np
+  np.arange(3,7)               # generates [3,4,5,6]
+  np.arange(4).reshape((2,2))  # creates [[0,1],[2,3]]
+
+  # Operations on arrays are performed in an element-by-element manner
+    a * 0.5 # multiplies each element with 0.5
+    a + b   # adds each item in array a its corresponding item in b
+    a * b
+
+  # 1D array
+    a = np.array([1,2,3])
+  
+  # 2D array
+    a = np.array([[1,2,3], [4,5,6]])
+    a.shape           # prints (2, 3)
+    a[1,2]            # get an element at row 1 col 2
+    a[1,:]            # get row 1
+    a[:,2]            # get col 2
+    b = np.matrix(a)  # cast a into a matrix
+    np.transpose(a)   # transpose 2D array
+
+  # special arrays
+    np.empty([2, 3])    # 2 by 3 array with arbitrary random values
+    np.eye(2, 3)        # matrix of given shape where diagonal entires are 1 and everything else 0
+    np.identity(3)      # 3 by 3 identity matrix
+    np.ones([2, 3])     # array of given shape filled with ones
+    np.zeros([2, 3])    # array of given shape filled with zeros
+    np.random.rand(2,3) # array of given shape filled with random values
+
+  # matrices
+    a = np.martix([[1,2,3], [4,5,6]])
+    a * b   # only valid if b has as many columns as the row of a, else error will be thrown
+
+  # linear algebra
+    import numpy.linalg as la
+    al.inv(A)                   # inverse matrix A
+    la.solve(A, b)              # solve for A x = b
+    a, e, r, s = la.lstsq(M, b) # least squares for M a = b. a: least-square solution, e: residue or error, r: rank of a, s: singular values of a
