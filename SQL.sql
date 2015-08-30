@@ -72,6 +72,12 @@
   AS priceGST
   FROM catalog;
 
+  /* union */
+    -- Note: The UNION operator selects only distinct values by default. To allow duplicate values, use "UNION ALL"
+    SELECT column_name(s) FROM table1
+    UNION
+    SELECT column_name(s) FROM table2;
+
   /* grouping: split up table into buckets */
     -- note: whatever columns that appear in SELECT must also appear in GOUP BY
     SELECT book        -- selects the book from each book bucket (works exactly like UNIQUE)
