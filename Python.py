@@ -313,6 +313,8 @@
   import numpy as np
   np.arange(3,7)               # generates [3,4,5,6]
   np.arange(4).reshape((2,2))  # creates [[0,1],[2,3]]
+  .size()                      # returns total number of items
+  np.nditer(a)                 # returns list of all items in numpy array a
 
   # Operations on arrays are performed in an element-by-element manner
     a * 0.5 # multiplies each element with 0.5
