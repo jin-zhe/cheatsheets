@@ -57,7 +57,10 @@
     AND l.returned > '2010-03-04'
     AND l.borrower = 'abc@mail.com';
 
-  SELECT DISTINCT nationality     -- removing duplicates
+  SELECT DISTINCT nationality     -- removing duplicates in a single row
+  FROM student;
+  
+  SELECT DISTINCT nationality, last_name -- selecting only unique tuples
   FROM student;
 
   SELECT name                     -- ordering (default asc)
