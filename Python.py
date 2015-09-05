@@ -69,6 +69,7 @@
   myStr.lower() == "string"
   myStr.upper() == "STRING"
   myStr.isalpha() == True
+  myStr.endswith(ing) == True
   
   letters = ['a', 'b', 'c', 'd']
   "-".join(letters) == "a-b-c-d"
@@ -258,6 +259,17 @@
   __repr__(self)  
     return "(%d, %d, %d)" % (self.x, self.y, self.z)
 
+  # main method
+  def main():
+    # display some lines
+  if __name__ == "__main__": main()
+
+# enum (only available on Python 3.4 onwards)
+  from enum import Enum
+  class EdgeDetector(Enum):
+    prewit = 0
+    sobel = 1
+
 # I/O
   """
     r: read
@@ -350,3 +362,26 @@
     al.inv(A)                   # inverse matrix A
     la.solve(A, b)              # solve for A x = b
     a, e, r, s = la.lstsq(M, b) # least squares for M a = b. a: least-square solution, e: residue or error, r: rank of a, s: singular values of a
+
+# pyplot
+  import matplotlib.pyplot as plt
+  
+  # plot histogram
+    plt.hist(values, cumulative=True, bins=256)
+    plt.title("%s CDF" % image_name)
+    plt.xlabel("Intensity")
+    plt.ylabel("Cumulative Frequency")
+    plt.show()
+
+# openCV
+  import cv2
+  # read image as np array
+    cv2.imread(path, cv2.CV_LOAD_IMAGE_GRAYSCALE) # read image as grayscale
+  
+  # write np array as image
+    cv2.imwrite(path, image)
+
+  # display an image
+    cv2.imshow('image',image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
