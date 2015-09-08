@@ -80,6 +80,8 @@
     SELECT column_name(s) FROM table1
     UNION
     SELECT column_name(s) FROM table2;
+  /* minus */
+    
 
   /* grouping: split up table into buckets */
     -- note: whatever columns that appear in SELECT must also appear in GOUP BY
@@ -94,7 +96,7 @@
     SELECT l.borrower
     FROM loan l
     GROUP BY l.borrowed, l.borrower
-    HAVING COUNT(l.book) > 1;          -- aggregate conditionals on GROUP BY (cannot use WHERE)
+    HAVING COUNT(l.book) > 1;          -- aggregate conditionals on GROUP BY (cannot use WHERE). It applies to each group bucket
 
   /* aggregate queries: MAX(), MIN(), AVG(), STD(), SUM() etc. */ 
     -- NOTE: aggregate functions cannot be used in the WHERE clause
@@ -117,7 +119,7 @@
   DELETE FROM table_name;  -- delete all of table entires but keep table 
   
   DELETE FROM table_name   -- delete entries that falls within condition
-  WHERE some_column=some_value;
+  WHERE some_column=some_value; -- note: quotes have to be placed also on boolean values. e.g. some_bool='TRUE'
 
 /* modify entries */
   ALTER TABLE table_name        -- add new column
