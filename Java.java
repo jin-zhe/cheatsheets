@@ -104,6 +104,8 @@
   LinkedList<Object> list = new LinkedList<Object>();	  // Queue: peek(), poll(), offer(item), isEmpty()
   Stack<Object> stack = new Stack<Object>(); 			      // Stack: peek(), pop(), push(item), empty()
 
+  PriorityQueue<Long>(10, Collections.reverseOrder());  // Max heap
+  
   public static class Pair<X,Y>{
     X one;
     Y two;
