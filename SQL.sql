@@ -28,10 +28,10 @@
   );
 
 /* basic insert */
-  INSERT INTO student VALUES(...);                        -- insert all values in the order defined during table creation
+  INSERT INTO student VALUES(...), (...), ...;            -- insert all values in the order defined during table creation
 
   INSERT INTO student (email, name, faculty, department)  -- insert only values indicated by the ones list and in that order
-  VALUES (...);
+  VALUES (...), (...), ...;
 
 /* delete table */
   DROP TABLE loan;
