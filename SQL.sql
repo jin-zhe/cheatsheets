@@ -84,7 +84,7 @@
     
 
   /* grouping: split up table into buckets */
-    -- note: whatever columns that appear in SELECT must also appear in GOUP BY
+    -- note: whatever columns that appear in SELECT must also appear in GROUP BY
     SELECT book        -- selects the book from each book bucket (works exactly like UNIQUE)
     FROM loan
     GROUP BY book;
