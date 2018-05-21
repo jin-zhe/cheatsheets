@@ -1,3 +1,4 @@
+```py
 # running python
   python filename.py
   python -m -v doctest filename.py  # doctests are a quick way of writing tests (v: verbose)
@@ -385,3 +386,4 @@
     cv2.imshow('image',image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+```

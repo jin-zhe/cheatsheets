@@ -1,3 +1,4 @@
+```js
 /* document ready */
 	$(document).ready(function(){});
 	$(function(){});	// shorthand: same as above
@@ -70,3 +71,4 @@ events: click,
 	.draggable();
 	.resizable();
 	.selectable();	// need CSS defintion for .ui-selected
+```

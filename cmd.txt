@@ -1,4 +1,0 @@
-setx PATH "%PATH%;C:\Python34\Scripts"  // adds an enviroment variable
-javac code.java                     // compile
-java -Xss8m code < in.txt > out.txt // uses in.txt to generate out.txt
-fc out.txt ans.txt                  // compares out.txt with ans.txt

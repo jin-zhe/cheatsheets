@@ -1,3 +1,4 @@
+```sh
 *** some useful UNIX commands from @girishadurrel ***
 -----------------------------
 
@@ -67,3 +68,4 @@ if you want to quickly see what a text file contain you can just type more file-
 
 there are a lot of commands that you can use. you can learn about them using the man pages or by searching online. this is just a small guide I just complied for you all to get started.
 
+```

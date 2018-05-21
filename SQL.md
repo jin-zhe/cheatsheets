@@ -1,3 +1,4 @@
+```sql
 /* domain types */
   CHAR(n)       -- fixed-length character string, with user-specified length.
   VARCHAR(n)    -- variable-length character string, with user-specified maximum length.
@@ -186,3 +187,4 @@ alter session set NLS_DATE_FORMAT = 'YYYY-MM-DD'
   -- conitionals can be TRUE/FALSE or UNKNOWN for cases dealing with NULL values
   set define off  -- disable special character such as '&'
   O''reilly       -- single quotes are escaped by doubling
+```

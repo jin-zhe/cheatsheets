@@ -1,3 +1,4 @@
+```
 /word/    # matches the first occurence of pattern "word"
 
 # Operator precedence (highest to loweset) 
@@ -58,3 +59,4 @@
   # Usage
     /^The dog\.$/   # match a line containing only "The dog."
     /\bthe\b/       # match "the" but not "other"
+```

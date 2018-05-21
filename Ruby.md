@@ -1,3 +1,4 @@
+```rb
 # a comment
 =begin
   no semicolon termination
@@ -352,3 +353,4 @@ gets.chomp    # removes that extra line
 
 # time object
   .hour # reutrns hour for the time object
+```

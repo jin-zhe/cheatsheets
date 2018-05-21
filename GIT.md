@@ -1,3 +1,4 @@
+```sh
 # General notes
   # main remote repo is called "origin" by convention
   # all file references can use wildcards e.g. git add '*.txt' stages all files ending with .txt
@@ -126,3 +127,4 @@ git checkout master       # switch to master branch
 git checkout --force      # restore/undo change (prior to commit)
 git checkout -b <branch>  # creates or resets branch (if existent) and then switch to it
 git checkout -- <file>    # discard all changes and reverts file to its state in the last commit
+```

@@ -1,3 +1,4 @@
+```java
 /* Bit Manipulation */
    int complement = ~0; // 32 '1's
    << len               // left shift: pads right by len number of '0's
@@ -251,3 +252,4 @@
                              p, p.surfaceWeight(mass));
     }
   }
+```

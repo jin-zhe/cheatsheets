@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html> <!--tells browser what language it's reading (always on first line)-->
 <html>
 <head> <!--contains meta-information-->
@@ -8,3 +9,4 @@
 <body>
 </body>
 </html>
+```

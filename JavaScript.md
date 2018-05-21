@@ -1,3 +1,4 @@
+```js
 // The var keyword creates a new variable in the current scope. That means if var is used outside a function, that variable has a global scope. If var is used inside a function, that variable has a local scope.
 
 /* Math */
@@ -115,3 +116,4 @@ Emperor.prototype = new Penguin();
 /* arrays */
 	var arrayName = [data, data, data];
 	array.push(item)
+```
