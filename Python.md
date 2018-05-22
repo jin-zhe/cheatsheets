@@ -361,8 +361,8 @@ dic = {x: x**2 for x in (1, 2, 3)}                # via dict comprehensions
 Common methods to check and update members
 ```py
 key in dic        # check if key is in dic
-dic[key] = value  # adding/updating value
-del dic[key]      # delete key,val from dic
+dic[key] = value  # adding/updating value. Note key can be a number
+del dic[key]      # delete (key, val) from dic
 ```
 Common methods to extract members:
 ```py
@@ -387,7 +387,8 @@ sorted(hashmap)
 ```
 #### Shorthands
 ```py
-[value for (key, value) in sorted(hashmap.items())] # returns [1, 2, 3]
+dic = {'a': 1, 'b': 2, 'c': 3}
+[value for (key, value) in sorted(dic.items())] #=> [1, 2, 3]
 ```
 
 ## Math
@@ -424,7 +425,7 @@ os.listdir(".")                 # list files in current working directory
 os.path.join(par_dir, rel_path) # join par_dir and rel_path together
 os.path.abspath(rel_path)       # get the absolute path give relative path
 ```
-#### Datetime
+#### datetime
 ```py
 import datetime
 date = datetime.now()   # current date and time
@@ -435,7 +436,7 @@ date.hour
 date.minute
 date.second
 ```
-#### Random
+#### random
 ```py
 from random import randint
 randint(low, high)  # generates random interger between low to high inclusive
@@ -471,6 +472,7 @@ class MyClass:
 ```
 
 Python 3: Declare a class with implicit inheritance of `object` class:
+
 Python 2: Declare an old-style class:
 ```py
 class MyClass():
@@ -478,6 +480,7 @@ class MyClass():
 ```
 
 Python 3: Declare a class with explicit inheritance of `object` class:
+
 Python 2: Declare a new-style class
 ```py
 class MyClass(object):
