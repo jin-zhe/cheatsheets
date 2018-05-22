@@ -1,389 +1,630 @@
+# Python Cheatsheet
+Unless specified otherwise, the following is written for Python 3.
+
+## General
+* Python is indentation-based language i.e. indentation defines scope
+* Paramenters in Python function are **passed by reference** so modifying their attributes within the function will change them.
+
+### Main method
 ```py
-# running python
-  python filename.py
-  python -m -v doctest filename.py  # doctests are a quick way of writing tests (v: verbose)
-# single line comment
+def main():
+  # do somethind
+  
+if __name__ == "__main__": main()
+```
+
+## Running Python
+```py
+python some_code.py               # interpets python code
+python -m -v doctest filename.py  # doctests are a quick way of writing tests (v: verbose)
+python -m http.server 8080        # runs python localhost:8080
+```
+
+## Comments
+```py
+# Single line comment
 """
-  Multiple line comment
+Multiple
+Line
+Comment
 """
-# Python is indentation-based i.e. indentation defines scope
+```
 
-# printing
-  print "Welcome to Python!"  # newline
-  print "foo %s bar %s" % (string_1, string_2)
-  print str1, print str2      # prints on same line seperated by space
-  print str1, str2            # same as above
-  print anArray               # prints an array
+## Continuation charater
+`\` is the continuation character. The line following the continuation character is considered a continuation of the current line:
+```py
+print("hello" + \
+  "word")
 
-# \ continuation character, following line is considered a continuation of the current line
-  print "hello" + \
-  "word"
+if x not in range(8) or \
+  y not in range(3):
+```
 
-  if x not in range(8) or \
-    y not in range(3):
+## I/O
+### File
+#### Opening and closing
+Python uses the following modes when invoking the `open()` function:
+* `r`: read (default)
+* `rb`: read bytes
+* `w`: write
+* `wb`: write bytes
+* `r+`: read and write
 
-# userinput
-  name = raw_input("What is your name?")  # read in string
-  num = int(raw_input("give a number"))   # read in number
+File objects contain a special pair of built-in methods: `__enter__()` and `__exit__()`. When a file object's `__exit__()` method is invoked, it automatically closes the file. Files are typically opened and closed with the following commands:
+```py
+some_file = open(some_file_path, mode)  # opening a file
+some_file.close()                       # closing a file
+some_file.closed                        # check if a file is closed
+```
 
-# typecast
-  int("1010", 2) == 2
-  str(2) == "2"         # parse to string
-  float(2)              # case int 2 into float
+The opening and closing of a file can be conveniently handled with a **with-as** clause:
+```py
+with open(some_file_path, mode) as some_file:
+  # do something with some_file
+```
+Note: `some_file` is automatically closed when the with-as clause upon completion of the containing block. It is also closed when a `return` is made from within the block.
 
-# inbuilt functions
-  max(*args)  # e.g. max(2,3,4,5)
-  min(*args)  # e.g. min(2,3,4,5)
-  abs(arg)
-  sum(array)
-  type(arg) # e.g. type('spam') returns <type 'str'>, type(1) is int == True
+#### Reading
+Read the entire file as a string (or otherwise)
+```py
+with open(some_file_path, mode) as some_file:
+  file_contents = some_file.read()
+```
+Read the file line by line:
+```py
+with open(some_file_path, read_mode) as some_file:
+  for line in some_file:
+    # do something with line
+```
+#### Writing
+```py
+contents = 'something'
+with open(some_file_path, write_mode) as some_file:
+  some_file.write(contents)
+```
+Note: During the I/O process, data is buffered. this means that it is held in a temporary location before being written to the file. Python doesn't flush the buffer—that is, write data to the file—until it's sure you're done writing
+One way to do this is to close the file. **If you write to a file without closing, the data won't make it to the target file.**
 
-# modules
-  import math                   # import math module
-  from datetime import datetime # import datetime function from datetime module
-  from math import *            # import all functions from math module
-  """
-     you have a function of your very own named sqrt and you import math, 
-     your function is safe: there is your sqrt and there is math.sqrt.
-     If you do from math import *, however, you have a problem:
-     namely, two different functions with the exact same name.
-  """
-  dir(module) # returns an array of strings listing all the function names in module
+### Printing
+```py
+print("Welcome to Python!")         # ends with newline
+print("Welcome to Python!", end='') # ends without the default ending newline
+print(str1, str2)                   # prints the 2 strings separated by a space
+print(arr)                          # prints an array
+```
 
-  # os module
-  import os
-  os.getcwd()           # get current working directory
-  os.chdir("d/jinzhe")  # change directory
-  os.listdir(".")       # list files in current working directory
+### User input
+```py
+name = raw_input("What is your name?")  # read in string
+num = int(raw_input("give a number"))   # read in number
+```
 
-# Boolean
-  myBool = True # boolean
-  and
-  or
-  not
+### Selection statement
+```py
+if condition_1:
+  # do something 1
+elif condition_2:
+  # do something 2
+else:
+  # do something else
+```
+Note: There are no switch statements in Python
 
-# Strings
-  myStr = "String"
-  myStr[0] == "S"
-  myStr[1:4] == "tri"   # slice
-  len(myStr) == 6
-  myStr.lower() == "string"
-  myStr.upper() == "STRING"
-  myStr.isalpha() == True
-  myStr.endswith(ing) == True
+### Conditional assignment
+```py
+x = 10 if a > b else 11 # analogous to x = (z > b)? 10: 11;
+```
+
+## Built-in Types
+### Check types
+```py
+type('spam')    #=> <type 'str'>
+type(1) is int  #=> True
+```
+### Typecasting
+```py
+int("1010", 2) == 2
+str(2) == "2"         # parse to string
+float(2)              # case int 2 into float
+```
+### Boolean
+```py
+myBool = True
+```
+### Boolean operators
+```py
+and
+or
+not
+```
+### Binary
+```py
+bin(10)       #=> 0b1010
+10 == 0b1010  #=> True
+```
+### Bit manipulation
+Note that they return in decimal format
+```py
+5 >> 4  # Right Shift
+5 << 1  # Left Shift
+8 & 5   # Bitwise AND
+9 | 4   # Bitwise OR
+12 ^ 42 # Bitwise XOR
+~88     # Bitwise NOT
+```
+### Strings
+```py
+s = "String"              # single-line string
+s = '''This is a          # multi-lin string
+  mutli-line string'''
+s[0]        #=> 'S'       # retrieve character
+s[1:4]      #=> 'tri'     # slice
+len(s)      #=> 6         # string length
+s.lower()   #=> "string"  # downcase
+s.upper()   #=> "STRING"  # upcase
+s.isalpha() #=> True      # Alpha numeric check 
+s.startswith('Str') #=> True
+s.endswith('ing')   #=> True
+','.join('abc')           #=> 'a,b,c'
+','.join(['a', 'b', 'c']) #=> 'a,b,c' # For this to work, the argument has to be a list of strings
+```
+#### Fromatting
+Old style not recommended:
+```py
+'%s %s' % ('one', 'two')  #=> 'one two'
+'%d %d' % (1, 2)          #=> '1 2'
+```
+New recommended style:
+```py
+'{} {}'.format('one', 'two')  #=> 'one two'
+'{} {}'.format(1, 2)          #=> '1 2'
+```
+
+## Loops
+### For loop
+```py
+for i in some_list:
+  # do something
+```
+### For-else loop
+The else block will execute only when the loop condition is evaluated to `False`. i.e. it will only run once at the end
+```py
+for number in numbers: 
+  # do something
+else:
+  $ do something else
+```
+### While loop
+```py
+while condition:
+  # do something
+```
+### While-else loop
+Just like for-else loops, the else block is executed only when the while-loops terminates formally
+```py
+while condition: 
+  # do something
+else:
+  # do something else
+```
+### Control flow
+```py
+break     # breaks out of current loop
+continue  # continues to next iteration in loop
+```
+
+## Data Structures
+These are some common data structures used in Python
+
+### List
+In python, list, array and stack are equivalent data structures. For the sake of consistency, they shall be referred to as *arrays* for the rest of this cheatsheet and our variable name for the array is `arr`.
+
+#### Declaration and initialization
+```py
+"""Single-dimensional array"""
+arr = [5, 6, 7, 8]            #=> [5, 6, 7, 8] # explicit assignment
+arr = [1] * 4                 #=> [1, 1, 1, 1] # generative assignment
+arr = list(range(5,9))        #=> [5, 6, 7, 8] # generative assignment using range
+arr = [x for x in range(5,9)] #=> [5, 6, 7, 8] # generative assignment using range and list comprehension (see list comprehension section below)
+
+"""Multi-dimensional array"""
+arr = [[1,2,3],[4,5,6]]   #=> [[1, 2, 3], [4, 5, 6]]    # explicit assignment
+arr = [[1]*2]*3           #=> [[1, 1], [1, 1], [1, 1]]  # generative assignment
+# The methods using range and list comprehension for single-dimensional array works for multi-dimensions as expected and is left out for brevity
+```
+#### Range
+`range(start, stop, step)` provides a convenient construct for generating an ordered list of numbers
+```py
+range(6)            #=> [0,1,2,3,4,5]
+range(1,6)          #=> [1,2,3,4,5]
+range(1,6,3)        #=> [1,4]
+range(10,-1,-1)     #=> [10,9,8,7,6,5,4,3,2,1,0]
+
+3 in range(1,4)     #=> True
+3 not in range(1,4) #=> False
+```
+
+#### Membership
+```py
+arr.count(item)         # counts the number of times item appears in array 
+arr.index(item)         # returns index of first occurence of the item
+arr.insert(index, item) # inserts item at position index, suceeding elements are pushed down | in-place | does not return
+arr.append(item)        # append item to end of list | in-place | does not return
+arr.remove(item)        # remove item | in-place | does not return
+arr.pop(index)          # removes object at index and returns it (if not index provided, will pop last) | in-place | returns popped item
+del(arr[index])         # same as pop exept it doesn't return the object
+```
+#### Slicing
+Slicing is achieved with the `[start:end:stride]` operator
+
+* `start` describes where the slice starts (inclusive)
+  * If not provided, value defaults *0*
+* `end` is where it ends (exclusive)
+  * If not provided, value defaults *length of array*. I.E. Operation defaults to `[start:length:1]`
+  * If value is negative, Python interpreter will subtract that value off the length of array. For example `a[start:-x]` is translated to `arr[start:length-x]`
+* `stride` indicates the interval between items in the sliced list
+  * If not provided, value defaults to *1*. I.E. Operation defaults to `[start:end:1]`
+  * `start` and `end` defines the sequence for stride to traverse
+  * `stride` indicates the interval in sequence for which objects are picked. For example, a stride of 2 will skip 1 item in sequence at every interval.
+  * a positive stride length traverses the sequence in sequential order
+  * a negative stride traverses the sequence in reverse order
+```py
+arr = [0, 1, 2, 3, 4, 5, 6, 7, 8 ,9]
+arr[:2]   #=> [0, 1]
+arr[3:6]  #=> [2, 3, 4]
+arr[:-5]  #=> [0 ,1, 2, 3, 4] # Python interpreter translates to arr[0:5]
+arr[::2]  #=> [0, 2, 4, 6, 8]
+arr[::-1] #=> [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+```
+
+#### Concatenating
+```py
+arr1 = [1, 2, 3]
+arr2 = [4, 5, 6]
+arr1 + arr2       #=> [1, 2, 3, 4, 5, 6]
+```
+
+#### List comprehension
+List comprehension is commonly used as a shorthand for creating a new list by iterating over a given list.
+
+It is commonly used as a filter by applying a condition over the given list:
+```py
+a = [1, 2, 3, 4]
+odd_a = [x for x in a if i%2 == 0] #=> [2, 4]
+```
+It is also commonly used for modifying each item in the given list:
+```py 
+a = [1, 2, 3, 4]
+squared_a = [x**2 for x in a] #=> [1, 4, 9, 16]
+```
+We can also nest lists within the comprehension to iterate through multi-dimensional arrays. One application for this is to flatten out a multi-dimensional array:
+```py
+2d_arr = [[1, 2, 3], [4, 5, 6]]
+flattened_arr = [x for row in 2d_arr for x in row ]
+```
+
+#### Iterating
+To iterate over all items in the array:
+```py
+for item in arr:
+  # do something with item
+```
+To iterate over all indices for items in the array:
+```py
+for index in range(len(arr)):
+  # do something with index
+```
+To iterate over all indicies and their accompanying items in the array:
+```py
+for index, item in enumerate(arr):
+  # do something with index, item
+```
+To iterate all items in the array in reversed order (without using slice):
+```py
+for item in reversed(arr):
+  # do something with item
+```
+use `zip` to iterate over multiple lists at once (terminating on the shorter list):
+```py
+for item_1, item_2, item_3 in zip(arr_1, arr_2, arr_3):
+  # do something with item_1, item_2, item_3
+```
+#### Sorting
+```py
+arr.sort()                          # in-place sorting
+tuples = [(5,99), (4,54), (3,12), (2,44)]
+sorted(tuples)                      # returns (2,44), (3,12), (4,54), (5,99)
+sorted(tuples, key=lambda x: x[1])  # returns (3,12), (2,44), (4,54), (5,99)
+```
+
+### Dictionary
+In Python dictionary is equivalent to hashmap
+
+#### Declaration and initialization
+Declaring an empty dictionary:
+```py
+dic = {}
+dic = dict()  # using contructor
+```
+
+Declaring and initializing with values:
+```py
+dic = {'key_1' : val_1, 'key_2' : val_2}          # via explicit assignment
+dic = dict([('key_1', val_1), ('key_2', val_2)])  # via key,val pair list
+dic = dict(key_1=val_1, key_2=val_2)              # via keyword arguments
+dic = {x: x**2 for x in (1, 2, 3)}                # via dict comprehensions 
+```
+
+#### Membership
+Common methods to check and update members
+```py
+key in dic        # check if key is in dic
+dic[key] = value  # adding/updating value
+del dic[key]      # delete key,val from dic
+```
+Common methods to extract members:
+```py
+dic.items()   # returns an array of (key, value) tuples, not in any order
+dic.keys()    # returns an array of keys, not in any order
+dic.values()  # return an array of values, not in any order
+```
+#### Iterating
+```py
+# Iterates each key (not guaranteed same order everytime)
+for key in hashmap:
+  # Do something with key
   
-  letters = ['a', 'b', 'c', 'd']
-  "-".join(letters) == "a-b-c-d"
+# Iterates each key, value pair
+for key, value in hashmap.items():
+  # Do something with key, value
+```
+#### Sorting
+To get a sorted list of keys:
+```py
+sorted(hashmap)
+```
+#### Shorthands
+```py
+[value for (key, value) in sorted(hashmap.items())] # returns [1, 2, 3]
+```
 
-# datetime
-  date = datetime.now()   # current date and time
-  date.year
-  date.month
-  date.day
-  date.hour
-  date.minute
-  date.second
+## Math
+Python contains useful inbuilt math functions
+```py
+a = [2,3,4,5]
+max(a)  #=> 5
+min(a)  #=> 2
+sum(a)  #=> 14
+b = -1
+abs(b)  #=> 1
+```
 
-# selection
-  if boolean1:
-    doSum
-  elif boolean2:
-    doSum
-  else:
-    doSum
+## Importing
+```py
+import math                   # import math module
+from datetime import datetime # import datetime function from datetime module
+from math import *            # import all functions from math module into global namespace
+```
+Note of caution for `from math import *`: If you have a function of your very own named sqrt and you `import math`,      your function is safe: there is your `sqrt` and there is `math.sqrt`. However if you do from `math import *`, you have a problem, namely, two different functions with the exact same name.
 
-  x = 10 if a > b else 11 # analogous to x = (z > b)? 10: 11; 
+To return an array of strings listing all the function names in module:
+```py
+dir(module)
+```
 
-# methods
-  def tax(bill):
-      bill *= 1.08
-      print "With tax: %f" % bill
-      return bill
+### Common modules
+#### os
+```
+import os
+os.getcwd()                     # get current working directory
+os.chdir("d/jinzhe")            # change directory
+os.listdir(".")                 # list files in current working directory
+os.path.join(par_dir, rel_path) # join par_dir and rel_path together
+os.path.abspath(rel_path)       # get the absolute path give relative path
+```
+#### Datetime
+```py
+import datetime
+date = datetime.now()   # current date and time
+date.year
+date.month
+date.day
+date.hour
+date.minute
+date.second
+```
+#### Random
+```py
+from random import randint
+randint(low, high)  # generates random interger between low to high inclusive
+```
+#### enum (only available on Python 3.4 onwards)
+```py
+from enum import Enum
+class EdgeDetector(Enum):
+  prewit = 0
+  sobel = 1
+```
 
-    # changes the actual array i.e. passed by reference
-    def doSum(anArray):
-      anArray[0] = anArray[0] * 2
+## Functions
+The default function return value in Python is `None`
+```py
+def some_function(param_1, kwarg_1=default_kwarg_1_val):
+  # do something
+  return ans
+```
+### Lambda: anonymous functions
+```py
+arr = [0, 1, 2, 3, 4, 5, 6]
+filter(lambda x: x % 3 == 0, arr) #=> [0, 3, 6]
+```
+## Class
+### Declaration
+There are multiple ways to declare a class.
 
-    # Note: default return value is None
+Python 3: Delcare a class with implicit inheritance of `object` class:
+```py
+class MyClass:
+  pass
+```
 
-# lambda: anonymous functions
-  filter(lambda x: x % 3 == 0, my_list)
+Python 3: Declare a class with implicit inheritance of `object` class:
+Python 2: Declare an old-style class:
+```py
+class MyClass():
+ pass
+```
 
- # array == list == stack
-  numbers = [5, 6, 7, 8]      # declaration method 1
-  numbers = [1] * 10          # declaration method 2
-  numbers.index(6) == 2       # first index that contains the object
-  numbers.insert(index, obj)  # inserts obj at position index, suceeding elements are pushed down
-  anArray.append(obj)         # append object
-  anArray.remove(obj)         # remove object (method does not return anything)
-  anArray.pop(index)          # removes object at index and returns it (if not index provided, will pop last)
-  del(anArray[index])         # same as pop expect it doesn't return the object
-  [1,1,1].count(1) == 3       # counts the number of given parameter in array 
+Python 3: Declare a class with explicit inheritance of `object` class:
+Python 2: Declare a new-style class
+```py
+class MyClass(object):
+  pass
+```
+See here on [old-style and new-style classes](https://docs.python.org/release/2.5.2/ref/node33.html)
 
-  """
-  Slice
-    anArray[start:end:stride]
-    start describes where the slice starts (inclusive)
-    end is where it ends (exclusive),
-    stride describes the space between items in the sliced list. 
-    if a value is not provided, its default value is taken. [0:len:1]
-    a positive stride length traverses the list from left to right
-    a negative one traverses the list from right to left
-  """
-    anArray[:2]         # Grabs the first two items
-    anArray[3:]         # Grabs the fourth through last items
-    anArray[::2]        # choose objects seperated apart by 2
-    anArray[::-1]       # reverses the list
+### Instantiation
+```py
+my_class_object = MyClass(attr1, attr2, attr3) # instantiating myClass
+```
+
+### Methods
+#### Constructor
+The first argument `__init__()` gets is used to refer to the instance object by convention, that argument is called `self`. If you add additional arguments in the body of `__init__()`, you need to give each instance those attributes. `self` is only passed as an argument when defining methods, but are left out when calling them.
+
+#### Class representation
+By providing a return value in this method, we can tell Python how to represent an object of our class (for instance, when using a print statement)
+```py
+__repr__(self):  
+  return "(#{}, #{}, #{})" % (self.attr_1, self.attr_2, self.attr_3)
+```
+
+### Class example
+```py
+class MyClass(object):
+  # class attributes or "member variables", information that belongs to the class object
+  attr_1 = attr_1_val  # Note: must be referenced later via self.attr_1
+
+  # constructor with instance attributes
+  def __init__(self, attr1, attr2, attr3):
+    self.attr1 = attr1
+    self.attr2 = attr2
+    self.attr3 = attr3
+
+    # methods (need to pass in self)
+    def method_1(self, param_1, param_2):
+      return doSum
+```
+### Inheritance example
+```py
+class MyOtherClass(MyClass):
+  # new constructor
+  def __init__(self, attr1, attr2, attr3, attr4):
+    super(MyOtherClass, self).__init__(attr1, attr2, attr3) # super method (don't have to include self)
+    self.attr4 = attr4
+
+  # override method_1 from MyClass
+  def method_1(self):
+    return doSum2
+
+  def oldMethod(self):
+    return super(MyOtherClass, self).aMethod()  # super method. Note the return statement
+```
+
+### Misc
+```py
+len(some_object) # returns length attribute of the object
+```
+## Other libraries
+### NLTK
+```py
+s = '''' Good muffins cost $3.88\nin New York.  Please buy me\n    ... two of them.\n\nThanks. '''
+[word_tokenize(t) for t in sent_tokenize(s)]  #=> [['Good', 'muffins', 'cost', '$', '3.88', 'in', 'New', 'York', '.'], ['Please', 'buy', 'me', 'two', 'of', 'them', '.'], ['Thanks', '.']]
+```
+
+### Numpy
+#### General
+```py
+import numpy as np
+```
+```py
+arr.size()                      # returns total number of items
+np.nditer(arr)                 # returns list of all items in numpy array arr
+```
+Operations on arrays are performed in an element-wise manner:
+```py
+a * 0.5 # multiplies each element with 0.5
+a + b   # adds each item in array a its corresponding item in b
+a * b
+```
+
+#### Generations
+```py
+np.arange(3,7)               # generates [3,4,5,6]
+np.arange(4).reshape((2,2))  # creates [[0,1],[2,3]]
+```
+
+#### 1D array
+```py
+a = np.array([1,2,3])
+```
+#### 2D array
+```py
+a = np.array([[1,2,3], [4,5,6]])
+a.shape           # prints (2, 3)
+a[1,2]            # get an element at row 1 col 2
+a[1,:]            # get row 1
+a[:,2]            # get col 2
+b = np.matrix(a)  # cast a into a matrix
+np.transpose(a)   # transpose 2D array
+```
+
+#### Special arrays
+```py
+np.empty([2, 3])    # 2 by 3 array with arbitrary random values
+np.eye(2, 3)        # matrix of given shape where diagonal entires are 1 and everything else 0
+np.identity(3)      # 3 by 3 identity matrix
+np.ones([2, 3])     # array of given shape filled with ones
+np.zeros([2, 3])    # array of given shape filled with zeros
+np.random.rand(2,3) # array of given shape filled with random values
+```
+
+#### matrices
+```py
+a = np.martix([[1,2,3], [4,5,6]])
+a * b   # only valid if b has as many columns as the row of a, else error will be thrown
+```
+
+#### linear algebra
+```py
+import numpy.linalg as la
+al.inv(A)                   # inverse matrix A
+la.solve(A, b)              # solve for A x = b
+a, e, r, s = la.lstsq(M, b) # least squares for M a = b. a: least-square solution, e: residue or error, r: rank of a, s: singular values of a
+```
+
+### Pyplot
+```py
+import matplotlib.pyplot as plt
   
-  array1 + array2       # concatenate 2 arrays
-  [i**2 for i in range(11) if i%2 == 0] # list comprehension. creates [0,4,9,16,25,36,49,56,81,100]
-
-  for index, item in enumerate(anArray):
-    doSum
-
-  for a, b in zip(list_a, list_b, list_c):  # iterates multiple lists at once (terminates on the shorter list)
-    doSum
-
-  # TODO reverse an array
-  for i in reversed(anArray)
-
-# hashmap
-  hashmap = {}                        # initialisation (optional)
-  hashmap = {'key1' : 1, 'key2' : 2}  # same as js but note that keys are NOT considered as attributes
-  hashmap[key] = new_value            # adding/updating value
-  del dict_name[key_name]             # delete key,val
-  for key in hashmap:                 # iterates each key (not guaranteed same order everytime)
-    # Do stuff
-  for key, value in hashmap.items()
-  key in hashmap == True/False        # test if key is in hashmap
-  hashmap.items()                     # returns an array of (key, value) tuples, not in any order
-  hashmap.keys()                      # returns an array of keys, not in any order
-  hashmap.values()                    # return an array of values, not in any order
-  sorted(hashmap)                     # returns sorted list of keys
-
-  [value for (key, value) in sorted(hashmap.items())] # returns [1, 2, 3]
-
-# sorting
-  anArray.sort()                      # in-place sorting
-  tuples = [(5,99), (4,54), (3,12), (2,44)]
-  sorted(tuples)                      # returns (2,44), (3,12), (4,54), (5,99)
-  sorted(tuples, key=lambda x: x[1])  # returns (3,12), (2,44), (4,54), (5,99)
-
- # loops
-  break # breaks all loops
-
-  for variable in list_name:
-      doSum
-
-    for i in range(len(array)):
-      print array[i]
-
-    while count < 5:
-      doSum
-
-    # while/else loops: the else block will execute anytime the loop condition is evaluated to False. i.e. it will only run once at the end
-    while condition: 
-      doSum
-    else:
-      doOther
-
-    # for/else loops: just like while/else loops, else block runs iff for loops terminates formally
-    for number in numbers: 
-      doSum
-    else:
-      doOther
-# random
-  from random import randint
-  randint(low, high)  # generates random interger between low to high inclusive
-
-# range(start, stop, step) for generating a list of numbers
-  range(6)          # => [0,1,2,3,4,5]
-  range(1,6)        # => [1,2,3,4,5]
-  range(1,6,3)      # => [1,4]
-  range(10,-1,-1)   # => [10,9,8,7,6,5,4,3,2,1,0]
-
-  3 in range(1,4) == True
-  3 not in range(1,4) == False
-
-# binary manipulation
-  bin(10) == 0b1010
-  10 == 0b1010
-
-  # bitwise operators. Note that they return in decimal format
-  5 >> 4  # Right Shift
-  5 << 1  # Left Shift
-  8 & 5   # Bitwise AND
-  9 | 4   # Bitwise OR
-  12 ^ 42 # Bitwise XOR
-  ~88     # Bitwise NOT
-
-# classes
-  """
-  The first argument __init__() gets is used to refer to the instance object
-  by convention, that argument is called self
-  if you add additional arguments in the body of __init__(), 
-  you need to give each instance those attributes
-  self is only passed as an argument when defining methods, but are left out when calling them
-  """
-  # myClass inherits object class
-  class MyClass(object):
-    # class attributes or "member variables", information that belongs to the class object
-    anAttribute = defaultVal  # Note: must be referenced later via self.anAttribute
-
-      # constructor with instance attributes
-      def __init__(self, attr1, attr2, attr3):
-          self.attr1 = attr1
-          self.attr2 = attr2
-          self.attr3 = attr3
-
-      # methods (need to pass in self)
-      def aMethod(self):
-          return doSum
-
-  class MyOtherClass(MyClass):
-    # new constructor
-    def __init__(self, attr1, attr2, attr3, attr4):
-      super(MyOtherClass, self).__init__(attr1, attr2, attr3) # super method (don't have to include self)
-      self.attr4 = attr4
-
-    # overide aMethod from MyClass
-    def aMethod(self):
-          return doSum2
-
-      def oldMethod(self):
-        return super(MyOtherClass, self).aMethod()  # super method. Note the return statement
-
-
-  classy = MyClass(attr1, attr2, attr3) # instantiating myClass
-
-  # class representation method. by providing a return value in this method, we can tell Python how to represent an object of our class (for instance, when using a print statement)
-  __repr__(self)  
-    return "(%d, %d, %d)" % (self.x, self.y, self.z)
-
-  # main method
-  def main():
-    # display some lines
-  if __name__ == "__main__": main()
-
-# enum (only available on Python 3.4 onwards)
-  from enum import Enum
-  class EdgeDetector(Enum):
-    prewit = 0
-    sobel = 1
-
-# I/O
-  """
-    r: read
-    w: write
-    r+: read and write
-  """
-  aFile = open("output.txt", "w")
-  aFile.write("something" + "\n") # write a line
-  aFile.read()                    # read entire file
-  aFile.readline()                # read a line (progressive after each call)
-  aFille.close()
-  aFile.closed == True            # test if a file is closed
-  
-  for line in aFile:
-    
-  """
-  Automatically closing our files:
-    file objects contain a special pair of built-in methods: __enter__() and __exit__()
-    When a file object's __exit__() method is invoked, it automatically closes the file
-    With 'with' and 'as' clause invokes thse methods
-  """
-  with open("text.txt", "w") as fileName:
-    fileName.write("Success!")
-
-  """
-  Buffers:
-    During the I/O process, data is buffered
-    this means that it is held in a temporary location before being written to the file.
-    Python doesn't flush the buffer—that is, write data to the file—until it's sure you're done writing
-    One way to do this is to close the file
-    If you write to a file without closing, the data won't make it to the target file.
-  """
-
-# Misc
-  len(anObject) # returns length attribute of the object
-  pass          # placeholder for expressions
-
-# NLTK
-  s = '''' Good muffins cost $3.88\nin New York.  Please buy me
-    ... two of them.\n\nThanks. '''
-  [word_tokenize(t) for t in sent_tokenize(s)]
-  """
-  returns: 
-      [['Good', 'muffins', 'cost', '$', '3.88', 'in', 'New', 'York', '.'],
-      ['Please', 'buy', 'me', 'two', 'of', 'them', '.'], ['Thanks', '.']]
-  """
-
-# commandline
-  python code.py              # interpets python code
-  python -m http.server 8080  # runs python localhost:8080
-
-# numpy
-  import numpy as np
-  np.arange(3,7)               # generates [3,4,5,6]
-  np.arange(4).reshape((2,2))  # creates [[0,1],[2,3]]
-  .size()                      # returns total number of items
-  np.nditer(a)                 # returns list of all items in numpy array a
-
-  # Operations on arrays are performed in an element-by-element manner
-    a * 0.5 # multiplies each element with 0.5
-    a + b   # adds each item in array a its corresponding item in b
-    a * b
-
-  # 1D array
-    a = np.array([1,2,3])
-  
-  # 2D array
-    a = np.array([[1,2,3], [4,5,6]])
-    a.shape           # prints (2, 3)
-    a[1,2]            # get an element at row 1 col 2
-    a[1,:]            # get row 1
-    a[:,2]            # get col 2
-    b = np.matrix(a)  # cast a into a matrix
-    np.transpose(a)   # transpose 2D array
-
-  # special arrays
-    np.empty([2, 3])    # 2 by 3 array with arbitrary random values
-    np.eye(2, 3)        # matrix of given shape where diagonal entires are 1 and everything else 0
-    np.identity(3)      # 3 by 3 identity matrix
-    np.ones([2, 3])     # array of given shape filled with ones
-    np.zeros([2, 3])    # array of given shape filled with zeros
-    np.random.rand(2,3) # array of given shape filled with random values
-
-  # matrices
-    a = np.martix([[1,2,3], [4,5,6]])
-    a * b   # only valid if b has as many columns as the row of a, else error will be thrown
-
-  # linear algebra
-    import numpy.linalg as la
-    al.inv(A)                   # inverse matrix A
-    la.solve(A, b)              # solve for A x = b
-    a, e, r, s = la.lstsq(M, b) # least squares for M a = b. a: least-square solution, e: residue or error, r: rank of a, s: singular values of a
-
-# pyplot
-  import matplotlib.pyplot as plt
-  
-  # plot histogram
-    plt.hist(values, cumulative=True, bins=256)
-    plt.title("%s CDF" % image_name)
-    plt.xlabel("Intensity")
-    plt.ylabel("Cumulative Frequency")
-    plt.show()
-
+# plot histogram
+plt.hist(values, cumulative=True, bins=256)
+plt.title("%s CDF" % image_name)
+plt.xlabel("Intensity")
+plt.ylabel("Cumulative Frequency")
+plt.show()
+```
 # openCV
-  import cv2
-  # read image as np array
-    cv2.imread(path, cv2.CV_LOAD_IMAGE_GRAYSCALE) # read image as grayscale
-  
-  # write np array as image
-    cv2.imwrite(path, image)
+```py
+import cv2
+# read image as np array
+cv2.imread(path, cv2.CV_LOAD_IMAGE_GRAYSCALE) # read image as grayscale
 
-  # display an image
-    cv2.imshow('image',image)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+# write np array as image
+cv2.imwrite(path, image)
+
+# display an image
+cv2.imshow('image',image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 ```
