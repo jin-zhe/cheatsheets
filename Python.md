@@ -481,7 +481,7 @@ class MyClass():
 
 Python 3: Declare a class with explicit inheritance of `object` class:
 
-Python 2: Declare a new-style class
+Python 2: Declare a new-style class:
 ```py
 class MyClass(object):
   pass
@@ -490,7 +490,7 @@ See here on [old-style and new-style classes](https://docs.python.org/release/2.
 
 ### Instantiation
 ```py
-my_class_object = MyClass(attr1, attr2, attr3) # instantiating myClass
+my_class_object = MyClass(attr1, attr2, attr3) # instantiating MyClass
 ```
 
 ### Methods
