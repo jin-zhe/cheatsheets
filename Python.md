@@ -220,14 +220,15 @@ These are some common data structures used in Python
 In python, list, array and stack are equivalent data structures. For the sake of consistency, they shall be referred to as *arrays* for the rest of this cheatsheet and our variable name for the array is `arr`.
 
 #### Declaration and initialization
+Single-dimensional array:
 ```py
-"""Single-dimensional array"""
 arr = [5, 6, 7, 8]            #=> [5, 6, 7, 8] # explicit assignment
 arr = [1] * 4                 #=> [1, 1, 1, 1] # generative assignment
 arr = list(range(5,9))        #=> [5, 6, 7, 8] # generative assignment using range
 arr = [x for x in range(5,9)] #=> [5, 6, 7, 8] # generative assignment using range and list comprehension (see list comprehension section below)
-
-"""Multi-dimensional array"""
+```
+Multi-dimensional array:
+```py
 arr = [[1,2,3],[4,5,6]]   #=> [[1, 2, 3], [4, 5, 6]]    # explicit assignment
 arr = [[1]*2]*3           #=> [[1, 1], [1, 1], [1, 1]]  # generative assignment
 # The methods using range and list comprehension for single-dimensional array works for multi-dimensions as expected and is left out for brevity
