@@ -8,7 +8,7 @@ Unless specified otherwise, the following is written for Python 3.
 ### Main method
 ```py
 def main():
-  # do somethind
+  # do something
   
 if __name__ == "__main__": main()
 ```
@@ -168,7 +168,7 @@ s.endswith('ing')   #=> True
 ','.join('abc')           #=> 'a,b,c'
 ','.join(['a', 'b', 'c']) #=> 'a,b,c' # For this to work, the argument has to be a list of strings
 ```
-#### Fromatting
+#### Formatting
 Old style not recommended:
 ```py
 '%s %s' % ('one', 'two')  #=> 'one two'
@@ -178,6 +178,7 @@ New recommended style:
 ```py
 '{} {}'.format('one', 'two')  #=> 'one two'
 '{} {}'.format(1, 2)          #=> '1 2'
+'{0} {0} {1}'.format(1, 2)    #=> '1 1 2'
 ```
 
 ## Loops
