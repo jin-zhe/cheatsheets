@@ -192,7 +192,7 @@ The else block will execute only when the loop condition is evaluated to `False`
 for number in numbers: 
   # do something
 else:
-  $ do something else
+  # do something else
 ```
 ### While loop
 ```py
@@ -299,8 +299,8 @@ squared_a = [x**2 for x in a] #=> [1, 4, 9, 16]
 ```
 We can also nest lists within the comprehension to iterate through multi-dimensional arrays. One application for this is to flatten out a multi-dimensional array:
 ```py
-2d_arr = [[1, 2, 3], [4, 5, 6]]
-flattened_arr = [x for row in 2d_arr for x in row ]
+arr_2d = [[1, 2, 3], [4, 5, 6]]
+flattened_arr = [x for row in arr_2d for x in row ]
 ```
 
 #### Iterating
