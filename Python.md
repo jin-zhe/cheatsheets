@@ -5,22 +5,32 @@ Unless specified otherwise, the following is written for Python 3.
 * Python is indentation-based language i.e. indentation defines scope
 * Paramenters in Python function are **passed by reference** so modifying their attributes within the function will change them.
 
-### Main method
-```py
-def main():
-  # do something
-  
-if __name__ == "__main__": main()
-```
-
-## Running Python
+### Running Python
 ```py
 python some_code.py               # interpets python code
-python -m -v doctest filename.py  # doctests are a quick way of writing tests (v: verbose)
-python -m http.server 8080        # runs python localhost:8080
 ```
-
-## Comments
+#### Module option
+Python has a [`-m` command-line flag](https://docs.python.org/3/using/cmdline.html#cmdoption-m) which when used will import a module or package for you, then run it as a script
+```py
+python -m http.server 8080        # runs python localhost:8080 using http.server module script
+python -m -v doctest filename.py  # doctests are a quick way of writing tests (v: verbose)
+```
+When you don't use the `-m` flag in regular scenarios, the file you named is run as just a script.
+#### Shebang
+[See here](https://github.com/jin-zhe/cheatsheets/blob/master/UNIX.md#shebang) for the purpose of the shebang (`#!`) in Unix systems. You may include the shebang at the top of a Python script to execute it without having to type `python` before the code name when running the code from the terminal. After proper configuration of the file manager, shebang also allows for running a python script via double-clicking its file within the file-manager interface.  
+For latest version of Python 3 scripts:
+```py
+#!/usr/bin/env python3
+```
+For latest version of Python 2 scripts:
+```py
+#!/usr/bin/env python2
+```
+For both Python 2 and 3 scripts (NOT RECOMMENDED):
+```py
+#!/usr/bin/env python
+```
+### Comments
 ```py
 # Single line comment
 """
@@ -30,7 +40,13 @@ Comment
 """
 ```
 
-## Continuation charater
+### Semicolon
+Unlike other languages such as C, C++, Java, Javascript etc. Python does not require semi-colons to terminate statements. Semicolons are instead used to delimit statements if you wish to put multiple statements on the same line. For example:
+```py
+var_1 = 1; var_2 = 2; var_3 = 3;
+```
+
+### Continuation charater
 `\` is the continuation character. The line following the continuation character is considered a continuation of the current line:
 ```py
 print("hello" + \
@@ -38,6 +54,14 @@ print("hello" + \
 
 if x not in range(8) or \
   y not in range(3):
+```
+
+### Main method
+```py
+def main():
+  # do something
+  
+if __name__ == "__main__": main()
 ```
 
 ## I/O
@@ -545,67 +569,6 @@ len(some_object) # returns length attribute of the object
 ```py
 s = '''' Good muffins cost $3.88\nin New York.  Please buy me\n    ... two of them.\n\nThanks. '''
 [word_tokenize(t) for t in sent_tokenize(s)]  #=> [['Good', 'muffins', 'cost', '$', '3.88', 'in', 'New', 'York', '.'], ['Please', 'buy', 'me', 'two', 'of', 'them', '.'], ['Thanks', '.']]
-```
-
-### Numpy
-#### General
-```py
-import numpy as np
-```
-```py
-arr.size()                      # returns total number of items
-np.nditer(arr)                 # returns list of all items in numpy array arr
-```
-Operations on arrays are performed in an element-wise manner:
-```py
-a * 0.5 # multiplies each element with 0.5
-a + b   # adds each item in array a its corresponding item in b
-a * b
-```
-
-#### Generations
-```py
-np.arange(3,7)               # generates [3,4,5,6]
-np.arange(4).reshape((2,2))  # creates [[0,1],[2,3]]
-```
-
-#### 1D array
-```py
-a = np.array([1,2,3])
-```
-#### 2D array
-```py
-a = np.array([[1,2,3], [4,5,6]])
-a.shape           # prints (2, 3)
-a[1,2]            # get an element at row 1 col 2
-a[1,:]            # get row 1
-a[:,2]            # get col 2
-b = np.matrix(a)  # cast a into a matrix
-np.transpose(a)   # transpose 2D array
-```
-
-#### Special arrays
-```py
-np.empty([2, 3])    # 2 by 3 array with arbitrary random values
-np.eye(2, 3)        # matrix of given shape where diagonal entires are 1 and everything else 0
-np.identity(3)      # 3 by 3 identity matrix
-np.ones([2, 3])     # array of given shape filled with ones
-np.zeros([2, 3])    # array of given shape filled with zeros
-np.random.rand(2,3) # array of given shape filled with random values
-```
-
-#### matrices
-```py
-a = np.martix([[1,2,3], [4,5,6]])
-a * b   # only valid if b has as many columns as the row of a, else error will be thrown
-```
-
-#### linear algebra
-```py
-import numpy.linalg as la
-al.inv(A)                   # inverse matrix A
-la.solve(A, b)              # solve for A x = b
-a, e, r, s = la.lstsq(M, b) # least squares for M a = b. a: least-square solution, e: residue or error, r: rank of a, s: singular values of a
 ```
 
 ### Pyplot
