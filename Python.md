@@ -209,7 +209,7 @@ c.conjugate()     # conjugate of the complex number c
 ### Strings
 ```py
 s = "String"              # single-line string
-s = '''This is a          # multi-lin string
+s = '''This is a
   mutli-line string'''
 s[0]        #=> 'S'       # retrieve character
 s[1:4]      #=> 'tri'     # slice
