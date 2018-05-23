@@ -1,4 +1,4 @@
-# Rub on Rails Cheatsheet
+# Ruby on Rails Cheatsheet
 
 ## Basics
 ```sh
