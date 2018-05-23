@@ -38,7 +38,8 @@ CREATE TABLE book(
 ## Basic insert
 ```sql
 INSERT INTO student VALUES(...), (...), ...;            -- insert all values in the order defined during table creation
-
+```
+```sql
 INSERT INTO student (email, name, faculty, department)  -- insert only values indicated by the ones list and in that order
 VALUES (...), (...), ...;
 ```
@@ -51,39 +52,48 @@ DROP TABLE loan;
 ## Querying
 ```sql
 SELECT * FROM table_name;       -- display all columns from table
-
+```
+```sql
 SELECT column_name, column_name -- display indicated columns from table
 FROM table_name;
-
+```
+```sql
 SELECT name, email              -- display indicated columns from table with condition
 FROM student
 WHERE department='CS';
-
+```
+```sql
 SELECT student.name, book.title -- select from multiple tables
 FROM student, copy, book
 WHERE student.email=copy.owner
 AND copy.book=book.ISBN13;
-
+```
+```sql
 SELECT s.name AS owner          -- renaming colums for output (purely cosmetic)
 FROM loan l, student s
 WHERE s.email=l.owner
   AND l.returned > '2010-03-04'
   AND l.borrower = 'abc@mail.com';
-
+```
+```sql
 SELECT DISTINCT nationality     -- removing duplicates in a single row
 FROM student;
-
+```
+```sql
 SELECT DISTINCT nationality, last_name -- selecting only unique tuples
 FROM student;
-
+```
+```sql
 SELECT name                     -- ordering (default asc)
 FROM student
 ORDER BY matric_num DESC;
-
+```
+```sql
 SELECT name                     -- multiple ordering (default asc)
 FROM student
 ORDER BY nationality, name;     -- order first by nationality then by name within same nationality
-
+```
+```sql
 SELECT book, price * 1.17       -- arithmetic
 AS priceGST
 FROM catalog;
@@ -97,6 +107,7 @@ UNION
 SELECT column_name(s) FROM table2;
 ```
 ## Minus
+TODO
 
 ## Group
 Splitting up table into buckets.
@@ -105,11 +116,13 @@ Splitting up table into buckets.
 SELECT book        -- selects the book from each book bucket (works exactly like UNIQUE)
 FROM loan
 GROUP BY book;
-
+```
+```sql
 SELECT borrower, borrowed_date, COUNT(book)
 FROM loan
 GROUP BY borrower, borrowed_date;  -- unlike ORDER BY, order doesn't matter here
-
+```
+```sql
 SELECT l.borrower
 FROM loan l
 GROUP BY l.borrowed, l.borrower
@@ -121,11 +134,14 @@ E.g. `MAX()`, `MIN()`, `AVG()`, `STD()`, `SUM()` etc
 **NOTE: aggregate functions cannot be used in the `WHERE` clause**
 ```sql
 SELECT COUNT(*) FROM book;                          -- counts all entries in book
-
+```
+```sql
 SELECT COUNT(title) from book;                      -- counts non NULL entries in title
-
+```
+```sql
 SELECT COUNT(DISTINCT column_name) FROM table_name; -- counts number of distinct values from table
-
+```
+```sql
 SELECT NATIONALITY, AVG(SALARY)                     -- prints the average salary of entries for each nationality bucket
 FROM EMPLOYEE
 GROUP BY NATIONALITY;
@@ -141,7 +157,8 @@ WHERE some_column=some_value;
 ## Delete entries
 ```sql
 DELETE FROM table_name;  -- delete all of table entires but keep table 
-
+```
+```sql
 DELETE FROM table_name   -- delete entries that falls within condition
 WHERE some_column=some_value; -- note: quotes have to be placed also on boolean values. e.g. some_bool='TRUE'
 ```
@@ -150,10 +167,12 @@ WHERE some_column=some_value; -- note: quotes have to be placed also on boolean 
 ```sql
 ALTER TABLE table_name        -- add new column
 ADD column_name domain_type;
-
+```
+```sql
 ALTER TABLE table_name        -- modify exisitng column
 MODIFY column_name datatype
-
+```
+```sql
 ALTER TABLE table_name        -- delete column
 DROP COLUMN column_name
 ```
@@ -187,14 +206,21 @@ UNIQUE (first_name, last_name)  -- composite
 ```
 
 ### Check
+Column check:
 ```sql
-age INT CHECK(age>0)                                  -- column check
-
-check (death_date > birth_date OR death_date is NULL) -- table constraint without naming
-
-CONSTRAINT positive_val CHECK(age>0)                  -- table constraint with naming to help identify violations
-
-CREATE ASSERTION no_student_staff                     -- CHECK constraints that are declared outside tables
+age INT CHECK(age>0)
+```
+Table constraint without naming:
+```sql
+check (death_date > birth_date OR death_date is NULL)
+```
+Table constraint with naming to help identify violations:
+```sql
+CONSTRAINT positive_val CHECK(age>0)
+```
+`CHECK` constraints that are declared outside tables:
+```sql
+CREATE ASSERTION no_student_staff
   CHECK(NOT EXISTS (SELECT * FROM staff, student WHERE staff.id = student.id))
 ```
 
