@@ -1,71 +1,59 @@
+# UNIX Cheatsheet
+Some useful UNIX commands with notes adapted from @girishadurrel
+
+## Directory symbols
+* `.` denotes current working directory
+* `..` denotes parent directory
+
+## Common commands
+### `pwd`
+Command to print the *current working directory*
 ```sh
-*** some useful UNIX commands from @girishadurrel ***
------------------------------
-
-1) prints the current working directory
-
--bash-3.00$ pwd 
-
-2) list the files in the directory
-
--bash-3.00$ ls
-
-( gives you just the file names in the directory )
-
--bash-3.00$ ls -l 
-
-( gives you just the file names plus more information about the files, -l option means long list ) 
-
-3) change directory
-
--bash-3.00$ cd directory-name
-
-( changes the directory to the given directory name. suppose you are in /home/g/girisha. now you want to go to p1-sample directory. you type in cd p1-sample )
-
--bash-3.00$ cd .. 
-
-( goes one level up in the directory hierarchy. eg. suppose you are in /home/g/girisha/p1-sample. if you type in cd .. you will change directory to /home/g/girisha. )
-
-4) copy files/directory
-
--bash-3.00$ cp file-current-path file-destination-path
-
-( if you want to copy the file /home/g/girisha/p1-sample/sample-readLine.java to /home/g/girisha/mycode directory, you can do the following. cp /home/g/girisha/p1-sample/sample-readLine.java /home/g/girisha/mycode/ )
-
-( you always don't have to specify the whole path as mentioned above [in other words we have given the absolute paths for the files]. you can do the following as well. suppose you are in /home/g/girisha already [ I mean your current working directory /home/g/girisha/ ]. then to do what we did above you can just say cp p1-sample/sample-readLine.java mycode/ . we have given the paths relatively to our current working directory. )
-
-if you want to copy a directory to some place just use 
-
--bash-3.00$ cp -r directory-current-path directory-destination-path
-
-( nore the -r option. -r means you are doing a recursive copy )
-
-5) man command
-
-( man is a very useful command. suppose you want to know more information on the cp command or the cd command. you just type in )
-
--bash-3.00$ man cp
-
-( gives you all the information about the cp command and the options that can be used )
-
--bash-3.00$ man cd
- 
-( gives you all the information about the cd command and the options that can be used )
-
--bash-3.00$ man man
-
-( if you feel you don't know how to use the man pages ( the man command ) you can say man man :P it will explain how to use the man command. )
-
-( man actually means manual. for and example if you type man cp you are looking at the manual page for the cp command. )
-
-6) more command
-
--bash-3.00$ more file-name
-
-if you want to quickly see what a text file contain you can just type more file-name and it will list down the contents of the file. if the file is too large it will show only a portion of the file. by typing the enter button you can traverse the file
-
------------------------------------------------------------------------------------------------------------------------------------------
-
-there are a lot of commands that you can use. you can learn about them using the man pages or by searching online. this is just a small guide I just complied for you all to get started.
-
+$ pwd
 ```
+### `ls`
+Command to *list* the files in the directory
+
+To get just the file names in directory:
+```sh
+$ ls
+```
+To get file names plus more information about the files, use the `-l` (long list) flag:
+```sh
+$ ls -l 
+```
+### `cd`
+Command to *change directory*
+```sh
+$ cd some_dir_path
+```
+### 'cp'
+Command to *copy* files or directories
+
+To copy files:
+```sh
+$ cp source_file_path target_file_path
+```
+To copy directories, use the `-r` (recursive) flag:
+```sh
+$ cp source_dir_path target_dir_path
+```
+### `man`
+Command to display the *manual*. Some examples:
+```sh
+$ man cp  # displays all the information about the cp command and the options that can be used
+$ man cd  # displays all the information about the cd command and the options that can be used
+$ man man # displays all the information about the man command and the options that can be used
+```
+### `more`
+Command for *more*. If you want to quickly see what a text file contain you can just type `more file-name` and it will list down the contents of the file. if the file is too large it will show only a portion of the file. by typing the enter button you can traverse the file
+```sh
+$ more file-name
+```
+
+## Scripting
+### Shebang
+From [Wikipedia](https://en.wikipedia.org/wiki/Shebang_(Unix)):
+> In computing, a shebang is the character sequence consisting of the characters number sign and exclamation mark (`#!`) at the beginning of a script. It is also called sha-bang, hashbang, pound-bang, or hash-pling.
+>
+> In Unix-like operating systems, when a text file with a shebang is used as if it is an executable, the program loader parses the rest of the file's initial line as an interpreter directive; the specified interpreter program is executed, passing to it as an argument the path that was initially used when attempting to run the script, so that the program may use the file as input data. For example, if a script is named with the path path/to/script, and it starts with the following line, `#!/bin/sh`, then the program loader is instructed to run the program using `/bin/sh`, passing `path/to/script` as the first argument.
