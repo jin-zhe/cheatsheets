@@ -562,7 +562,7 @@ class MyClass(object):
 
     # methods (need to pass in self)
     def method_1(self, param_1, param_2):
-      return doSum
+      # do something
 ```
 ### Inheritance example
 ```py
@@ -574,16 +574,17 @@ class MyOtherClass(MyClass):
 
   # override method_1 from MyClass
   def method_1(self):
-    return doSum2
+    # do something new
 
-  def oldMethod(self):
-    return super(MyOtherClass, self).aMethod()  # super method. Note the return statement
+  def old_method_1(self):
+    return super(MyOtherClass, self).method_1()  # super method. Note the return statement
 ```
 
 ### Misc
 ```py
 len(some_object) # returns length attribute of the object
 ```
+
 ## Other libraries
 ### NLTK
 ```py
