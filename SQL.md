@@ -259,7 +259,7 @@ email like('%@%.com') -- where % is the wildcard character
 format = 'paperback' OR format = 'hardcover'
 ```
 
-## NLS_DATE_FORMAT
+## Date format
 specifies the default date format to use with the `TO_CHAR` and `TO_DATE` functions
 ```sql
 alter session set NLS_DATE_FORMAT = 'YYYY-MM-DD'
