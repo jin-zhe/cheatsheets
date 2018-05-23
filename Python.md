@@ -136,7 +136,11 @@ Note: There are no switch statements in Python
 
 ### Conditional assignment
 ```py
-x = 10 if a > b else 11 # analogous to x = (z > b)? 10: 11;
+x = 10 if a > b else 11
+```
+This is analogous to the more common conditional assigment syntax in other languages:
+```rb
+x = a > b ? 10 : 11
 ```
 
 ## Built-in Types
