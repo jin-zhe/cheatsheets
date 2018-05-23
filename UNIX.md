@@ -27,7 +27,7 @@ Command to *change directory*
 ```sh
 $ cd some_dir_path
 ```
-### 'cp'
+### `cp`
 Command to *copy* files or directories
 
 To copy files:
