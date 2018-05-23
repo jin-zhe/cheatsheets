@@ -1,190 +1,235 @@
+# SQL Cheatsheet
+
+## Domain types
 ```sql
-/* domain types */
-  CHAR(n)       -- fixed-length character string, with user-specified length.
-  VARCHAR(n)    -- variable-length character string, with user-specified maximum length.
-  INT           -- (also: INTEGER) an integer (length is machine-dependent).
-  DATE          -- a calendar date, containing four digit year, month, and day of the month.
-  TIMESTAMP     -- the time of the day in hours, minutes, and seconds.
-  FLOAT(n)      -- floating-point, with user-specified precision of at least n digits.
-  SMALLINT      -- a small integer (length is machine-dependent).
-  NUMERIC(p, d) -- a fixed-point number with user-specified precision, consists of p digits (plus a sign) and d of p digits are to the right of the decimal point. E.g., numeric(3, 1) allows 44.5 to be stored exactly but not 444.5.
-  REAL          -- (also: DOUBLE PRECISION) floating-point or double-precision floating-point numbers, with machine-dependent precision.
+CHAR(n)       -- fixed-length character string, with user-specified length.
+VARCHAR(n)    -- variable-length character string, with user-specified maximum length.
+INT           -- (also: INTEGER) an integer (length is machine-dependent).
+DATE          -- a calendar date, containing four digit year, month, and day of the month.
+TIMESTAMP     -- the time of the day in hours, minutes, and seconds.
+FLOAT(n)      -- floating-point, with user-specified precision of at least n digits.
+SMALLINT      -- a small integer (length is machine-dependent).
+NUMERIC(p, d) -- a fixed-point number with user-specified precision, consists of p digits (plus a sign) and d of p digits are to the right of the decimal point. E.g., numeric(3, 1) allows 44.5 to be stored exactly but not 444.5.
+REAL          -- (also: DOUBLE PRECISION) floating-point or double-precision floating-point numbers, with machine-dependent precision.
+```
 
-/*  operator order */
-  SELECT
-  FROM
-  WHERE
-  GROUP BY
-  HAVING
-  ORDER BY
+## Operator order
+```sql
+SELECT
+FROM
+WHERE
+GROUP BY
+HAVING
+ORDER BY
+```
 
-/*  basic create */
-  CREATE TABLE book(
-    title VARCHAR(256),
-    authors VARCHAR(256),
-    format CHAR(9) DEFAULT 'paperback',
-    pages INT,
-    year DATE,
-    ISBN13 CHAR(14)
-  );
+## Basic create
+```sql
+CREATE TABLE book(
+  title VARCHAR(256),
+  authors VARCHAR(256),
+  format CHAR(9) DEFAULT 'paperback',
+  pages INT,
+  year DATE,
+  ISBN13 CHAR(14)
+);
+```
 
-/* basic insert */
-  INSERT INTO student VALUES(...), (...), ...;            -- insert all values in the order defined during table creation
+## Basic insert
+```sql
+INSERT INTO student VALUES(...), (...), ...;            -- insert all values in the order defined during table creation
 
-  INSERT INTO student (email, name, faculty, department)  -- insert only values indicated by the ones list and in that order
-  VALUES (...), (...), ...;
+INSERT INTO student (email, name, faculty, department)  -- insert only values indicated by the ones list and in that order
+VALUES (...), (...), ...;
+```
 
-/* delete table */
-  DROP TABLE loan;
+## Delete table
+```sql
+DROP TABLE loan;
+```
 
-/* querying */
-  SELECT * FROM table_name;       -- display all columns from table
+## Querying
+```sql
+SELECT * FROM table_name;       -- display all columns from table
 
-  SELECT column_name, column_name -- display indicated columns from table
-  FROM table_name;
+SELECT column_name, column_name -- display indicated columns from table
+FROM table_name;
 
-  SELECT name, email              -- display indicated columns from table with condition
-  FROM student
-  WHERE department='CS';
+SELECT name, email              -- display indicated columns from table with condition
+FROM student
+WHERE department='CS';
 
-  SELECT student.name, book.title -- select from multiple tables
-  FROM student, copy, book
-  WHERE student.email=copy.owner
-  AND copy.book=book.ISBN13;
+SELECT student.name, book.title -- select from multiple tables
+FROM student, copy, book
+WHERE student.email=copy.owner
+AND copy.book=book.ISBN13;
 
-  SELECT s.name AS owner          -- renaming colums for output (purely cosmetic)
-  FROM loan l, student s
-  WHERE s.email=l.owner
-    AND l.returned > '2010-03-04'
-    AND l.borrower = 'abc@mail.com';
+SELECT s.name AS owner          -- renaming colums for output (purely cosmetic)
+FROM loan l, student s
+WHERE s.email=l.owner
+  AND l.returned > '2010-03-04'
+  AND l.borrower = 'abc@mail.com';
 
-  SELECT DISTINCT nationality     -- removing duplicates in a single row
-  FROM student;
-  
-  SELECT DISTINCT nationality, last_name -- selecting only unique tuples
-  FROM student;
+SELECT DISTINCT nationality     -- removing duplicates in a single row
+FROM student;
 
-  SELECT name                     -- ordering (default asc)
-  FROM student
-  ORDER BY matric_num DESC;
+SELECT DISTINCT nationality, last_name -- selecting only unique tuples
+FROM student;
 
-  SELECT name                     -- multiple ordering (default asc)
-  FROM student
-  ORDER BY nationality, name;     -- order first by nationality then by name within same nationality
+SELECT name                     -- ordering (default asc)
+FROM student
+ORDER BY matric_num DESC;
 
-  SELECT book, price * 1.17       -- arithmetic
-  AS priceGST
-  FROM catalog;
+SELECT name                     -- multiple ordering (default asc)
+FROM student
+ORDER BY nationality, name;     -- order first by nationality then by name within same nationality
 
-  /* union */
-    -- Note: The UNION operator selects only distinct values by default. To allow duplicate values, use "UNION ALL"
-    SELECT column_name(s) FROM table1
-    UNION
-    SELECT column_name(s) FROM table2;
-  /* minus */
-    
+SELECT book, price * 1.17       -- arithmetic
+AS priceGST
+FROM catalog;
+```
 
-  /* grouping: split up table into buckets */
-    -- note: whatever columns that appear in SELECT must also appear in GROUP BY
-    SELECT book        -- selects the book from each book bucket (works exactly like UNIQUE)
-    FROM loan
-    GROUP BY book;
+## Union
+Note: The UNION operator selects only distinct values by default. To allow duplicate values, use `UNION ALL`
+```sql
+SELECT column_name(s) FROM table1
+UNION
+SELECT column_name(s) FROM table2;
+```
+## Minus
 
-    SELECT borrower, borrowed_date, COUNT(book)
-    FROM loan
-    GROUP BY borrower, borrowed_date;  -- unlike ORDER BY, order doesn't matter here
+## Group
+Splitting up table into buckets.
+**Note: whatever columns that appear in SELECT must also appear in `GROUP BY`**
+```sql
+SELECT book        -- selects the book from each book bucket (works exactly like UNIQUE)
+FROM loan
+GROUP BY book;
 
-    SELECT l.borrower
-    FROM loan l
-    GROUP BY l.borrowed, l.borrower
-    HAVING COUNT(l.book) > 1;          -- aggregate conditionals on GROUP BY (cannot use WHERE). It applies to each group bucket
+SELECT borrower, borrowed_date, COUNT(book)
+FROM loan
+GROUP BY borrower, borrowed_date;  -- unlike ORDER BY, order doesn't matter here
 
-  /* aggregate queries: MAX(), MIN(), AVG(), STD(), SUM() etc. */ 
-    -- NOTE: aggregate functions cannot be used in the WHERE clause
-    SELECT COUNT(*) FROM book;                          -- counts all entries in book
+SELECT l.borrower
+FROM loan l
+GROUP BY l.borrowed, l.borrower
+HAVING COUNT(l.book) > 1;          -- aggregate conditionals on GROUP BY (cannot use WHERE). It applies to each group bucket
+```
 
-    SELECT COUNT(title) from book;                      -- counts non NULL entries in title
+## Aggregate queries
+E.g. `MAX()`, `MIN()`, `AVG()`, `STD()`, `SUM()` etc  
+**NOTE: aggregate functions cannot be used in the `WHERE` clause**
+```sql
+SELECT COUNT(*) FROM book;                          -- counts all entries in book
 
-    SELECT COUNT(DISTINCT column_name) FROM table_name; -- counts number of distinct values from table
+SELECT COUNT(title) from book;                      -- counts non NULL entries in title
 
-    SELECT NATIONALITY, AVG(SALARY)                     -- prints the average salary of entries for each nationality bucket
-    FROM EMPLOYEE
-    GROUP BY NATIONALITY;
+SELECT COUNT(DISTINCT column_name) FROM table_name; -- counts number of distinct values from table
 
-/* basic update */
-  UPDATE table_name
-  SET column1=value1, column2=value2, ...
-  WHERE some_column=some_value;
+SELECT NATIONALITY, AVG(SALARY)                     -- prints the average salary of entries for each nationality bucket
+FROM EMPLOYEE
+GROUP BY NATIONALITY;
+```
 
-/* delete entries */
-  DELETE FROM table_name;  -- delete all of table entires but keep table 
-  
-  DELETE FROM table_name   -- delete entries that falls within condition
-  WHERE some_column=some_value; -- note: quotes have to be placed also on boolean values. e.g. some_bool='TRUE'
+## Basic update
+```sql
+UPDATE table_name
+SET column1=value1, column2=value2, ...
+WHERE some_column=some_value;
+```
 
-/* modify entries */
-  ALTER TABLE table_name        -- add new column
-  ADD column_name domain_type;
+## Delete entries
+```sql
+DELETE FROM table_name;  -- delete all of table entires but keep table 
 
-  ALTER TABLE table_name        -- modify exisitng column
-  MODIFY column_name datatype
+DELETE FROM table_name   -- delete entries that falls within condition
+WHERE some_column=some_value; -- note: quotes have to be placed also on boolean values. e.g. some_bool='TRUE'
+```
 
-  ALTER TABLE table_name        -- delete column
-  DROP COLUMN column_name
+## Modify entries
+```sql
+ALTER TABLE table_name        -- add new column
+ADD column_name domain_type;
 
-/* integrity constraints */
-  /* primary key (also enforces NOT NULL and UNIQUE) */
-    ISBN13 CHAR(14) PRIMARY key     -- singular
-    PRIMARY KEY (owner, book, copy) -- composite
+ALTER TABLE table_name        -- modify exisitng column
+MODIFY column_name datatype
 
-  /* foreign key */
-    column_name VARCHAR(256) REFERENCES other_table(other_table_PK)     -- singular
-    FOREIGN KEY (owner, book, copy) REFERENCES copy(owner, book, copy)  -- composite
-    -- ON UPDATE/DELETE
-      CASCADE
-      NO ACTION
-      SET DEFAULT 
-      SET NULL
+ALTER TABLE table_name        -- delete column
+DROP COLUMN column_name
+```
 
-  /* not null */
-    ISBN10 CHAR(10) NOT NULL
-  
-  /* unique (do not enforce NOT NULL. i.e. permits multiple null values) */
-    ISBN10 CHAR(10) UNIQUE          -- singular
-    UNIQUE (first_name, last_name)  -- composite
-  
-  /* check */
-    age INT CHECK(age>0)                                  -- column check
+## Integrity constraints
+### Primary key
+Automatically enforces `NOT NULL` and `UNIQUE`
+```sql
+ISBN13 CHAR(14) PRIMARY key     -- singular
+PRIMARY KEY (owner, book, copy) -- composite
+```
+### Foreign key
+```sql
+column_name VARCHAR(256) REFERENCES other_table(other_table_PK)     -- singular
+FOREIGN KEY (owner, book, copy) REFERENCES copy(owner, book, copy)  -- composite
+-- ON UPDATE/DELETE
+  CASCADE
+  NO ACTION
+  SET DEFAULT 
+  SET NULL
+```
+### NOT NULL
+```sql
+ISBN10 CHAR(10) NOT NULL
+```
+### Unique
+NOTE: Does not enforce `NOT NULL`. i.e. permits multiple null values)
+```sql
+ISBN10 CHAR(10) UNIQUE          -- singular
+UNIQUE (first_name, last_name)  -- composite
+```
 
-    check (death_date > birth_date OR death_date is NULL) -- table constraint without naming
+### Check
+```sql
+age INT CHECK(age>0)                                  -- column check
 
-    CONSTRAINT positive_val CHECK(age>0)                  -- table constraint with naming to help identify violations
-    
-    CREATE ASSERTION no_student_staff                     -- CHECK constraints that are declared outside tables
-      CHECK(NOT EXISTS (SELECT * FROM staff, student WHERE staff.id = student.id))
+check (death_date > birth_date OR death_date is NULL) -- table constraint without naming
 
-/* tuple variables (alias) */
-  SELECT s.name, b.title
-  FROM student s, copy c, book b
-  WHERE s.email=c.owner
-  AND c.book=b.ISBN13;
+CONSTRAINT positive_val CHECK(age>0)                  -- table constraint with naming to help identify violations
 
-/* conditionals */
-  email like('%@%.com') -- where % is the wildcard character
-  format = 'paperback' OR format = 'hardcover'
+CREATE ASSERTION no_student_staff                     -- CHECK constraints that are declared outside tables
+  CHECK(NOT EXISTS (SELECT * FROM staff, student WHERE staff.id = student.id))
+```
 
-/* NLS_DATE_FORMAT (specifies the default date format to use with the TO_CHAR and TO_DATE functions) */
+## Tuple variables (alias)
+```sql
+SELECT s.name, b.title
+FROM student s, copy c, book b
+WHERE s.email=c.owner
+AND c.book=b.ISBN13;
+```
+
+## Conditionals
+```sql
+email like('%@%.com') -- where % is the wildcard character
+format = 'paperback' OR format = 'hardcover'
+```
+
+## NLS_DATE_FORMAT
+specifies the default date format to use with the `TO_CHAR` and `TO_DATE` functions
+```sql
 alter session set NLS_DATE_FORMAT = 'YYYY-MM-DD'
+```
 
-/* triggers */
-  /* a trigger is a piece of SQL to execute either before or after an update, insert, or delete in a database */
-  CREATE TRIGGER trigger_name
-  AFTER UPDATE
-    INSERT INTO CustomerLog (column1, ...)
-    SELECT column1, ... FROM deleted
+## Triggers
+A trigger is a piece of SQL to execute either before or after an update, insert, or delete in a database
+```sql
+CREATE TRIGGER trigger_name
+AFTER UPDATE
+  INSERT INTO CustomerLog (column1, ...)
+  SELECT column1, ... FROM deleted
+```
 
-/* misc */
-  -- conitionals can be TRUE/FALSE or UNKNOWN for cases dealing with NULL values
-  set define off  -- disable special character such as '&'
-  O''reilly       -- single quotes are escaped by doubling
+## Misc
+Conitionals can be `TRUE/FALSE` or `UNKNOWN` for cases dealing with `NULL` values
+```sql
+set define off  -- disable special character such as '&'
+O''reilly       -- single quotes are escaped by doubling
 ```
