@@ -586,7 +586,7 @@ plt.xlabel("Intensity")
 plt.ylabel("Cumulative Frequency")
 plt.show()
 ```
-# openCV
+### openCV
 ```py
 import cv2
 # read image as np array
