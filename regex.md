@@ -59,8 +59,8 @@
 ```
 Note:
 ```
-  [e^]        # matches either "e" or "^"
-  a^b         # matches pattern "a^b"
+[e^]        # matches either "e" or "^"
+a^b         # matches pattern "a^b"
 ```
 
 ## Kleene closure
@@ -72,9 +72,9 @@ Note:
 
 ## Anchors
 ```
-  ^     # start of a line
-  $     # end of a line
-  \b    # word(any sequence of digits, underscores or letters) boundary
+^     # start of a line
+$     # end of a line
+\b    # word(any sequence of digits, underscores or letters) boundary
 ```
 Usage:
 ```
