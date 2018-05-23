@@ -36,7 +36,7 @@ $ cp source_file_path target_file_path
 ```
 To copy directories, use the `-r` (recursive) flag:
 ```sh
-$ cp source_dir_path target_dir_path
+$ cp -r source_dir_path target_dir_path
 ```
 ### `man`
 Command to display the *manual*. Some examples:
