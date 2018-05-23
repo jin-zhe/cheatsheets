@@ -151,34 +151,60 @@ type(1) is int  #=> True
 ```
 ### Typecasting
 ```py
-int("1010", 2) == 2
-str(2) == "2"         # parse to string
-float(2)              # case int 2 into float
-```
-### Boolean
-```py
-myBool = True
-```
-### Boolean operators
-```py
-and
-or
-not
+int('1010', 2)  #=> 2     # cast from binary to decimal int
+str(2)          #=> "2"   # cast to string
+float(2)        #=> 2.0   # cast int 2 into float
 ```
 ### Binary
 ```py
 bin(10)       #=> 0b1010
 10 == 0b1010  #=> True
 ```
-### Bit manipulation
+### Boolean
+```py
+myBool = True
+```
+### Operations
+#### Boolean
+```py
+x and y # CONJUNCTION
+x or y  # DISJUNCTION
+not x   # NEGATION
+```
+#### Bitwise
 Note that they return in decimal format
 ```py
-5 >> 4  # Right Shift
-5 << 1  # Left Shift
-8 & 5   # Bitwise AND
-9 | 4   # Bitwise OR
-12 ^ 42 # Bitwise XOR
-~88     # Bitwise NOT
+x | y   # bitwise OR of x and y
+x ^ y   # bitwise EXCLUSIVE OR of x and y 
+x & y   # bitwise AND of x and y
+~x      # NOT of the bits of x
+x << n  # x shifted left by n bits
+x >> n  # x shifted right by n bits
+```
+#### Numeric
+```py
+x + y   # sum of x and y
+x - y   # difference of x and y
+x * y   # product of x and y
+x / y   # quotient of x and y
+x // y  # floored quotient of x and y
+x % y   # remainder of x / y
+-x      # x negated
++x      # x unchanged
+x ** y  # x to the power y
+```
+### Math
+Python contains useful inbuilt math functions
+```py
+a = [2,3,4,5]
+max(a)        #=> 5
+min(a)        #=> 2
+sum(a)        #=> 14
+abs(-1)       #=> 1
+pow(x, y)     #=> x ** y
+divmod(x, y)  #=> (x // y, x % y)
+complex(re, im)   # a complex number with real part re, imaginary part im. im defaults to zero.
+c.conjugate()     # conjugate of the complex number c
 ```
 ### Strings
 ```py
@@ -193,6 +219,7 @@ s.upper()   #=> "STRING"  # upcase
 s.isalpha() #=> True      # Alpha numeric check 
 s.startswith('Str') #=> True
 s.endswith('ing')   #=> True
+'hello ' + 'world'  #=> 'hello world' # concatenation
 ','.join('abc')           #=> 'a,b,c'
 ','.join(['a', 'b', 'c']) #=> 'a,b,c' # For this to work, the argument has to be a list of strings
 ```
@@ -417,17 +444,6 @@ sorted(hashmap)
 ```py
 dic = {'a': 1, 'b': 2, 'c': 3}
 [value for (key, value) in sorted(dic.items())] #=> [1, 2, 3]
-```
-
-## Math
-Python contains useful inbuilt math functions
-```py
-a = [2,3,4,5]
-max(a)  #=> 5
-min(a)  #=> 2
-sum(a)  #=> 14
-b = -1
-abs(b)  #=> 1
 ```
 
 ## Importing
