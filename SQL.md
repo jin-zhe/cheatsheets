@@ -50,51 +50,61 @@ DROP TABLE loan;
 ```
 
 ## Querying
+Display all columns from table:
 ```sql
-SELECT * FROM table_name;       -- display all columns from table
+SELECT * FROM table_name;
 ```
+Display indicated columns from table:
 ```sql
-SELECT column_name, column_name -- display indicated columns from table
+SELECT column_name, column_name
 FROM table_name;
 ```
+Display indicated columns from table with condition:
 ```sql
-SELECT name, email              -- display indicated columns from table with condition
+SELECT name, email
 FROM student
 WHERE department='CS';
 ```
+Select from multiple tables:
 ```sql
-SELECT student.name, book.title -- select from multiple tables
+SELECT student.name, book.title
 FROM student, copy, book
 WHERE student.email=copy.owner
 AND copy.book=book.ISBN13;
 ```
+Renaming colums for output (purely cosmetic):
 ```sql
-SELECT s.name AS owner          -- renaming colums for output (purely cosmetic)
+SELECT s.name AS owner
 FROM loan l, student s
 WHERE s.email=l.owner
   AND l.returned > '2010-03-04'
   AND l.borrower = 'abc@mail.com';
 ```
+Removing duplicates in a single row:
 ```sql
-SELECT DISTINCT nationality     -- removing duplicates in a single row
+SELECT DISTINCT nationality
 FROM student;
 ```
+Selecting only unique tuples:
 ```sql
-SELECT DISTINCT nationality, last_name -- selecting only unique tuples
+SELECT DISTINCT nationality, last_name
 FROM student;
 ```
+Ordering (default asc):
 ```sql
-SELECT name                     -- ordering (default asc)
+SELECT name
 FROM student
 ORDER BY matric_num DESC;
 ```
+Multiple ordering (default asc):
 ```sql
-SELECT name                     -- multiple ordering (default asc)
+SELECT name
 FROM student
 ORDER BY nationality, name;     -- order first by nationality then by name within same nationality
 ```
+Arithmetic:
 ```sql
-SELECT book, price * 1.17       -- arithmetic
+SELECT book, price * 1.17
 AS priceGST
 FROM catalog;
 ```
@@ -110,7 +120,7 @@ SELECT column_name(s) FROM table2;
 TODO
 
 ## Group
-Splitting up table into buckets.
+Splitting up table into buckets.  
 **Note: whatever columns that appear in SELECT must also appear in `GROUP BY`**
 ```sql
 SELECT book        -- selects the book from each book bucket (works exactly like UNIQUE)
@@ -185,9 +195,16 @@ ISBN13 CHAR(14) PRIMARY key     -- singular
 PRIMARY KEY (owner, book, copy) -- composite
 ```
 ### Foreign key
+Singular:
 ```sql
 column_name VARCHAR(256) REFERENCES other_table(other_table_PK)     -- singular
+```
+Composite
+```sql
 FOREIGN KEY (owner, book, copy) REFERENCES copy(owner, book, copy)  -- composite
+```
+Update/delete rules:
+```sql
 -- ON UPDATE/DELETE
   CASCADE
   NO ACTION
@@ -199,10 +216,14 @@ FOREIGN KEY (owner, book, copy) REFERENCES copy(owner, book, copy)  -- composite
 ISBN10 CHAR(10) NOT NULL
 ```
 ### Unique
-NOTE: Does not enforce `NOT NULL`. i.e. permits multiple null values)
+NOTE: Does not enforce `NOT NULL`. i.e. permits multiple null values)  
+Singular:
 ```sql
-ISBN10 CHAR(10) UNIQUE          -- singular
-UNIQUE (first_name, last_name)  -- composite
+ISBN10 CHAR(10) UNIQUE
+```
+Composite:
+```sql
+UNIQUE (first_name, last_name)
 ```
 
 ### Check
