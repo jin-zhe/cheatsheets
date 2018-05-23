@@ -35,12 +35,14 @@ CREATE TABLE book(
 );
 ```
 
-## Basic insert
+## Insert
+Insert all values in the order defined during table creation:
 ```sql
-INSERT INTO student VALUES(...), (...), ...;            -- insert all values in the order defined during table creation
+INSERT INTO student VALUES(...), (...), ...;
 ```
+Insert only values indicated by the ones list and in that order:
 ```sql
-INSERT INTO student (email, name, faculty, department)  -- insert only values indicated by the ones list and in that order
+INSERT INTO student (email, name, faculty, department)
 VALUES (...), (...), ...;
 ```
 
@@ -49,7 +51,7 @@ VALUES (...), (...), ...;
 DROP TABLE loan;
 ```
 
-## Querying
+## Query
 Display all columns from table:
 ```sql
 SELECT * FROM table_name;
