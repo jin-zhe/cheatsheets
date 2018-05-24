@@ -469,6 +469,45 @@ os.listdir(".")                 # list files in current working directory
 os.path.join(par_dir, rel_path) # join par_dir and rel_path together
 os.path.abspath(rel_path)       # get the absolute path give relative path
 ```
+#### pickle
+##### Python 2
+```py
+import cPickle as pkl
+loaded_pickle = pkl.load(open(pickle_path, "r" ))   # loading
+pkl.dump(payload, open(pickle_path, "w" ))          # dumping
+```
+##### Python 3
+```py
+import pickle as pkl
+loaded_pickle = pkl.load(open(pickle_path, "rb" ))  # loading
+pkl.dump(payload, open(pickle_path, "wb" ))         # dumping
+```
+#### defaultdict
+```py
+from collections import defaultdict
+
+# int type: non-existent keys will have default value 0 when first called
+dic = defaultdict(int)
+dic[key] += n
+
+# list type: non-existent keys will have default value list() when first called
+dic = defaultdict(list)
+dic[key].append(n)
+
+# set type: non-existent keys will have default value set() when first called
+dic = defaultdict(set)
+dic[key].add(n)
+```
+#### namedtuple
+TODO
+```py
+from collections import namedtuple
+```
+#### ordereddict
+TODO
+```py
+from collections import OrderedDict
+```
 #### datetime
 ```py
 import datetime
@@ -593,13 +632,14 @@ s = '''' Good muffins cost $3.88\nin New York.  Please buy me\n    ... two of th
 ```
 
 ### Pyplot
+#### Histogram
 ```py
 import matplotlib.pyplot as plt
-  
-# plot histogram
+import numpy as np
+values = np.random.randn(1000)
 plt.hist(values, cumulative=True, bins=256)
-plt.title("%s CDF" % image_name)
-plt.xlabel("Intensity")
+plt.title("Cumulative distribution function")
+plt.xlabel("Value")
 plt.ylabel("Cumulative Frequency")
 plt.show()
 ```
