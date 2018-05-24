@@ -6,7 +6,7 @@ Cheatsheet for Python's [NumPy library](http://www.numpy.org/)
 import numpy as np
 ```
 ```py
-arr.size()                      # returns total number of items
+arr.size()                     # returns total number of items
 np.nditer(arr)                 # returns list of all items in numpy array arr
 ```
 Operations on arrays are performed in an element-wise manner:
@@ -67,7 +67,7 @@ From https://docs.scipy.org/doc/numpy/reference/routines.statistics.html
 ### Order statistics
 ```py
 amin(a[, axis, out, keepdims])      # Return the minimum of an array or minimum along an axis.
-amax(a[, axis, out, keepdims])	    # Return the maximum of an array or maximum along an axis.
+amax(a[, axis, out, keepdims])      # Return the maximum of an array or maximum along an axis.
 nanmin(a[, axis, out, keepdims])    # Return minimum of an array or minimum along an axis, ignoring any NaNs.
 nanmax(a[, axis, out, keepdims])    # Return the maximum of an array or maximum along an axis, ignoring any NaNs.
 ptp(a[, axis, out])                 # Range of values (maximum - minimum) along an axis.
@@ -99,7 +99,7 @@ cov(m[, y, rowvar, bias, ddof, fweights, …])  # Estimate a covariance matrix, 
 ```py
 histogram(a[, bins, range, normed, weights, …])   # Compute the histogram of a set of data.
 histogram2d(x, y[, bins, range, normed, weights]) # Compute the bi-dimensional histogram of two data samples.
-histogramdd(sample[, bins, range, normed, …])	    # Compute the multidimensional histogram of some data.
-bincount(x[, weights, minlength])	                # Count number of occurrences of each value in array of non-negative ints.
-digitize(x, bins[, right])	                      # Return the indices of the bins to which each value in input array belongs.
+histogramdd(sample[, bins, range, normed, …])     # Compute the multidimensional histogram of some data.
+bincount(x[, weights, minlength])                 # Count number of occurrences of each value in array of non-negative ints.
+digitize(x, bins[, right])                        # Return the indices of the bins to which each value in input array belongs.
 ```
