@@ -18,8 +18,9 @@ a * b
 
 ## Generations
 ```py
-np.arange(3,7)               # generates [3,4,5,6]
-np.arange(4).reshape((2,2))  # creates [[0,1],[2,3]]
+np.random.randn(1000)         # generates array of 1000 random numbers 
+np.arange(3,7)                # generates [3,4,5,6]
+np.arange(4).reshape((2,2))   # creates [[0,1],[2,3]]
 ```
 
 ## 1D array
