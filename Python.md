@@ -315,9 +315,9 @@ del(arr[index])         # same as pop exept it doesn't return the object
 Slicing is achieved with the `[start:end:stride]` operator
 
 * `start` describes where the slice starts (inclusive)
-  * If not provided, value defaults *0*
+  * If not provided, value defaults to *0*
 * `end` is where it ends (exclusive)
-  * If not provided, value defaults *length of array*. I.E. Operation defaults to `[start:length:1]`
+  * If not provided, value defaults to *length of array*. I.E. Operation defaults to `[start:length:1]`
   * If value is negative, Python interpreter will subtract that value off the length of array. For example `a[start:-x]` is translated to `arr[start:length-x]`
 * `stride` indicates the interval between items in the sliced list
   * If not provided, value defaults to *1*. I.E. Operation defaults to `[start:end:1]`
@@ -357,7 +357,7 @@ squared_a = [x**2 for x in a] #=> [1, 4, 9, 16]
 We can also nest lists within the comprehension to iterate through multi-dimensional arrays. One application for this is to flatten out a multi-dimensional array:
 ```py
 arr_2d = [[1, 2, 3], [4, 5, 6]]
-flattened_arr = [x for row in arr_2d for x in row ]
+flattened_arr = [x for row in arr_2d for x in row ] #=> [1, 2, 3, 4, 5, 6] 
 ```
 
 #### Iterating
