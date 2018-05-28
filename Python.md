@@ -508,6 +508,11 @@ TODO
 ```py
 from collections import OrderedDict
 ```
+#### re
+```py
+import re
+re.search(r'\d+\.\d*N','1.312740N, 103.779490E').group(0) #=> '1.312740N'
+```
 #### datetime
 ```py
 import datetime
