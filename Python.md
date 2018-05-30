@@ -469,6 +469,28 @@ os.listdir(".")                 # list files in current working directory
 os.path.join(par_dir, rel_path) # join par_dir and rel_path together
 os.path.abspath(rel_path)       # get the absolute path give relative path
 ```
+#### sys
+```py
+import sys
+```
+#### Getting arguments
+```py
+sys.argv[1] # first argument
+```
+#### Pythonpath append
+You may append directories to your Pythonpath via `sys.path.append` instead of appending to `$PYTHONPATH` environment variable. Pythonpath stores the list of directories Python scans through when locating modules and files.
+```py
+sys.path.append(some_path) 
+```
+#### argparse
+```py
+import argparse
+
+parser = argparse.ArgumentParser(description="Description of script")
+parser.add_argument('--input', '-i', type=int, default=1, help='Help text for input argument')
+args = parser.parse_args()
+args.input  # gets argument for --input
+```
 #### pickle
 ##### Python 2
 ```py
