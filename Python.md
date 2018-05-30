@@ -473,12 +473,11 @@ os.path.abspath(rel_path)       # get the absolute path give relative path
 ```py
 import sys
 ```
-#### Getting arguments
+Getting arguments:
 ```py
 sys.argv[1] # first argument
 ```
-#### Pythonpath append
-You may append directories to your Pythonpath via `sys.path.append` instead of appending to `$PYTHONPATH` environment variable. Pythonpath stores the list of directories Python scans through when locating modules and files.
+Pythonpath stores the list of directories Python scans through when locating modules and files. You may append directories to your Pythonpath via `sys.path.append` instead of appending to `$PYTHONPATH` environment variable:
 ```py
 sys.path.append(some_path) 
 ```
