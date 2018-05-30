@@ -486,8 +486,10 @@ sys.path.append(some_path)
 import argparse
 
 parser = argparse.ArgumentParser(description="Description of script")
+parser.add_argument('--flag', '-f', action='store_true')
 parser.add_argument('--input', '-i', type=int, default=1, help='Help text for input argument')
 args = parser.parse_args()
+args.flag   # gets boolean if flag was indicated
 args.input  # gets argument for --input
 ```
 #### pickle
