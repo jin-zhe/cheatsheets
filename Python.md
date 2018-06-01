@@ -354,6 +354,7 @@ It is also commonly used for modifying each item in the given list:
 ```py 
 a = [1, 2, 3, 4]
 squared_a = [x**2 for x in a] #=> [1, 4, 9, 16]
+squared_even_a = [x**2 if x%2 == 0 else x for x in a] #=> [1, 4, 3, 16]
 ```
 We can also nest lists within the comprehension to iterate through multi-dimensional arrays. One application for this is to flatten out a multi-dimensional array:
 ```py
