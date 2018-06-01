@@ -226,8 +226,9 @@ s.endswith('ing')   #=> True
 #### Formatting
 Old style not recommended:
 ```py
-'%s %s' % ('one', 'two')  #=> 'one two'
-'%d %d' % (1, 2)          #=> '1 2'
+'%s %s' % ('one', 'two')      #=> 'one two'
+'%d %d' % (1, 2)              #=> '1 2'
+'%2.2f%%' % (0.93788 * 100)   #=> '93.79%'
 ```
 New recommended style:
 ```py
