@@ -656,6 +656,8 @@ len(some_object) # returns length attribute of the object
 
 ## Exception handling
 ### Common exceptions
+See [Built-in Exceptions](https://docs.python.org/3/library/exceptions.html) for the full list of Python exceptions that come out of the box.
+
 Exception | Description
 --- | ---
 `IOError` | Raised when a file cannot be opened
@@ -719,7 +721,7 @@ Raising pre-defined exceptions:
 raise IOError
 raise SyntaxError("Oops!") # Add a custom message
 ```
-Raising custom exception
+Raising custom exception:
 ```py
 class MyException(Exception):
   pass
