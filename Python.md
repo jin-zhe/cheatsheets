@@ -17,7 +17,8 @@ python -m -v doctest filename.py  # doctests are a quick way of writing tests (v
 ```
 When you don't use the `-m` flag in regular scenarios, the file you named is run as just a script.
 #### Shebang
-[See here](https://github.com/jin-zhe/cheatsheets/blob/master/UNIX.md#shebang) for the purpose of the shebang (`#!`) in Unix systems. You may include the shebang at the top of a Python script to execute it without having to type `python` before the code name when running the code from the terminal. After proper configuration of the file manager, shebang also allows for running a python script via double-clicking its file within the file-manager interface.  
+[See here](https://github.com/jin-zhe/cheatsheets/blob/master/UNIX.md#shebang) for the purpose of the shebang (`#!`) in Unix systems. You may include the shebang at the top of a Python script to execute it without having to type `python` before the code name when running the code from the terminal. After proper configuration of the file manager, shebang also allows for running a python script via double-clicking its file within the file-manager interface.
+
 For latest version of Python 3 scripts:
 ```py
 #!/usr/bin/env python3
