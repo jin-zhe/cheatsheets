@@ -656,8 +656,6 @@ len(some_object) # returns length attribute of the object
 
 ## Exception handling
 ### Common exceptions
-See [Built-in Exceptions](https://docs.python.org/3/library/exceptions.html) for the full list of Python exceptions that come out of the box.
-
 Exception | Description
 --- | ---
 `IOError` | Raised when a file cannot be opened
@@ -667,6 +665,8 @@ Exception | Description
 `EOFError` | Raised when one of the built-in functions (input() or raw_input()) hits an end-of-file condition (EOF) without reading any data
 `KeyboardInterrupt` | Raised when the user hits the interrupt key (normally Control-C or Delete)
 `ValueError` | Raised when a built-in operation or function receives an argument that has the right type but an inappropriate value
+
+See [Built-in Exceptions](https://docs.python.org/3/library/exceptions.html) for the full list of Python exceptions that come out of the box.
 
 ### Catching exceptions
 try-except:
