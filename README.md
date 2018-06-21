@@ -6,7 +6,10 @@ Here is an assortment of programming cheatsheets that have helped me over the ye
 ### [jQuery](jQuery.md)
 ### [Java](Java.md)
 ### [JavaScript](JavaScript.md)
+---
 ### [Python](Python.md)
+### [PyTorch](PyTorch.md)
+---
 ### [Regular expression](regex.md)
 ### [Ruby](Ruby.md)
 ### [Ruby on Rails](RoR.md)
