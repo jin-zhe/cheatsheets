@@ -7,6 +7,7 @@ Here is an assortment of programming cheatsheets that have helped me over the ye
 ### [Java](Java.md)
 ### [JavaScript](JavaScript.md)
 ---
+### [NumPy](NumPy.md)
 ### [Python](Python.md)
 ### [PyTorch](PyTorch.md)
 ---
