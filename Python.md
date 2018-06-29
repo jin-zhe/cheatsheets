@@ -485,6 +485,7 @@ Pythonpath stores the list of directories Python scans through when locating mod
 sys.path.append(some_path) 
 ```
 #### argparse
+See [here](https://docs.python.org/3/library/argparse.html#the-add-argument-method) for all available arugments of `add_argument()` method
 ```py
 import argparse
 
@@ -563,6 +564,55 @@ class EdgeDetector(Enum):
   sobel = 1
 ```
 
+#### multiprocessing.Pool
+See [API](https://docs.python.org/3/library/multiprocessing.html#module-multiprocessing.pool)
+Importing
+```py
+from multiprocessing import Pool
+```
+Pool:
+```py
+pool = Pool() # If processes is None then the number returned by multiprocessing.cpu_count()
+// do something
+pool.close()
+
+# Using `with` clause
+with Pool(processes=4) as pool:
+  # do something
+```
+* Make sure function is defined before Pool istantiates! Otherwise the worker cannot see the function
+
+Using `pool.apply_async`:
+```py
+result_1 = pool.apply_async(f, 1)    # evaluate `f(1)` asynchronously
+result_2 = pool.apply_async(f, 2)    # evaluate `f(2)` asynchronously
+answer_1 = result_1.get(timeout=10)
+answer_2 = result_2.get(timeout=10)
+```
+Using `pool.map`:
+```py
+result_1, result_2 = pool.map(f, [1,2])
+```
+* This function only works for single argument functions! Use a function wrapper which takes in a single tuple if parallelizing multi argument functions
+
+#### multiprocessing.Process
+```py
+from multiprocessing import Pool
+
+def f(arg):
+  // do something
+
+args_list = [1,2,3,4]
+for arg in args_list:
+  p = Process(target=f, args=(arg,))
+  p.start()
+  p.join()
+```
+
+Find out the number of CPU cores on your machine:
+```sh
+cat /proc/cpuinfo | grep processor | wc -l
+```
 ## Functions
 The default function return value in Python is `None`
 ```py
