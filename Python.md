@@ -566,14 +566,15 @@ class EdgeDetector(Enum):
 
 #### multiprocessing.Pool
 See [API](https://docs.python.org/3/library/multiprocessing.html#module-multiprocessing.pool)
-Importing
+
+Importing:
 ```py
 from multiprocessing import Pool
 ```
 Pool:
 ```py
 pool = Pool() # If processes is None then the number returned by multiprocessing.cpu_count()
-// do something
+# do something
 pool.close()
 
 # Using `with` clause
@@ -600,18 +601,13 @@ result_1, result_2 = pool.map(f, [1,2])
 from multiprocessing import Pool
 
 def f(arg):
-  // do something
+  # do something
 
 args_list = [1,2,3,4]
 for arg in args_list:
   p = Process(target=f, args=(arg,))
   p.start()
   p.join()
-```
-
-Find out the number of CPU cores on your machine:
-```sh
-cat /proc/cpuinfo | grep processor | wc -l
 ```
 ## Functions
 The default function return value in Python is `None`
@@ -620,6 +616,7 @@ def some_function(param_1, kwarg_1=default_kwarg_1_val):
   # do something
   return ans
 ```
+
 ### Lambda: anonymous functions
 ```py
 arr = [0, 1, 2, 3, 4, 5, 6]
