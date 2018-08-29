@@ -51,7 +51,8 @@ np.random.rand(2,3) # array of given shape filled with random values
 ## Matrices
 ```py
 a = np.martix([[1,2,3], [4,5,6]])
-a * b   # only valid if b has as many columns as the row of a, else error will be thrown
+a * b           # only valid if b has as many columns as the row of a, else error will be thrown
+np.matmul(a,b)  # same as above
 ```
 
 ## Linear algebra
