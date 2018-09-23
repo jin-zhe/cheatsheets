@@ -700,11 +700,17 @@ class MyOtherClass(MyClass):
 ### kwargs
 ```py
 def func(**kwargs):
-  # do stuff with kwargs[key]
+  # do stuff with kwargs['a'] and kwargs['b']
 
-func({'key_1': 1, 'key_2': 2})
+func(a=1, b=3)
 ```
+```py
+def func(a, b):
+  print(a, b)
 
+func(**{'a': 1, 'b': 2}) # same as func(1, 2)
+#=> 1 2
+```
 ### Tuples
 Tuples are immutable in Python
 ```py
