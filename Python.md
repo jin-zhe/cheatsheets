@@ -698,11 +698,19 @@ class MyOtherClass(MyClass):
 ```
 
 ### kwargs
-```
+```py
 def func(**kwargs):
   # do stuff with kwargs[key]
 
 func({'key_1': 1, 'key_2': 2})
+```
+
+### Tuples
+Tuples are immutable in Python
+```py
+uniple = (1,)
+pair = (1, 2)
+triplet = (1, 2) + (3,) # creates a new tuplet
 ```
 
 ### Misc
