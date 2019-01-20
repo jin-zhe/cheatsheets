@@ -20,11 +20,11 @@
 int main() {
   int l, r;
   std::cin >> l >> r;
-  std::cout << l << ' ' << r << endl;
+  std::cout << l << ' ' << r << std::endl;
 }
 ```
 ### Reading 2D array
-Here's 
+Here's an example of reading in a 2D `char` array.
 ```cpp
 // Global vars
 int maxSize = 200;
