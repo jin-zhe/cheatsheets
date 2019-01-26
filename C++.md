@@ -1,8 +1,25 @@
 ## Strings
+
 ### Import
 ```cpp
 #include <string>
 ````
+
+### Declaration
+```cpp
+// Assignment via string literal
+std:string str = "Hello world!";
+
+// Initialization using char array
+char arr[] = "Hello world!";
+std::string str(arr);
+```
+
+### Parsing
+```cpp
+std::to_string(42); //=> "42"
+std::stoi("42");    //=> 42
+```
 
 ### Info
 In C++ and C, a string is an array of `char` terminated with the null character `\0`.
@@ -22,7 +39,7 @@ str.push_back(c);
 ```cpp
 std::string str = "Hello World!";
 int len = str.length();                 //=> 12
-std::string str2 = str.substr(6, 11);   //=> "World"
+std::string str2 = str.substr(6, 5);   //=> "World"
 std::size_t pos = str.find("World");    //=> 6
 std::size_t pos = str.find("Hey");      //=> std::string::npos
 std::string str3 = str.substr(6);       //=> "World!"
@@ -48,19 +65,83 @@ int find(std::string str, std::string subStr) {
 }
 ```
 
-## Arrays
-### Initializations
+## Iteration
+```cpp
+for (auto a : s) {
+  std::cout << a << " ";
+}  
+```
+
+### Iterators
+```cpp
+for (std::vector<int>::iterator it=myvector.begin(); it!=myvector.end(); ++it) {
+    std::cout << ' ' << *it;
+}
+```
+
+## Data structures
+### Array
+#### Initializations
 ```cpp
 int arr[3] = {1, 2, 3}; //=> [1, 2, 3]
 int arr[5] = {1, 2, 3}; //=> [1, 2, 3, 0, 0]  // unspecified values are assigned default values
 int arr[5] = {};        //=> [0, 0, 0, 0, 0]
+int arr[5];             //=> [0, 0, 0, 0, 0]
 int arr[] = {1, 2, 3}   //=> [1, 2, 3]        // implicit size understood by compiler
 int arr[] {1, 2, 3}     //=> [1, 2, 3]        // universal initialization
 ```
 
-### Overview
+#### Overview
 ```cpp
 ```
+
+### std::array
+```cpp
+std::array<int, 10> s = {5, 7, 4, 2, 8, 6, 1, 9, 0, 3};
+```
+
+### std:vector
+Import:
+```cpp
+#include <vector>
+```
+```cpp
+std::vector<std::string> names;
+for (int i=0; i<n; i++) {
+  std::string input;
+  std::cin >> input;
+  names.push_back(input); 
+}
+```
+
+## Sorting
+Import:
+```cpp
+#include <algorithm>
+#include <functional> // if using lambda
+```
+Examples:
+```cpp
+// sort using the default operator<
+std::sort(s.begin(), s.end());
+
+// sort using a standard library compare function object
+std::sort(s.begin(), s.end(), std::greater<int>());
+
+// sort using a custom function object
+struct {
+    bool operator()(int a, int b) const{   
+        return a < b;
+    }   
+} customComparator;
+std::sort(s.begin(), s.end(), customComparator);
+
+// sort using a lambda expression 
+std::sort(s.begin(), s.end(), [](int a, int b) {
+    return a < b;   
+});
+```
+Note: default `std::sort` doesn't guarantee stable sorting. For stable sorting, use `std::stable_sort`
 
 ## Pointers
 ```cpp
