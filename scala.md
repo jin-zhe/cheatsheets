@@ -119,11 +119,11 @@ val a = if (i == 1) x else y
 
 ## Functions
 ```scala
-# Name function
+// Named function
 def isEven (x: Int): Boolean = {
   x % 2 == 0
 }
 
-# Anonymous function
+// Anonymous function
 (x: Int)  => x % 2 == 0
 ```
