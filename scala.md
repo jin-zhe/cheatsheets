@@ -10,9 +10,16 @@ scala program        # run
 ```
 
 ### Types
+Variables are denoted by `var` while immutables (constants) are denoted by `val`
+
+Declaration of variable with explicit type:
+```scala
+var i: Int = 0
+```
+
 #### Casting
 ```scala
-helper(xs, 0).asInstanceOf[Option[A]]
+ans.asInstanceOf[Option[A]]
 ```
 
 ### Script mode
@@ -45,14 +52,35 @@ for (var x <- xs ){
 ```
 ### While-loop
 ```scala
-while(condition) {
+while (condition) {
    // ...
 }
 ```
 ## Collections
 See [performance](https://docs.scala-lang.org/overviews/collections/performance-characteristics.html)
 
+### Tuple
+Instantiation
+```scala
+// val t = new Tuple3(1, "hello", Console)
+val t = (1, "hello", Console) // syntatic sugar
+```
+
+Accessing
+```scala
+t._1 //=> 1
+t._2 //=> "hello"
+t._3 //=> Console
+```
+
 ### List
+#### Declaration
+```scala
+var lst = List(1, 2, 3)
+var lst = List[Int](1, 2, 3)  // with explicit type
+val emptyList = List()        // the empty list
+```
+#### Overview
 ```scala
 val lst = 1 :: (2 :: (3 :: Nil))
 lst.head    //=> 1
