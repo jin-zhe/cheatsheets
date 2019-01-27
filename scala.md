@@ -3,13 +3,50 @@
 This is a work in progress...
 
 ## General
+### Compilation and execution
+```sh
+scalac program.scala # compile
+scala program        # run
+```
 
-## Script mode
+### Types
+#### Casting
+```scala
+helper(xs, 0).asInstanceOf[Option[A]]
+```
+
+### Script mode
 ```scala
 object HelloWorld {
    def main(args: Array[String]) {
       println("Hello, world!") // prints Hello World
    }
+}
+```
+## Loops
+### for-loop
+Looping using `to` and `until`
+```scala
+var i = 0
+for (i <- 1 to 10) {
+   // Iterates through i = 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+}
+
+for (i <- 1 until 10) {
+   // Iterates through i = 1, 2, 3, 4, 5, 6, 7, 8, 9
+}
+```
+
+Looping through a collection
+```scala
+for (var x <- xs ){
+   // ...
+}
+```
+### While-loop
+```scala
+while(condition) {
+   // ...
 }
 ```
 ## Collections
