@@ -18,22 +18,22 @@ See [performance](https://docs.scala-lang.org/overviews/collections/performance-
 ### List
 ```scala
 val lst = 1 :: (2 :: (3 :: Nil))
-lst.head    #=> 1
-lst.tail    #=> (2 :: (3 :: Nil))
-lst.length  #=> 3 | O(N)
-lst.isEmpty #=> false
+lst.head    //=> 1
+lst.tail    //=> (2 :: (3 :: Nil))
+lst.length  //=> 3 | O(N)
+lst.isEmpty //=> false
 
-# Prepend
-0 :: lst    #=> List(0, 1, 2, 3) | O(1)
-0 +: lst    #=> List(0, 1, 2, 3) | O(1)
+// Prepend
+0 :: lst    //=> List(0, 1, 2, 3) | O(1)
+0 +: lst    //=> List(0, 1, 2, 3) | O(1)
 
-# Append
-lst :+ 4    #=> List(1, 2, 3, 4) | O(N)
+// Append
+lst :+ 4    //=> List(1, 2, 3, 4) | O(N)
 
-# Concat
+// Concat
 val lst1 = List(1, 2, 3)
 val lst2 = List(4, 5)
-lst1 ::: lst2 # (preferred over ++)
+lst1 ::: lst2 // (preferred over ++)
 lst1 ++ lst2
 List.concat(lst1, lst2)
 
