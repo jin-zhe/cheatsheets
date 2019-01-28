@@ -18,7 +18,7 @@ using namespace std;
 ### Declaration
 ```cpp
 // Assignment via string literal
-std:string str = "Hello world!";
+std::string str = "Hello world!";
 
 // Initialization using char array
 char arr[] = "Hello world!";
@@ -100,6 +100,11 @@ int arr[5];             //=> [0, 0, 0, 0, 0]
 int arr[] = {1, 2, 3}   //=> [1, 2, 3]        // implicit size understood by compiler
 int arr[] {1, 2, 3}     //=> [1, 2, 3]        // universal initialization
 ```
+Note: The value within square brackets must be a literal or a constant, it cannot be a variable! I.E. The following is illegal
+```cpp
+int n = 5;
+int arr[n];
+```
 
 #### Overview
 ```cpp
@@ -110,13 +115,13 @@ int arr[] {1, 2, 3}     //=> [1, 2, 3]        // universal initialization
 std::array<int, 10> s = {5, 7, 4, 2, 8, 6, 1, 9, 0, 3};
 ```
 
-### std:vector
+### std::vector
 Import:
 ```cpp
 #include <vector>
 ```
 ```cpp
-std::vector<std::string> names;
+std::vector<std::string> names(n); // Note: n can be ommitted
 for (int i=0; i<n; i++) {
   std::string input;
   std::cin >> input;
