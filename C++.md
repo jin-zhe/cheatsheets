@@ -120,6 +120,7 @@ Import:
 ```cpp
 #include <vector>
 ```
+#### Overview
 ```cpp
 std::vector<std::string> names(n); // Note: n can be ommitted
 for (int i=0; i<n; i++) {
@@ -127,6 +128,13 @@ for (int i=0; i<n; i++) {
   std::cin >> input;
   names.push_back(input); 
 }
+
+// Accessing
+names[0];
+
+// Removing
+myvector.erase (myvector.begin() + 5);                    // erase the 6th element
+myvector.erase (myvector.begin(), myvector.begin() + 3);  // erase the first 3 elements:
 ```
 
 ## Sorting
