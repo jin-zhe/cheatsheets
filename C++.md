@@ -1,3 +1,13 @@
+# C++ Cheatsheet
+This is a work in progress
+
+## General
+Importing
+```cpp
+#include <package_name>
+using namespace std;
+```
+
 ## Strings
 
 ### Import
