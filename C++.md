@@ -96,7 +96,7 @@ for (std::vector<int>::iterator it=myvector.begin(); it!=myvector.end(); ++it) {
 int arr[3] = {1, 2, 3}; //=> [1, 2, 3]
 int arr[5] = {1, 2, 3}; //=> [1, 2, 3, 0, 0]  // unspecified values are assigned default values
 int arr[5] = {};        //=> [0, 0, 0, 0, 0]
-int arr[5];             //=> [0, 0, 0, 0, 0]
+int arr[5];             //=> [?, ?, ?, ?, ?]
 int arr[] = {1, 2, 3}   //=> [1, 2, 3]        // implicit size understood by compiler
 int arr[] {1, 2, 3}     //=> [1, 2, 3]        // universal initialization
 ```
