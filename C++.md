@@ -108,6 +108,7 @@ int arr[n];
 
 #### Overview
 ```cpp
+int size = int n = sizeof(arr) / sizeof(arr[0]);
 ```
 
 ### std::array
@@ -121,20 +122,28 @@ Import:
 #include <vector>
 ```
 #### Overview
+Initialization
 ```cpp
-std::vector<std::string> names(n); // Note: n can be ommitted
-for (int i=0; i<n; i++) {
-  std::string input;
-  std::cin >> input;
-  names.push_back(input); 
-}
+vector<int> vect;           // init empty vector
+vector<int> vect(n);        // init vector of size n
+vector<int> vect(n, 10);    // init vector of size n with all values being 10
+vector<int> vect(1, 2, 3);  // init vector with items {1, 2, 3}
+
+// Init using array
+int arr[3] = {10, 20, 30};
+vector<int> vect(arr, arr + 3); // init vector with items {10, 20, 30} 
+```
+
+```cpp
+// appending
+vect.push_back(99);
 
 // Accessing
-names[0];
+vect[0];
 
 // Removing
-myvector.erase (myvector.begin() + 5);                    // erase the 6th element
-myvector.erase (myvector.begin(), myvector.begin() + 3);  // erase the first 3 elements:
+vect.erase (myvector.begin() + 5);                    // erase the 6th element
+vect.erase (myvector.begin(), myvector.begin() + 3);  // erase the first 3 elements:
 ```
 
 ## Sorting
