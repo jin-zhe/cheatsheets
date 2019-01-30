@@ -159,15 +159,21 @@ Import:
 #include <algorithm>
 #include <functional> // if using lambda
 ```
-Examples:
+
+### Overview
+Default order
 ```cpp
 // sort using the default operator<
 std::sort(s.begin(), s.end());
-
+```
+Descending order
+```cpp
 // sort using a standard library compare function object
 std::sort(s.begin(), s.end(), std::greater<int>());
+```
 
-// sort using a custom function object
+Custom order
+```cpp
 struct {
     bool operator()(int a, int b) const{   
         return a < b;
