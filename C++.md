@@ -15,7 +15,8 @@ using namespace std;
 #include <string>
 ````
 
-### Declaration
+### Overview
+Declaration
 ```cpp
 // Assignment via string literal
 std::string str = "Hello world!";
@@ -23,10 +24,15 @@ std::string str = "Hello world!";
 // Initialization using char array
 char arr[] = "Hello world!";
 std::string str(arr);
+```
+Accessing chars
+```cpp
+std::string hello = "Hello";
 str.at(0); //=> 'H'
+str[0];    //=> 'H'
 ```
 
-### Parsing
+Parsing
 ```cpp
 std::to_string(42); //=> "42"
 std::stoi("42");    //=> 42
