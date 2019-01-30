@@ -135,11 +135,18 @@ vector<int> vect(arr, arr + 3); // init vector with items {10, 20, 30}
 ```
 
 ```cpp
-// appending
+// Length
+vect.size():
+
+// Appending
 vect.push_back(99);
 
-// Accessing
-vect[0];
+// Accessor
+vect[i];
+
+// Mutator
+vect[i] = x;
+vect[i]++;
 
 // Removing
 vect.erase (myvector.begin() + 5);                    // erase the 6th element
