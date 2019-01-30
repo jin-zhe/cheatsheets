@@ -23,6 +23,7 @@ std::string str = "Hello world!";
 // Initialization using char array
 char arr[] = "Hello world!";
 std::string str(arr);
+str.at(0); //=> 'H'
 ```
 
 ### Parsing
