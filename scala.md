@@ -1,6 +1,62 @@
 # Scala Cheatsheet
 
 This is a work in progress...
+```
+function call brackets can be ommitted if no arguments
+Unit is similar to void
+object is a singleton class that gets instantiated the moment it's defined
+[A] capital letter polymorphic type, like generic in Java
+Option returns: Nothing (None) or Something (Some)
+Nil is empty list
+---
+case _: everything else
+case xx: xx is a template to match with
+tree match {
+    case Lead(v) => 1
+    case tree(v, l, r) => countL(l) + countL(r)
+}
+---
+List[A]() same as List(): List[A]
+rest.::(x) same as x::rest
+
+_ means anything, not a particular thing
+case _ if <guard> => __ # if fail guard, fall down the cases
+
+# exists
+xs.foldRight (List[A]()) ((x:A, rest:List[A]) =>
+    if (rest.exists( (y:A) => y == x)) # if only one param : (_ == x) # if only one param for f we may omit the . ?
+        rest
+    else
+        x::rest
+)
+----
+Option.empty[A]
+-----
+for comprehension vs for-loop
+val res = for (i <- i until num)
+    yield (i, num-1)
+
+same as
+
+(1 until num).map(i => (i, num - i))
+-----
+parsing:
+toInt
+toString
+-----
+forall
+takeWhile // take while condition is true, terminate once false
+dropWhile // drop while condition is true, terminate once false
+find # get
+flatten
+-----
+trait is like interface in java
+-----
+x: List[Int] = List()
+y
+for(x <- xs; y <- ys) // acts like nested-for
+    yield (x, y)
+```
 
 ## General
 ### Compilation and execution
