@@ -243,8 +243,8 @@ vect[i] = x;
 vect[i]++;
 
 // Removing
-vect.erase(myvector.begin() + 5);                    // erase the 6th element
-vect.erase(myvector.begin(), myvector.begin() + 3);  // erase the first 3 elements:
+vect.erase(vect.begin() + 5);                    // erase the 6th element
+vect.erase(vect.begin(), vect.begin() + 3);  // erase the first 3 elements:
 ```
 
 ## Sorting
