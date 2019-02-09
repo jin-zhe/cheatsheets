@@ -122,7 +122,7 @@ int find(string str, string subStr) {
 #### Tokenize
 For single delimiter
 ```cpp
-#include <bits/stdc++.h>
+#include <sstream>
 // ...
 vector<string> tokenizer(string str, char delimiter) {
   string token;
@@ -292,11 +292,12 @@ cout << *ptr;
 ```
 
 ## I/O
+### iostream
 Import
 ```cpp
 #include <iostream>
 ```
-### std::cin
+#### std::cin
 Integers
 ```cpp
 // Read 2 numbers
@@ -312,10 +313,8 @@ cin >> str;
 
 // Read an entire line
 getline(cin, str);
-
 ```
-
-### Reading until EOF
+#### Reading until EOF
 ```cpp
 string line; 
 istringstream iss;
@@ -330,8 +329,7 @@ while(getline(cin, line)){
   // ...
 }
 ```
-
-### Reading 2D array
+#### Reading 2D array
 Here's an example of reading in a 2D `char` array.
 ```cpp
 // Global vars
@@ -348,6 +346,44 @@ void readArr2D(int rows, int cols) {
     }
   }
 }
+```
+#### std::cout
+```cpp
+cout << "Hello World!" << endl;
+```
+### stdio.h
+Import
+```cpp
+#include <stdio.h>
+```
+#### printf
+```cpp
+printf("Hello World!\n");
+printf ("Characters: %c %c \n", 'a', 65);
+printf ("Decimals: %d %ld\n", 1977, 650000L);
+printf ("Preceding with blanks: %10d \n", 1977);
+printf ("Preceding with zeros: %010d \n", 1977);
+printf ("Some different radices: %d %x %o %#x %#o \n", 100, 100, 100, 100, 100);
+printf ("floats: %4.2f %+.0e %E \n", 3.1416, 3.1416, 3.1416);
+printf ("Width trick: %*d \n", 5, 10);
+printf ("%s \n", "A string");
+```
+Outputs the following
+```sh
+Characters: a A
+Decimals: 1977 650000
+Preceding with blanks:       1977
+Preceding with zeros: 0000001977
+Some different radices: 100 64 144 0x64 0144
+floats: 3.14 +3e+000 3.141600E+000
+Width trick:    10
+A string
+```
+
+#### scanf
+```cpp
+int l, r;
+scanf("%d %d", &l, &r);
 ```
 
 ## OOP
