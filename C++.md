@@ -8,8 +8,34 @@ Importing
 using namespace std;      // This will be assumed for the remaining of this cheatsheet
 ```
 
-## Strings
+### Switch statement
+```cpp
+int test = 1;
+switch(test) {
+    case 1 : cout << '1'; // prints "1"
+             break;       // and exits the switch
+    case 2 : cout << '2';
+             break;
+    // ...
+    default:
+             cout << 'Default case';
+             break;
+}
+```
+If declaration statement exists within a case, it has to be scoped. e.g.
+```cpp
+switch(1) {
+    case 1: {  int x = 0;
+               std::cout << x << '\n';
+               break;
+            } // scope of 'x' ends here
+    default: std::cout << "default\n"; // no error
+             break;
+}
+```
 
+## Strings
+Strings are mutable in C++
 ### Import
 ```cpp
 #include <string>
