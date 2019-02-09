@@ -171,7 +171,7 @@ for (vector<int>::iterator it=vect.begin(); it!=vect.end(); ++it) {
 
 ## Data structures
 
-### Tuple
+### std::tuple
 Import:
 ```cpp
 #include <tuple>
@@ -197,11 +197,6 @@ int arr[5] = {};        //=> [0, 0, 0, 0, 0]
 int arr[5];             //=> [?, ?, ?, ?, ?]
 int arr[] = {1, 2, 3}   //=> [1, 2, 3]        // implicit size understood by compiler
 int arr[] {1, 2, 3}     //=> [1, 2, 3]        // universal initialization
-```
-Note: The value within square brackets must be a literal or a constant, it cannot be a variable! I.E. The following is illegal
-```cpp
-int n = 5;
-int arr[n];
 ```
 
 #### Overview
