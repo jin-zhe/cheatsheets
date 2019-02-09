@@ -35,14 +35,17 @@ switch(1) {
 ```
 
 ## Strings
+In C++ and C, a string is an array of `char` terminated with the null character `\0`.
+
 Strings are mutable in C++
+
 ### Import
 ```cpp
 #include <string>
 ````
 
 ### Overview
-Declaration
+#### Declaration
 ```cpp
 // Assignment via string literal
 string str = "Hello world!";
@@ -51,22 +54,19 @@ string str = "Hello world!";
 char arr[] = "Hello world!";
 string str(arr);
 ```
-Accessing chars
+#### Accessing chars
 ```cpp
 string hello = "Hello";
 str.at(0); //=> 'H'
 str[0];    //=> 'H'
 ```
-
-Parsing
+#### Parsing
+`int` <-> `string`
 ```cpp
 to_string(42); //=> "42"
 stoi("42");    //=> 42
 ```
-
-### Info
-In C++ and C, a string is an array of `char` terminated with the null character `\0`.
-To convert `char` to string:
+Parse `char` as string:
 ```cpp
 char c = 'c';
 
@@ -77,8 +77,7 @@ string str = std::string() + c; //=> "c"
 string str;
 str.push_back(c);
 ```
-
-### Overview
+#### Methods
 ```cpp
 string str = "Hello World!";
 int len = str.length();                 //=> 12
@@ -88,9 +87,21 @@ size_t pos = str.find("Hey");           //=> string::npos
 string str3 = str.substr(6);            //=> "World!"
 string str4 = str + " Hey!";            //=> "Hello World! Hey!"
 int comp = str.compare("Hello World!"); //=> 0
+
 ```
 
 ### Self-implementations
+#### String to char array
+```cpp
+char* to_char_array(string str) {
+    int n = str.length();
+    char* char_array = new char[n+1];
+    strcpy(char_array, str.c_str());
+    return char_array;
+}
+```
+
+#### Substring
 ```cpp
 // Returns the index of the first occurence of the substring, else -1
 int find(string str, string subStr) {
@@ -105,6 +116,36 @@ int find(string str, string subStr) {
     if (match) return i;
   }
   return -1;
+}
+```
+
+#### Tokenize
+For single delimiter
+```cpp
+#include <bits/stdc++.h>
+// ...
+vector<string> tokenizer(string str, char delimiter) {
+  string token;
+  istringstream iss(str);
+  vector<string> tokens(str.length());
+  while(getline(iss, token, delimiter)) {
+    tokens.push_back(token);
+  }
+  return tokens;
+}
+```
+For multiple delimiters
+```cpp
+vector<string> tokenizer(string str, string delimiters) {
+    vector<string> tokens(str.length());
+    char* str_chars = to_char_array(str);
+    char* del_chars = to_char_array(delimiters);
+    char *token = strtok(str_chars, del_chars); 
+    while (token != NULL) {
+        tokens.push_back(token);
+        token = strtok(NULL, del_chars);
+    }
+    return tokens;
 }
 ```
 
@@ -256,30 +297,41 @@ cout << *ptr;
 ```
 
 ## I/O
-### Overview
+Import
 ```cpp
 #include <iostream>
-#include <string>
+```
+### std::cin
+Integers
+```cpp
+// Read 2 numbers
+int l, r;
+cin >> l >> r;
+```
 
-int main() {
-  int l, r;
-  cin >> l >> r;
-  cout << l << ' ' << r << endl;
-}
+Strings
+```cpp
+string str;
+// Read a word (terminated with space/tab)
+cin >> str;
+
+// Read an entire line
+getline(cin, str);
+
 ```
 
 ### Reading until EOF
 ```cpp
 string line; 
-stringstream ss;
+istringstream iss;
 while(getline(cin, line)){
   if (line.length() == 0) break;
-  ss.clear();
-  ss.str(line);
+  iss.clear();
+  iss.str(line);
 
   // Read in data
   int num;
-  ss >> num;
+  iss >> num;
   // ...
 }
 ```
