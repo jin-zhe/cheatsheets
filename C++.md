@@ -5,7 +5,7 @@ This is a work in progress
 Importing
 ```cpp
 #include <package_name>
-using namespace std;
+using namespace std;      // This will be assumed for the remaining of this cheatsheet
 ```
 
 ## Strings
@@ -19,23 +19,23 @@ using namespace std;
 Declaration
 ```cpp
 // Assignment via string literal
-std::string str = "Hello world!";
+string str = "Hello world!";
 
 // Initialization using char array
 char arr[] = "Hello world!";
-std::string str(arr);
+string str(arr);
 ```
 Accessing chars
 ```cpp
-std::string hello = "Hello";
+string hello = "Hello";
 str.at(0); //=> 'H'
 str[0];    //=> 'H'
 ```
 
 Parsing
 ```cpp
-std::to_string(42); //=> "42"
-std::stoi("42");    //=> 42
+to_string(42); //=> "42"
+stoi("42");    //=> 42
 ```
 
 ### Info
@@ -45,29 +45,29 @@ To convert `char` to string:
 char c = 'c';
 
 // Method 1
-std::string str = std::string() + c; //=> "c"
+string str = std::string() + c; //=> "c"
 
 // Method 2
-std::string str;
+string str;
 str.push_back(c);
 ```
 
 ### Overview
 ```cpp
-std::string str = "Hello World!";
+string str = "Hello World!";
 int len = str.length();                 //=> 12
-std::string str2 = str.substr(6, 5);   //=> "World"
-std::size_t pos = str.find("World");    //=> 6
-std::size_t pos = str.find("Hey");      //=> std::string::npos
-std::string str3 = str.substr(6);       //=> "World!"
-std::string str4 = str + " Hey!";       //=> "Hello World! Hey!"
+string str2 = str.substr(6, 5);         //=> "World"
+size_t pos = str.find("World");         //=> 6
+size_t pos = str.find("Hey");           //=> string::npos
+string str3 = str.substr(6);            //=> "World!"
+string str4 = str + " Hey!";            //=> "Hello World! Hey!"
 int comp = str.compare("Hello World!"); //=> 0
 ```
 
 ### Self-implementations
 ```cpp
 // Returns the index of the first occurence of the substring, else -1
-int find(std::string str, std::string subStr) {
+int find(string str, string subStr) {
   for (int i = 0; i < str.length() - subStr.length() + 1; i++) {
     bool match = true;
     for (int j = 0; j < subStr.length(); j++) {
@@ -84,19 +84,43 @@ int find(std::string str, std::string subStr) {
 
 ## Iteration
 ```cpp
+// a is a copy of the items we are iterating over
 for (auto a : s) {
-  std::cout << a << " ";
+  cout << a << " ";
+}
+
+// a is a reference of the items we are iterating over
+for (auto &a : s) {
+  cout << a << " ";
 }  
 ```
 
 ### Iterators
 ```cpp
-for (std::vector<int>::iterator it=myvector.begin(); it!=myvector.end(); ++it) {
-    std::cout << ' ' << *it;
+for (vector<int>::iterator it=vect.begin(); it!=vect.end(); ++it) {
+    cout << ' ' << *it;
 }
 ```
 
 ## Data structures
+
+### Tuple
+Import:
+```cpp
+#include <tuple>
+```
+#### Overview
+```cpp
+// Declaration and initialization
+tuple<int, int, int> triplet = make_tuple(1, 2, 3);
+
+// Accessor
+int first = get<0>(triplet); //=> 1
+
+// Mutator
+get<0>(triplet) = 0;
+```
+
 ### Array
 #### Initializations
 ```cpp
@@ -120,7 +144,7 @@ int size = int n = sizeof(arr) / sizeof(arr[0]);
 
 ### std::array
 ```cpp
-std::array<int, 10> s = {5, 7, 4, 2, 8, 6, 1, 9, 0, 3};
+array<int, 10> s = {5, 7, 4, 2, 8, 6, 1, 9, 0, 3};
 ```
 
 ### std::vector
@@ -128,9 +152,10 @@ Import:
 ```cpp
 #include <vector>
 ```
+
 #### Overview
-Initialization
 ```cpp
+// Initialization
 vector<int> vect;           // init empty vector
 vector<int> vect(n);        // init vector of size n
 vector<int> vect(n, 10);    // init vector of size n with all values being 10
@@ -156,8 +181,8 @@ vect[i] = x;
 vect[i]++;
 
 // Removing
-vect.erase (myvector.begin() + 5);                    // erase the 6th element
-vect.erase (myvector.begin(), myvector.begin() + 3);  // erase the first 3 elements:
+vect.erase(myvector.begin() + 5);                    // erase the 6th element
+vect.erase(myvector.begin(), myvector.begin() + 3);  // erase the first 3 elements:
 ```
 
 ## Sorting
@@ -171,36 +196,37 @@ Import:
 Default order
 ```cpp
 // sort using the default operator<
-std::sort(s.begin(), s.end());
+sort(s.begin(), s.end());
 ```
 Descending order
 ```cpp
 // sort using a standard library compare function object
-std::sort(s.begin(), s.end(), std::greater<int>());
+sort(s.begin(), s.end(), greater<int>());
 ```
 
 Custom order
 ```cpp
+// Using function object
 struct {
     bool operator()(int a, int b) const{   
         return a < b;
     }   
 } customComparator;
-std::sort(s.begin(), s.end(), customComparator);
+sort(s.begin(), s.end(), customComparator);
 
-// sort using a lambda expression 
-std::sort(s.begin(), s.end(), [](int a, int b) {
+// Using a lambda expression 
+sort(s.begin(), s.end(), [](int a, int b) {
     return a < b;   
 });
 ```
-Note: default `std::sort` doesn't guarantee stable sorting. For stable sorting, use `std::stable_sort`
+Note: default `sort` is not stable. For stable sorting, use `stable_sort`
 
 ## Pointers
 ```cpp
 int *ptr;
 int a = 3;
 ptr = &a;
-std::cout << *ptr;
+cout << *ptr;
 ```
 
 ## I/O
@@ -211,16 +237,16 @@ std::cout << *ptr;
 
 int main() {
   int l, r;
-  std::cin >> l >> r;
-  std::cout << l << ' ' << r << std::endl;
+  cin >> l >> r;
+  cout << l << ' ' << r << endl;
 }
 ```
 
 ### Reading until EOF
 ```cpp
-std::string line; 
-std::stringstream ss;
-while(std::getline(std::cin, line)){
+string line; 
+stringstream ss;
+while(getline(cin, line)){
   if (line.length() == 0) break;
   ss.clear();
   ss.str(line);
@@ -245,17 +271,35 @@ void readArr2D(int rows, int cols) {
   for (int r=0; r<rows; r++) {
     Array2D[r] = new char[maxSize];
     for (int c=0; c<cols; c++) {
-      std::cin >> Array2D[r][c];
+      cin >> Array2D[r][c];
     }
   }
 }
 ```
 
-## Library
-### Tuple
+## OOP
+### Struct
 ```cpp
-#include <tuple>
-// ...
-std::tuple<int, int, int> triplet = std::make_tuple(1, 2, 3);
-int first = std::get<0>(triplet); //=> 1
+struct Human {
+  string name;
+  int age;
+  Human* father;
+  Human* mother;
+};
+
+int main() {
+  Human* jack = new Human();
+  jack->name = "jack";
+  jack->age = 55;
+
+  Human* mary = new Human();
+  mary->name = "mary";
+  mary->age = 52;
+
+  Human* john = new Human();
+  john->name = "john";
+  john->age = 25;
+  john->father = jack;
+  john->mother = mary;
+}
 ```
