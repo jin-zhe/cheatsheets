@@ -90,65 +90,6 @@ int comp = str.compare("Hello World!"); //=> 0
 
 ```
 
-### Self-implementations
-#### String to char array
-```cpp
-char* to_char_array(string str) {
-    int n = str.length();
-    char* char_array = new char[n+1];
-    strcpy(char_array, str.c_str());
-    return char_array;
-}
-```
-
-#### Substring
-```cpp
-// Returns the index of the first occurence of the substring, else -1
-int find(string str, string subStr) {
-  for (int i = 0; i < str.length() - subStr.length() + 1; i++) {
-    bool match = true;
-    for (int j = 0; j < subStr.length(); j++) {
-      if (str[i + j] != subStr[j]) {
-        match = false;
-        break;
-      }
-    }
-    if (match) return i;
-  }
-  return -1;
-}
-```
-
-#### Tokenize
-For single delimiter
-```cpp
-#include <sstream>
-// ...
-vector<string> tokenizer(string str, char delimiter) {
-  string token;
-  istringstream iss(str);
-  vector<string> tokens(str.length());
-  while(getline(iss, token, delimiter)) {
-    tokens.push_back(token);
-  }
-  return tokens;
-}
-```
-For multiple delimiters
-```cpp
-vector<string> tokenizer(string str, string delimiters) {
-    vector<string> tokens(str.length());
-    char* str_chars = to_char_array(str);
-    char* del_chars = to_char_array(delimiters);
-    char *token = strtok(str_chars, del_chars); 
-    while (token != NULL) {
-        tokens.push_back(token);
-        token = strtok(NULL, del_chars);
-    }
-    return tokens;
-}
-```
-
 ## Iteration
 ```cpp
 // a is a copy of the items we are iterating over
@@ -243,7 +184,7 @@ vect[i] = x;
 vect[i]++;
 
 // Removing
-vect.erase(vect.begin() + 5);                    // erase the 6th element
+vect.erase(vect.begin() + 5);                // erase the 6th element
 vect.erase(vect.begin(), vect.begin() + 3);  // erase the first 3 elements:
 ```
 
@@ -314,39 +255,6 @@ cin >> str;
 // Read an entire line
 getline(cin, str);
 ```
-#### Reading until EOF
-```cpp
-string line; 
-istringstream iss;
-while(getline(cin, line)){
-  if (line.length() == 0) break;
-  iss.clear();
-  iss.str(line);
-
-  // Read in data
-  int num;
-  iss >> num;
-  // ...
-}
-```
-#### Reading 2D array
-Here's an example of reading in a 2D `char` array.
-```cpp
-// Global vars
-int maxSize = 200;
-char **Array2D;
-
-// Function to read user input
-void readArr2D(int rows, int cols) {
-  Array2D = new char *[maxSize];
-  for (int r=0; r<rows; r++) {
-    Array2D[r] = new char[maxSize];
-    for (int c=0; c<cols; c++) {
-      cin >> Array2D[r][c];
-    }
-  }
-}
-```
 #### std::cout
 ```cpp
 cout << "Hello World!" << endl;
@@ -410,5 +318,109 @@ int main() {
   john->age = 25;
   john->father = jack;
   john->mother = mary;
+}
+```
+
+## Custom utils
+#### String to char array
+```cpp
+char* to_char_array(string str) {
+    int n = str.length();
+    char* char_array = new char[n+1];
+    strcpy(char_array, str.c_str());
+    return char_array;
+}
+```
+
+#### Substring
+```cpp
+// Returns the index of the first occurence of the substring, else -1
+int find(string str, string subStr) {
+  for (int i = 0; i < str.length() - subStr.length() + 1; i++) {
+    bool match = true;
+    for (int j = 0; j < subStr.length(); j++) {
+      if (str[i + j] != subStr[j]) {
+        match = false;
+        break;
+      }
+    }
+    if (match) return i;
+  }
+  return -1;
+}
+```
+
+#### Tokenize
+For single delimiter
+```cpp
+#include <sstream>
+// ...
+vector<string> tokenizer(string str, char delimiter) {
+  string token;
+  istringstream iss(str);
+  vector<string> tokens(str.length());
+  while(getline(iss, token, delimiter)) {
+    tokens.push_back(token);
+  }
+  return tokens;
+}
+```
+For multiple delimiters
+```cpp
+vector<string> tokenizer(string str, string delimiters) {
+    vector<string> tokens(str.length());
+    char* str_chars = to_char_array(str);
+    char* del_chars = to_char_array(delimiters);
+    char *token = strtok(str_chars, del_chars); 
+    while (token != NULL) {
+        tokens.push_back(token);
+        token = strtok(NULL, del_chars);
+    }
+    return tokens;
+}
+```
+#### Reading until EOF
+```cpp
+string line; 
+istringstream iss;
+while(getline(cin, line)){
+  if (line.length() == 0) break;
+  iss.clear();
+  iss.str(line);
+
+  // Read in data
+  int num;
+  iss >> num;
+  // ...
+}
+```
+
+#### Reading 2D array
+Here's an example of reading in a 2D `char` array.
+```cpp
+// Global vars
+int maxSize = 200;
+char **Array2D;
+
+// Function to read user input
+void readArr2D(int rows, int cols) {
+  Array2D = new char *[maxSize];
+  for (int r=0; r<rows; r++) {
+    Array2D[r] = new char[maxSize];
+    for (int c=0; c<cols; c++) {
+      cin >> Array2D[r][c];
+    }
+  }
+}
+```
+
+#### Printing 1D int array
+```cpp
+void print_array(int* arr, int n) {
+  for (int* i=arr; i<arr+n; i++) {
+    cout << *i;
+    if (i<arr+n-1) cout << ", ";
+  }
+  cout << endl;
 }
 ```
