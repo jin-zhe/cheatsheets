@@ -141,8 +141,15 @@ int arr[] {1, 2, 3}     //=> [1, 2, 3]        // universal initialization
 ```
 
 #### Overview
+Array size
 ```cpp
 int size = int n = sizeof(arr) / sizeof(arr[0]);
+```
+Array copy 
+* items exceeding size of dest will be ignored
+* `begin()` and `end()` only works for arrays and not array pointer/references
+```cpp
+copy(begin(src), end(src), begin(dest));
 ```
 
 ### std::array
@@ -294,6 +301,21 @@ int l, r;
 scanf("%d %d", &l, &r);
 ```
 
+### istringstream
+Import
+```cpp
+#include <sstream>
+```
+#### Overview
+```cpp
+string line = "5 6 22 8";
+istringstream iss;
+iss.clear();
+iss.str(line);
+int num1, num2, num3, num4;
+iss >> num1 >> num2 >> num3 >> num4;
+```
+
 ## OOP
 ### Struct
 ```cpp
@@ -379,38 +401,30 @@ vector<string> tokenizer(string str, string delimiters) {
     return tokens;
 }
 ```
-#### Reading until EOF
+#### Reading until empty line
 ```cpp
-string line; 
-istringstream iss;
-while(getline(cin, line)){
-  if (line.length() == 0) break;
-  iss.clear();
-  iss.str(line);
-
-  // Read in data
-  int num;
-  iss >> num;
-  // ...
+vector<string> read_till_empty() {
+  vector<string> lines;
+  string line; 
+  while(getline(cin, line)){
+    if (!line.length()) break;
+    lines.push_back(line);
+  }
+  return lines;
 }
 ```
 
-#### Reading 2D array
-Here's an example of reading in a 2D `char` array.
+#### Reading 2D char array
 ```cpp
-// Global vars
-int maxSize = 200;
-char **Array2D;
-
-// Function to read user input
-void readArr2D(int rows, int cols) {
-  Array2D = new char *[maxSize];
+char** read_2D_char_array(int rows, int cols) {
+  char **char_array_2D = new char *[rows];
   for (int r=0; r<rows; r++) {
-    Array2D[r] = new char[maxSize];
+    char_array_2D[r] = new char[cols];
     for (int c=0; c<cols; c++) {
-      cin >> Array2D[r][c];
+      cin >> char_array_2D[r][c];
     }
   }
+  return char_array_2D;
 }
 ```
 
