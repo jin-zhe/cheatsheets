@@ -112,11 +112,9 @@ for (vector<int>::iterator it=vect.begin(); it!=vect.end(); ++it) {
 Advancing a iterator
 ```cpp
 ++it            // Advance iterator to the next item
+it += k;        // Advance iterator by k items. We can do this without worring about size of item
 advance(it, k)  // Advance iterator by k items 
 ```
-Note:  
-*  `it + 1` **will not** be the iterator at the next item
-* If the item at iterator has been removed via `Erase` function or equivalent, it will no longer be able to advance
 
 ## Data structures
 
