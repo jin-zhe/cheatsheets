@@ -345,7 +345,7 @@ sort(s.begin(), s.end(), [](int a, int b) {
 ```
 Note: default `sort` is not stable. For stable sorting, use `stable_sort`
 
-## Pointers
+## Pointer
 ### Basics
 ```cpp
 int *ptr;       // Declaration
@@ -360,6 +360,15 @@ MyObject* my_object = new MyObject();
 /* The following are equivalent when accessing attributes of an object pointer */
 (*my_object).attr1;
 my_object->attr1;
+```
+
+## Reference
+[Pointers vs references](https://stackoverflow.com/questions/57483/what-are-the-differences-between-a-pointer-variable-and-a-reference-variable-in)
+### Basics
+```cpp
+int a = 3;
+int &ref = a;
+cout << ref;    // Acess value of reference
 ```
 
 ## I/O
