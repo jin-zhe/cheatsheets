@@ -12,25 +12,25 @@ using namespace std;      // This will be assumed for the remaining of this chea
 ```cpp
 int test = 1;
 switch(test) {
-    case 1 : cout << '1'; // prints "1"
-             break;       // and exits the switch
-    case 2 : cout << '2';
-             break;
-    // ...
-    default:
-             cout << 'Default case';
-             break;
+  case 1 : cout << '1'; // prints "1"
+           break;       // and exits the switch
+  case 2 : cout << '2';
+           break;
+  // ...
+  default:
+           cout << 'Default case';
+           break;
 }
 ```
 If declaration statement exists within a case, it has to be scoped. e.g.
 ```cpp
 switch(1) {
-    case 1: {  int x = 0;
-               std::cout << x << '\n';
-               break;
-            } // scope of 'x' ends here
-    default: std::cout << "default\n"; // no error
+  case 1: {  int x = 0;
+             std::cout << x << '\n';
              break;
+          } // scope of 'x' ends here
+  default: std::cout << "default\n"; // no error
+           break;
 }
 ```
 
@@ -239,6 +239,12 @@ Import
 ```cpp
 #include <stack>
 ```
+#### Overview
+##### Declaration and initialization
+```cpp
+stack<int> stk;
+stack<int> stk(vector<int>{1,2,3,4});
+```
 ##### Capacity
 ```cpp
 stk.empty();    // Checks if stack is empty
@@ -257,6 +263,11 @@ stk.pop(item);  // Pop item off top of stack
 Import
 ```cpp
 #include <queue>
+```
+#### Overview
+##### Declaration and initialization
+```cpp
+queue<int> q;
 ```
 ##### Capacity
 ```cpp
@@ -278,6 +289,11 @@ Import
 ```cpp
 #include <deque>
 ```
+#### Overview
+##### Declaration and initialization
+```cpp
+deque<int> deq;
+```
 ##### Capacity
 ```cpp
 deq.empty();    // Checks if deque is empty
@@ -295,13 +311,13 @@ deq.pop_front(item);    // Pop item from front of deque
 deq.push_back(item);    // Inject item at rear of deque
 deq.pop_back(item);     // Eject item at rear of deque
 ```
+
 ## Sorting
 Import:
 ```cpp
 #include <algorithm>
 #include <functional> // if using lambda
 ```
-
 ### Overview
 Default order
 ```cpp
@@ -438,14 +454,14 @@ struct Human {
 #### Declaration and initialization
 Using `new` constructor
 ```cpp
-Human* someone = new Human;    // Members are NOT initialized.
-Human* someone = new Human();  // Members are zero-initialized
+Human* someone = new Human;    // Attributes are NOT initialized.
+Human* someone = new Human();  // Attributes are zero-initialized
 Human  someone = new Human{};  // From C++14: New Brace initializer (Members are zero-initialized)
 ```
 Using struct constructor
 ```cpp
-Human  someone;                 // Members are NOT initialized.
-Human  someone = Human();       // Members are zero-initialized
+Human  someone;                 // Attributes are NOT initialized.
+Human  someone = Human();       // Attributes are zero-initialized
 Human  someone{};               // From C++14: New Brace initializer (Members are zero-initialized)
 ```
 #### Example
