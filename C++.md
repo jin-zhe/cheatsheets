@@ -426,6 +426,7 @@ iss >> num1 >> num2 >> num3 >> num4;
 
 ## OOP
 ### Struct
+All attributes in a struct are publicly accessible
 ```cpp
 struct Human {
   string name;
@@ -433,22 +434,35 @@ struct Human {
   Human* father;
   Human* mother;
 };
+```
+#### Declaration and initialization
+Using `new` constructor
+```cpp
+Human* someone = new Human;    // Members are NOT initialized.
+Human* someone = new Human();  // Members are zero-initialized
+Human  someone = new Human{};  // From C++14: New Brace initializer (Members are zero-initialized)
+```
+Using struct constructor
+```cpp
+Human  someone;                 // Members are NOT initialized.
+Human  someone = Human();       // Members are zero-initialized
+Human  someone{};               // From C++14: New Brace initializer (Members are zero-initialized)
+```
+#### Example
+```cpp
+Human* jack = new Human();
+jack->name = "jack";
+jack->age = 55;
 
-int main() {
-  Human* jack = new Human();
-  jack->name = "jack";
-  jack->age = 55;
+Human* mary = new Human();
+mary->name = "mary";
+mary->age = 52;
 
-  Human* mary = new Human();
-  mary->name = "mary";
-  mary->age = 52;
-
-  Human* john = new Human();
-  john->name = "john";
-  john->age = 25;
-  john->father = jack;
-  john->mother = mary;
-}
+Human* john = new Human();
+john->name = "john";
+john->age = 25;
+john->father = jack;
+john->mother = mary;
 ```
 
 ## Custom utils
