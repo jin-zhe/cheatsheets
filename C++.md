@@ -109,6 +109,14 @@ for (vector<int>::iterator it=vect.begin(); it!=vect.end(); ++it) {
     cout << ' ' << *it;
 }
 ```
+Advancing a iterator
+```cpp
+++it            // Advance iterator to the next item
+advance(it, k)  // Advance iterator by k items 
+```
+Note:  
+*  `it + 1` **will not** be the iterator at the next item
+* If the item at iterator has been removed via `Erase` function or equivalent, it will no longer be able to advance
 
 ## Data structures
 
@@ -118,14 +126,16 @@ Import:
 #include <tuple>
 ```
 #### Overview
+##### Declaration and initialization
 ```cpp
-// Declaration and initialization
 tuple<int, int, int> triplet = make_tuple(1, 2, 3);
-
-// Accessor
+```
+##### Accessor
+```cpp
 int first = get<0>(triplet); //=> 1
-
-// Mutator
+```
+##### Modifier
+```cpp
 get<0>(triplet) = 0;
 ```
 
@@ -164,6 +174,7 @@ Import:
 ```
 
 #### Overview
+##### Declaration and initialization
 ```cpp
 // Initialization
 vector<int> vect;           // init empty vector
@@ -175,26 +186,115 @@ vector<int> vect(1, 2, 3);  // init vector with items {1, 2, 3}
 int arr[3] = {10, 20, 30};
 vector<int> vect(arr, arr + 3); // init vector with items {10, 20, 30} 
 ```
-
+##### Capacity
 ```cpp
-// Length
 vect.size():
-
-// Appending
-vect.push_back(99);
-
-// Accessor
-vect[i];
-
-// Mutator
+```
+##### Accessors
+```cpp
 vect[i] = x;
+```
+##### Modifiers
+```cpp
 vect[i]++;
+vect.push_back(99); // Appending
 
 // Removing
 vect.erase(vect.begin() + 5);                // erase the 6th element
 vect.erase(vect.begin(), vect.begin() + 3);  // erase the first 3 elements:
 ```
 
+### std::list
+Import
+```cpp
+#include <list>
+```
+#### Overview
+##### Declaration and initialization
+```cpp
+list<int> lst;              
+list<int> lst({1, 2, 3});   // Initialize with items
+```
+##### Capacity
+```cpp
+lst.empty();    // Checks if list is empty
+lst.size();     // Returns size of list
+```
+#### Accessors
+```cpp
+lst.front();    // Get head item
+lst.back();     // Get tail item
+```
+#### Modifiers
+```cpp
+lst.clear();            // clear all contents of list
+lst.push_back(item);    // Appends item to the rear
+lst.push_front(item);   // Prepends item at head
+lst.insert(it, item);   // Inserts item before iterator position
+lst.pop_back();         // Removes last item
+```
+
+### std::stack
+Import
+```cpp
+#include <stack>
+```
+##### Capacity
+```cpp
+stk.empty();    // Checks if stack is empty
+stk.size();     // Returns current size on stack
+```
+#### Accessors
+```cpp
+stk.top();      // Returns the topmost element
+```
+#### Modifiers
+```cpp
+stk.push(item); // Push item to top of stack
+stk.pop(item);  // Pop item off top of stack
+```
+### std::queue
+Import
+```cpp
+#include <queue>
+```
+##### Capacity
+```cpp
+q.empty();    // Checks if queue is empty
+q.size();     // Returns current size on queue
+```
+#### Accessors
+```cpp
+q.front();  // Returns front item of queue
+q.back();   // Returns rear item of queue
+```
+#### Modifiers
+```cpp
+q.push(item); // enqueue item to rear of queue
+q.pop(item);  // dequeue item from front of queue
+```
+### std:deque
+Import
+```cpp
+#include <deque>
+```
+##### Capacity
+```cpp
+deq.empty();    // Checks if deque is empty
+deq.size();     // Returns current size on deque
+```
+#### Accessors
+```cpp
+deque.front();  // Returns front item of deque
+deque.back();   // Returns rear item of deque
+```
+#### Modifiers
+```cpp
+deq.push_front(item);   // Push item to front of deque
+deq.pop_front(item);    // Pop item from front of deque
+deq.push_back(item);    // Inject item at rear of deque
+deq.pop_back(item);     // Eject item at rear of deque
+```
 ## Sorting
 Import:
 ```cpp
@@ -232,11 +332,20 @@ sort(s.begin(), s.end(), [](int a, int b) {
 Note: default `sort` is not stable. For stable sorting, use `stable_sort`
 
 ## Pointers
+### Basics
 ```cpp
-int *ptr;
+int *ptr;       // Declaration
 int a = 3;
-ptr = &a;
-cout << *ptr;
+ptr = &a;       // Assignment
+cout << *ptr;   // De-reference to retrieve value
+```
+### Object pointers
+```cpp
+MyObject* my_object = new MyObject();
+
+/* The following are equivalent when accessing attributes of an object pointer */
+(*my_object).attr1;
+my_object->attr1;
 ```
 
 ## I/O
@@ -252,7 +361,6 @@ Integers
 int l, r;
 cin >> l >> r;
 ```
-
 Strings
 ```cpp
 string str;
