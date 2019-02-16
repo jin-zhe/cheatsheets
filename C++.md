@@ -282,6 +282,10 @@ q.back();   // Returns rear item of queue
 q.push(item); // enqueue item to rear of queue
 q.pop(item);  // dequeue item from front of queue
 ```
+#### Misc
+```cpp
+print_queue(q);
+```
 ### std:deque
 Import
 ```cpp
@@ -308,6 +312,34 @@ deq.push_front(item);   // Push item to front of deque
 deq.pop_front(item);    // Pop item from front of deque
 deq.push_back(item);    // Inject item at rear of deque
 deq.pop_back(item);     // Eject item at rear of deque
+```
+### std:deque
+Import
+```cpp
+#include <queue>
+```
+#### Overview
+##### Declaration and initialization
+```cpp
+priority_queue<int> pq;
+```
+##### Capacity
+```cpp
+pq.empty();
+pq.size();
+```
+#### Accessors
+```cpp
+pq.top();
+```
+#### Modifiers
+```cpp
+pq.push(item);
+pq.pop();
+```
+#### Misc
+```cpp
+print_queue(q);
 ```
 
 ## Sorting
