@@ -313,7 +313,7 @@ deq.pop_front(item);    // Pop item from front of deque
 deq.push_back(item);    // Inject item at rear of deque
 deq.pop_back(item);     // Eject item at rear of deque
 ```
-### std:deque
+### std:priority_queue
 Import
 ```cpp
 #include <queue>
