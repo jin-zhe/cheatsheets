@@ -508,6 +508,10 @@ struct Human {
   int age;
   Human* father;
   Human* mother;
+  Human(string n, int a) {
+    name = n;
+    age = a;
+  }
 };
 ```
 #### Declaration and initialization
@@ -525,17 +529,9 @@ Human  someone{};               // From C++14: New Brace initializer (Members ar
 ```
 #### Example
 ```cpp
-Human* jack = new Human();
-jack->name = "jack";
-jack->age = 55;
-
-Human* mary = new Human();
-mary->name = "mary";
-mary->age = 52;
-
-Human* john = new Human();
-john->name = "john";
-john->age = 25;
+Human* jack = new Human("jack", 55);
+Human* mary = new Human("mary", 52);
+Human* john = new Human("john", 25);
 john->father = jack;
 john->mother = mary;
 ```
