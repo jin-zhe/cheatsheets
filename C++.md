@@ -508,9 +508,17 @@ struct Human {
   int age;
   Human* father;
   Human* mother;
+  
+  /* Constructors */
+  Human() {}
   Human(string n, int a) {
     name = n;
     age = a;
+  }
+  
+  /* Function */
+  void print() {
+    cout << "Hello I am " << name << " and I am " << age << " years old!" << endl;
   }
 };
 ```
