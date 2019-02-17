@@ -402,6 +402,26 @@ int a = 3;
 int &ref = a;
 cout << ref;    // Acess value of reference
 ```
+### Examples
+Swap function
+```cpp
+void swap(int &a, int &b) {
+  int temp = a;
+  a = b;
+  b = temp;
+}
+```
+By default C++ passes by value (i.e make copy). Thus when writing functions to modify objects, be sure to pass (and return) them via reference!
+```cpp
+void update_val(vector<int> &vect, int index, int val) {
+  vect[index] = val;
+}
+
+queue<int> & get_curr_queue(bool on_left, queue<int> &left_queue, queue<int> &right_queue) {
+  return (on_left)? left_queue : right_queue;
+}
+queue<int> &curr_queue = get_curr_queue(on_left, left_queue, right_queue); // Important! If not assigning to a reference, a copy is made instead
+```
 
 ## I/O
 ### iostream
