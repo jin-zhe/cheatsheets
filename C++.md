@@ -91,7 +91,13 @@ int comp = str.compare("Hello World!"); //=> 0
 ```
 
 ## Iteration
+### Loops
+#### For
 ```cpp
+for (int i=0; i<n; ++i) {
+  // ...
+}
+
 // a is a copy of the items we are iterating over
 for (auto a : s) {
   cout << a << " ";
@@ -102,7 +108,19 @@ for (auto &a : s) {
   cout << a << " ";
 }  
 ```
-
+#### While
+```cpp
+while(loop_conditon) {
+   // ...
+}
+```
+#### Do-while
+```cpp
+do {
+   // ...
+}
+while (loop_condition);
+```
 ### Iterators
 ```cpp
 for (vector<int>::iterator it=vect.begin(); it!=vect.end(); ++it) {
