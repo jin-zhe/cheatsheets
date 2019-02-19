@@ -321,8 +321,9 @@ deq.size();     // Returns current size on deque
 ```
 #### Accessors
 ```cpp
-deque.front();  // Returns front item of deque
-deque.back();   // Returns rear item of deque
+deq.front();  // Returns front item of deque
+deq.back();   // Returns rear item of deque
+deq.at(i);    // Returns the item at position i in O(1)
 ```
 #### Modifiers
 ```cpp
@@ -330,6 +331,12 @@ deq.push_front(item);   // Push item to front of deque
 deq.pop_front(item);    // Pop item from front of deque
 deq.push_back(item);    // Inject item at rear of deque
 deq.pop_back(item);     // Eject item at rear of deque
+```
+#### Iterator
+```cpp
+for (deque::iterator it = deq.begin(); it != deq.end(); ++it) {
+  // ...
+}
 ```
 ### std:priority_queue
 Import
@@ -529,9 +536,9 @@ struct Human {
   
   /* Constructors */
   Human() {}
-  Human(string n, int a) {
-    name = n;
-    age = a;
+  Human(string name, int age) {
+    this->name = name;
+    this->age = age;
   }
   
   /* Function */
