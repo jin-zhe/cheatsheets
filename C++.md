@@ -345,8 +345,20 @@ Import
 #### Overview
 ##### Declaration and initialization
 ```cpp
-priority_queue<int> pq;
+priority_queue<int> pq;                             // Creates a max heap
+priority_queue<int, vector<int>, greater<int>> pq;  // Creates a min heap
 ```
+To create a priority queue with custom comparator:
+```cpp
+struct CustomCompare {
+  bool operator()(const int& lhs, const int& rhs) {
+    return lhs < rhs; // This entails a max heap
+  }
+};
+// ...
+priority_queue<int, vector<int>, CustomCompare > pq;
+```
+
 ##### Capacity
 ```cpp
 pq.empty();
