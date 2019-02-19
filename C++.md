@@ -334,7 +334,7 @@ deq.pop_back(item);     // Eject item at rear of deque
 ```
 #### Iterator
 ```cpp
-for (deque::iterator it = deq.begin(); it != deq.end(); ++it) {
+for (deque<int>::iterator it = deq.begin(); it != deq.end(); ++it) {
   // ...
 }
 ```
