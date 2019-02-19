@@ -136,25 +136,6 @@ advance(it, k)  // Advance iterator by k items
 
 ## Data structures
 
-### std::tuple
-Import:
-```cpp
-#include <tuple>
-```
-#### Overview
-##### Declaration and initialization
-```cpp
-tuple<int, int, int> triplet = make_tuple(1, 2, 3);
-```
-##### Accessor
-```cpp
-int first = get<0>(triplet); //=> 1
-```
-##### Modifier
-```cpp
-get<0>(triplet) = 0;
-```
-
 ### Array
 #### Initializations
 ```cpp
@@ -178,17 +159,35 @@ Array copy
 copy(begin(src), end(src), begin(dest));
 ```
 
-### std::array
+### `std::array`
 ```cpp
 array<int, 10> s = {5, 7, 4, 2, 8, 6, 1, 9, 0, 3};
 ```
 
-### std::vector
+### `std::tuple`
+Import:
+```cpp
+#include <tuple>
+```
+#### Overview
+##### Declaration and initialization
+```cpp
+tuple<int, int, int> triplet = make_tuple(1, 2, 3);
+```
+##### Accessor
+```cpp
+int first = get<0>(triplet); //=> 1
+```
+##### Modifier
+```cpp
+get<0>(triplet) = 0;
+```
+
+### `std::vector`
 Import:
 ```cpp
 #include <vector>
 ```
-
 #### Overview
 ##### Declaration and initialization
 ```cpp
@@ -220,7 +219,7 @@ vect.erase(vect.begin() + 5);                // erase the 6th element
 vect.erase(vect.begin(), vect.begin() + 3);  // erase the first 3 elements:
 ```
 
-### std::list
+### `std::list`
 Import
 ```cpp
 #include <list>
@@ -250,7 +249,7 @@ lst.insert(it, item);   // Inserts item before iterator position
 lst.pop_back();         // Removes last item
 ```
 
-### std::stack
+### `std::stack`
 Import
 ```cpp
 #include <stack>
@@ -275,7 +274,7 @@ stk.top();      // Returns the topmost element
 stk.push(item); // Push item to top of stack
 stk.pop(item);  // Pop item off top of stack
 ```
-### std::queue
+### `std::queue`
 Import
 ```cpp
 #include <queue>
@@ -304,7 +303,7 @@ q.pop(item);  // dequeue item from front of queue
 ```cpp
 print_queue(q);
 ```
-### std:deque
+### `std:deque`
 Import
 ```cpp
 #include <deque>
@@ -338,7 +337,7 @@ for (deque<int>::iterator it = deq.begin(); it != deq.end(); ++it) {
   // ...
 }
 ```
-### std:priority_queue
+### `std:priority_queue`
 Import
 ```cpp
 #include <queue>
@@ -449,12 +448,12 @@ queue<int> &curr_queue = get_curr_queue(on_left, left_queue, right_queue); // Im
 ```
 
 ## I/O
-### iostream
+### `iostream`
 Import
 ```cpp
 #include <iostream>
 ```
-#### std::cin
+#### `std::cin`
 Integers
 ```cpp
 // Read 2 numbers
@@ -470,16 +469,16 @@ cin >> str;
 // Read an entire line
 getline(cin, str);
 ```
-#### std::cout
+#### `std::cout`
 ```cpp
 cout << "Hello World!" << endl;
 ```
-### stdio.h
+### `stdio.h`
 Import
 ```cpp
 #include <stdio.h>
 ```
-#### printf
+#### `printf`
 ```cpp
 printf("Hello World!\n");
 printf ("Characters: %c %c \n", 'a', 65);
@@ -503,13 +502,13 @@ Width trick:    10
 A string
 ```
 
-#### scanf
+#### `scanf`
 ```cpp
 int l, r;
 scanf("%d %d", &l, &r);
 ```
 
-### istringstream
+### `istringstream`
 Import
 ```cpp
 #include <sstream>
