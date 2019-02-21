@@ -123,22 +123,22 @@ while (loop_condition);
 ```
 ### Iterators
 Available to the following STL data types
+```cpp
+#include <array>
+#include <deque>
+#include <forward_list>
+#include <list>
+#include <map>
+#include <regex>
+#include <set>
+#include <span>         // (since C++20)
+#include <string>
+#include <string_view>  // (since C++17)
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
 ```
-<array>
-<deque>
-<forward_list>
-<list>
-<map>
-<regex>
-<set>
-<span>
-(since C++20)
-<string>
-<string_view> (since C++17)
-<unordered_map>
-<unordered_set>
-<vector>
-```
+
 #### Iterating an iterable
 For-loop:
 ```cpp
@@ -176,6 +176,8 @@ it = vect.end();
 earse(it);
 cout << *it << endl; //=> 5
 ```
+#### Caveat
+Note that iterators might be invalidated when `.size()` of the container changes. Specifically when the updated `.size()` after an operation is greater than `.capacity()` then all iterators and references (including the past-the-end iterator) are invalidated. i.e. They can no longer be used! Otherwise only the past-the-end iterator is invalidated.
 
 ## Data structures
 
