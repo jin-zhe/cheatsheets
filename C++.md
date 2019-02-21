@@ -122,16 +122,59 @@ do {
 while (loop_condition);
 ```
 ### Iterators
+Available to the following STL data types
+```
+<array>
+<deque>
+<forward_list>
+<list>
+<map>
+<regex>
+<set>
+<span>
+(since C++20)
+<string>
+<string_view> (since C++17)
+<unordered_map>
+<unordered_set>
+<vector>
+```
+#### Iterating an iterable
+For-loop:
 ```cpp
 for (vector<int>::iterator it=vect.begin(); it!=vect.end(); ++it) {
-    cout << ' ' << *it;
+    // Do something with *it;
 }
 ```
-Advancing a iterator
+While-loop:
+```cpp
+vector<int>::iterator it=vect.begin();
+while(it != vect.end()) {
+  // Do something with *it
+  ++it;
+}
+```
+
+#### Advancing a iterator
 ```cpp
 ++it            // Advance iterator to the next item
 it += k;        // Advance iterator by k items. We can do this without worring about size of item
 advance(it, k)  // Advance iterator by k items 
+```
+#### Erasing
+```cpp
+vector<int> vect = {0,1,2,3,4,5};
+vector<int>::iterator it;
+
+/* If erasing iterator item at non-last position, iterator is automatically advanced to the next item */
+it = vect.begin() + 2;
+erase(it);
+cout << *it << endl; //=> 3
+
+/* If erasing iterator item at last position, iterator is not advanced */
+it = vect.end();
+earse(it);
+cout << *it << endl; //=> 5
 ```
 
 ## Data structures
