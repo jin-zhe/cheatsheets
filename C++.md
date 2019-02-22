@@ -534,33 +534,37 @@ Import:
 #include <functional> // if using lambda
 ```
 ### Sorting
-Default order
+#### Default order
 ```cpp
-// sort using the default operator<
+// sort using the default operator
 sort(s.begin(), s.end());
+stable_sort(s.begin(), s.end());
 ```
-Descending order
+#### Descending order
 ```cpp
 // sort using a standard library compare function object
 sort(s.begin(), s.end(), greater<int>());
 ```
+Note: default `sort` is not stable. For stable sorting, use `stable_sort`
 
-Custom order
+#### Custom order
+A comparator function with 2 parameters simply returns a `bool` that represents the condition to satisfy in order to rank first value before second value after sorting. 
+
+Using a function object:
 ```cpp
-// Using function object
 struct {
     bool operator()(int a, int b) const{   
         return a < b;
     }   
 } customComparator;
 sort(s.begin(), s.end(), customComparator);
-
-// Using a lambda expression 
+```
+Using a lambda expression:
+```cpp
 sort(s.begin(), s.end(), [](int a, int b) {
     return a < b;   
 });
 ```
-Note: default `sort` is not stable. For stable sorting, use `stable_sort`
 
 ### Bounds
 ##### `lower_bound`
