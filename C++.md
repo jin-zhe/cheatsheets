@@ -87,7 +87,7 @@ size_t pos = str.find("Hey");           //=> string::npos
 string str3 = str.substr(6);            //=> "World!"
 string str4 = str + " Hey!";            //=> "Hello World! Hey!"
 int comp = str.compare("Hello World!"); //=> 0
-
+"Hello" == "Hello"'                     //=> true
 ```
 
 ## Iteration
@@ -112,6 +112,16 @@ for (auto &a : s) {
 ```cpp
 while(loop_conditon) {
    // ...
+}
+
+int n = 5;
+while(--n) {
+  // n = 4, 3, 2, 1
+}
+
+int m = 5;
+while(m--) {
+  // m = 5, 4, 3, 2, 1, 0
 }
 ```
 #### Do-while
@@ -161,6 +171,8 @@ while(it != vect.end()) {
 it += k;        // Advance iterator by k items. We can do this without worring about size of item
 advance(it, k)  // Advance iterator by k items 
 ```
+#### `insert`
+// TODO
 #### Erasing
 ```cpp
 vector<int> vect = {0,1,2,3,4,5};
@@ -191,6 +203,12 @@ int arr[5];             //=> [?, ?, ?, ?, ?]
 int arr[] = {1, 2, 3}   //=> [1, 2, 3]        // implicit size understood by compiler
 int arr[] {1, 2, 3}     //=> [1, 2, 3]        // universal initialization
 ```
+Note array size cannot be initialized with a variable. i.e. the following is illegal
+```cpp
+int n = 100;
+int arr[n] = {0};
+```
+Instead, consider using [`std::vector`](#stdvector)
 
 #### Overview
 Array size
@@ -207,6 +225,33 @@ copy(begin(src), end(src), begin(dest));
 ### `std::array`
 ```cpp
 array<int, 10> s = {5, 7, 4, 2, 8, 6, 1, 9, 0, 3};
+```
+
+### `std::pair`
+Import:
+```cpp
+#include <utility>
+```
+#### Overview
+##### Declaration and initialization
+```cpp
+pair<int,int> p = make_pair(1,2);
+```
+##### Accessor
+```cpp
+int first = p.first;  //=> 1
+int first = p.second; //=> 2
+```
+##### Modifier
+```cpp
+p.first = 0;
+```
+##### Operation
+Equaliy via `==` is supported:
+```cpp
+pair<int,int> p1 = make_pair(1,2);
+pair<int,int> p2 = make_pair(1,2);
+p1 == p2; //=> true
 ```
 
 ### `std::tuple`
@@ -226,6 +271,13 @@ int first = get<0>(triplet); //=> 1
 ##### Modifier
 ```cpp
 get<0>(triplet) = 0;
+```
+##### Operation
+Equaliy via `==` is supported:
+```cpp
+tuple<int,int> t1 = make_tuple(1,2);
+tuple<int,int> t2 = make_tuple(1,2);
+t1 == t2; //=> true
 ```
 
 ### `std::vector`
@@ -423,13 +475,13 @@ pq.pop();
 print_queue(q);
 ```
 
-## Sorting
+## algorithm
 Import:
 ```cpp
 #include <algorithm>
 #include <functional> // if using lambda
 ```
-### Overview
+### Sorting
 Default order
 ```cpp
 // sort using the default operator<
@@ -457,6 +509,47 @@ sort(s.begin(), s.end(), [](int a, int b) {
 });
 ```
 Note: default `sort` is not stable. For stable sorting, use `stable_sort`
+
+### Bounds
+##### `lower_bound`
+Returns an iterator to the first item in container encountered that is greater or equal to given value. i.e. `>= val`. If no items qualify in the container, return iterator pointing to `.end()` of container. Performance is O(log N). Note that for this operation to be meangingful, the items should be sorted in some ordering.
+```cpp
+vector<int>::iterator it;
+vector<int> vect1 = {0,1,2,3,3,5};
+vector<int> vect2 = {0,1,2,4,5,6};
+
+/* Case 1: When value exists in container */
+it = lower_bound(vect1.begin(), vect1.end(), 3); //=> iterator poiting at index position 3
+cout << *it << endl;                            //=> 3
+
+/* Case 2: When only items greater than or equal to val exists in container */
+it = lower_bound(vect2.begin(), vect2.end(), 3); //=> iterator poiting at index position 3
+cout << *it << endl;                            //=> 4
+
+/* Case 3: All items in container strictly lower than val */
+it = lower_bound(vect2.begin(), vect2.end(), 7);
+it == vect2.end();                              //=> true
+```
+
+##### `upper_bound`
+Returns an iterator to the first item in container encountered that is **strictly greater than** than given value. i.e. `> val`. If no items qualify in the container, return iterator pointing to `.end()` of container. Performance is O(log N). Note that for this operation to be meangingful, the items should be sorted in some ordering.
+```cpp
+vector<int>::iterator it;
+vector<int> vect1 = {0,1,2,3,3,5};
+vector<int> vect2 = {0,1,2,4,5,6};
+
+/* Case 1: When value exists in container */
+it = upper_bound(vect1.begin(), vect1.end(), 3);  //=> iterator poiting at index position 5
+cout << *it << endl;                              //=> 5
+
+/* Case 2: When only items greater than or equal to val exists in container */
+it = upper_bound(vect2.begin(), vect2.end(), 3);  //=> iterator poiting at index position 3
+cout << *it << endl;                              //=> 4
+
+/* Case 3: All items in container strictly lower than val */
+it = upper_bound(vect2.begin(), vect2.end(), 7);
+it == vect2.end();                                //=> true
+```
 
 ## Pointer
 ### Basics
