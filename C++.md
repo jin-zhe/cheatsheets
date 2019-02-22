@@ -87,7 +87,7 @@ size_t pos = str.find("Hey");           //=> string::npos
 string str3 = str.substr(6);            //=> "World!"
 string str4 = str + " Hey!";            //=> "Hello World! Hey!"
 int comp = str.compare("Hello World!"); //=> 0
-"Hello" == "Hello"'                     //=> true
+assert("Hello" == "Hello");             //=> assertion true
 ```
 
 ## Iteration
@@ -165,31 +165,81 @@ while(it != vect.end()) {
 }
 ```
 
-#### Advancing a iterator
+#### Common manipulations
+##### Conversion
+Index to iterator:
+```cpp
+vector<int>::iterator it;
+vector<int> vect = {0,1,2,3,4,5};
+int index = 4;
+it = vect.begin() + index;
+cout << *it << endl;    //=> 4
+```
+
+Iterator to index:
+```cpp
+vector<int> vect = {0,1,2,3,4,5};
+vector<int>::iterator it = lower_bound(vect.begin(), vect.end(), 2);
+int index = it - vect.begin();
+cout << index << endl;  //=> 2
+```
+##### Advancement
 ```cpp
 ++it            // Advance iterator to the next item
 it += k;        // Advance iterator by k items. We can do this without worring about size of item
 advance(it, k)  // Advance iterator by k items 
 ```
-#### `insert`
-// TODO
-#### Erasing
+##### `insert`
+`.insert(it, val)` inserts `val` in container at location specified by iterator. It returns iterator pointing to the inserted value. For `vector` this is a O(N) procedure. For `list` this is O(1).
+```cpp
+vector<int>::iterator it;
+vector<int> vect = {1,2,4,5};
+
+/* Prepending to the front */
+it = vect.begin();
+it = vect.insert(it, 0);  // vect: {0,1,2,4,5}
+cout << *it << endl;      //=> 0
+
+/* Inserting in bewteen */
+it = vect.begin() + 3;
+it = vect.insert(it, 3);  // vect: {0,1,2,3,4,5}
+cout << *it << endl;      //=> 3
+
+/* Appending to the back */
+it = vect.end();
+it = vect.insert(it, 6);  // vect: {0,1,2,3,4,5,6}
+cout << *it << endl;      //=> 6
+```
+###### Pitfall
+> Causes reallocation if the new `size()` is greater than the old `capacity()`. **If the new `size()` is greater than `capacity()`,  all iterators and references are invalidated. Otherwise, only the iterators and references before the insertion point remain valid.** The past-the-end iterator is also invalidated. [source](https://en.cppreference.com/w/cpp/container/vector/insert)
+
+So it is important to update relevant iterator(s) with the returned iterator or re-assign them after calling `.insert()`!
+##### `emplace`
+TODO
+##### `erase`
+`.erase(start, end)` removes all items from `start` inclusive to `end` exclusive. i.e. `\[start, end)`. If `end` is not supplied as arugment, just remove the single item at `start`. It returns iterator following the last removed element. If the iterator position refers to the last element, the `end()` iterator is returned. For `vector` this is a O(N) procedure. For `list` this is O(1).
 ```cpp
 vector<int> vect = {0,1,2,3,4,5};
 vector<int>::iterator it;
 
-/* If erasing iterator item at non-last position, iterator is automatically advanced to the next item */
+/* If erasing iterator item at non-last position, returned iterator is automatically advanced to the next item */
 it = vect.begin() + 2;
-erase(it);
-cout << *it << endl; //=> 3
+it = vect.erase(it);          // vect: {0,1,3,4,5}
+cout << *it << endl;          //=> 3
 
-/* If erasing iterator item at last position, iterator is not advanced */
-it = vect.end();
-earse(it);
-cout << *it << endl; //=> 5
+it = vect.begin() + 1;
+it = vect.erase(it, it + 3);  // vect: {0,5}
+cout << *it << endl;          //=> 5
+
+/* If erasing iterator item at last position, returned iterator is new end iterator */
+it = vect.end() - 1;
+it = vect.erase(it);          // vect: {0}
+assert(it == vect.end());     //=> assertion true
 ```
-#### Caveat
-Note that iterators might be invalidated when `.size()` of the container changes. Specifically when the updated `.size()` after an operation is greater than `.capacity()` then all iterators and references (including the past-the-end iterator) are invalidated. i.e. They can no longer be used! Otherwise only the past-the-end iterator is invalidated.
+###### Pitfall
+> Invalidates iterators and references at or after the point of the erase, including the end() iterator.[Source](https://en.cppreference.com/w/cpp/container/vector/erase)
+
+So it is important to update relevant iterator(s) with the returned iterator or re-assign them after calling `.erase()`!
 
 ## Data structures
 
@@ -251,7 +301,7 @@ Equaliy via `==` is supported:
 ```cpp
 pair<int,int> p1 = make_pair(1,2);
 pair<int,int> p2 = make_pair(1,2);
-p1 == p2; //=> true
+assert(p1 == p2);   //=> assertion true
 ```
 
 ### `std::tuple`
@@ -277,7 +327,7 @@ Equaliy via `==` is supported:
 ```cpp
 tuple<int,int> t1 = make_tuple(1,2);
 tuple<int,int> t2 = make_tuple(1,2);
-t1 == t2; //=> true
+assertion(t1 == t2); //=> assertion true
 ```
 
 ### `std::vector`
@@ -519,16 +569,16 @@ vector<int> vect1 = {0,1,2,3,3,5};
 vector<int> vect2 = {0,1,2,4,5,6};
 
 /* Case 1: When value exists in container */
-it = lower_bound(vect1.begin(), vect1.end(), 3); //=> iterator poiting at index position 3
-cout << *it << endl;                            //=> 3
+it = lower_bound(vect1.begin(), vect1.end(), 3);  //=> iterator poiting at index position 3
+cout << *it << endl;                              //=> 3
 
 /* Case 2: When only items greater than or equal to val exists in container */
-it = lower_bound(vect2.begin(), vect2.end(), 3); //=> iterator poiting at index position 3
-cout << *it << endl;                            //=> 4
+it = lower_bound(vect2.begin(), vect2.end(), 3);  //=> iterator poiting at index position 3
+cout << *it << endl;                              //=> 4
 
 /* Case 3: All items in container strictly lower than val */
 it = lower_bound(vect2.begin(), vect2.end(), 7);
-it == vect2.end();                              //=> true
+assert(it == vect2.end());                        //=> assertion true
 ```
 
 ##### `upper_bound`
@@ -548,16 +598,24 @@ cout << *it << endl;                              //=> 4
 
 /* Case 3: All items in container strictly lower than val */
 it = upper_bound(vect2.begin(), vect2.end(), 7);
-it == vect2.end();                                //=> true
+assert(it == vect2.end());                        //=> assertion true
 ```
 
 ## Pointer
 ### Basics
 ```cpp
-int *ptr;       // Declaration
 int a = 3;
-ptr = &a;       // Assignment
-cout << *ptr;   // De-reference to retrieve value
+int *ptr1;              // Declaration
+ptr1 = &a;              // Assignment
+cout << *ptr1 << endl;  // De-reference to retrieve value
+*ptr1 = 4;              // Modify value
+cout << a << endl;      //=> 4
+
+int b = 6;
+int *ptr2 = &b;
+ptr1 = ptr2;            // Re-assignment
+cout << *ptr1 << endl;  //=> 6
+cout << a << endl;      //=> 4
 ```
 ### Object pointers
 ```cpp
@@ -811,5 +869,19 @@ void print_array(int* arr, int n) {
     if (i<arr+n-1) cout << ", ";
   }
   cout << endl;
+}
+```
+
+#### Index to iterator
+```cpp
+vector<int>::iterator get_iterator(int index, vector<int> & vect) {
+  return vect.begin() + index;
+}
+```
+
+#### Iterator to index
+```cpp
+int get_index(vector<int>::iterator it, vector<int> & vect) {
+  return distance(vect.begin(), it);
 }
 ```
