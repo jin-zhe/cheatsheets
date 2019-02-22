@@ -182,7 +182,7 @@ Iterator to index:
 ```cpp
 vector<int> vect = {0,1,2,3,4,5};
 vector<int>::iterator it = lower_bound(vect.begin(), vect.end(), 2);
-int index = it - vect.begin();
+int index = it - vect.begin(); // alternatively: distance(vect.begin(), it);
 cout << index << endl;  //=> 2
 ```
 ##### Advancement
