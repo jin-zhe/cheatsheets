@@ -1,5 +1,7 @@
 # C++ Cheatsheet
-This is a work in progress
+*This is a work in progress*
+
+Unless otherwise specified, this is written for C++11.
 
 ## General
 Importing
@@ -883,5 +885,17 @@ vector<int>::iterator get_iterator(int index, vector<int> & vect) {
 ```cpp
 int get_index(vector<int>::iterator it, vector<int> & vect) {
   return distance(vect.begin(), it);
+}
+```
+
+#### Binary search
+```
+int binary_search(vector<int> & sorted_vect, int val) {
+  vector<int>::iterator it = lower_bound(sorted_vect.begin(), sorted_vect.end(), val);
+  return (it == sorted_vect.end())
+    ? -1
+    : (*it == val)
+      ? distance(sorted_vect.begin(), it)
+      : -1;
 }
 ```
