@@ -134,7 +134,7 @@ do {
 while (loop_condition);
 ```
 ### Iterators
-Available to the following STL data types
+Available to the following STL container types
 ```cpp
 #include <array>
 #include <deque>
@@ -189,10 +189,10 @@ cout << index << endl;  //=> 2
 ```cpp
 ++it            // Advance iterator to the next item
 it += k;        // Advance iterator by k items. We can do this without worring about size of item
-advance(it, k)  // Advance iterator by k items 
+advance(it, k); // Advance iterator by k items 
 ```
 ##### `insert`
-`.insert(it, val)` inserts `val` in container at location specified by iterator. It returns iterator pointing to the inserted value. For `vector` this is a O(N) procedure. For `list` this is O(1).
+`<container>.insert(it, val)` inserts the reference of given argument `val` into container at position specified by iterator `it`. It returns an iterator pointing to the inserted value. For `<vector>` this is a O(N) procedure. For `<list>` this is O(1).
 ```cpp
 vector<int>::iterator it;
 vector<int> vect = {1,2,4,5};
@@ -213,13 +213,24 @@ it = vect.insert(it, 6);  // vect: {0,1,2,3,4,5,6}
 cout << *it << endl;      //=> 6
 ```
 ###### Pitfall
-> Causes reallocation if the new `size()` is greater than the old `capacity()`. **If the new `size()` is greater than `capacity()`,  all iterators and references are invalidated. Otherwise, only the iterators and references before the insertion point remain valid.** The past-the-end iterator is also invalidated. [source](https://en.cppreference.com/w/cpp/container/vector/insert)
+> Causes reallocation if the new `<container>.size()` is greater than the old `<container>.capacity()`. **If the new `size()` is greater than `<container>.capacity()`,  all iterators and references are invalidated. Otherwise, only the iterators and references before the insertion point remain valid.** The past-the-end iterator is also invalidated. [source](https://en.cppreference.com/w/cpp/container/vector/insert)
 
 So it is important to update relevant iterator(s) with the returned iterator or re-assign them after calling `.insert()`!
+
 ##### `emplace`
-TODO
+`<container>.emplace(it, args...)` inserts a new element constructed by given construction argument(s) into container at position specified by iterator `it`. Unlike `<container>.insert(...)` which receives a reference as argument and then copies the contents of referenced object into the new element, `<container>.emplace(...)` constructs the new element in-place using the given construction argument(s) and inserts it into the container. It returns an iterator pointing to the newly constructed element.
+
+The operations are identical to `<container>.insert(...)` so refer to [`insert`](#insert) for examples.
+
+For containers of primitives, it doesn't really matter if `emplace` or `insert` is used, but for objects, use of `emplace` is preferred for efficiency reasons. This is highlighted in the following example:
+```cpp
+vector<pair<int,int>> vect;
+vect.emplace(vect.begin(),1,2);             // new pair to be inserted is constructed in-place
+vect.insert (vect.begin(),make_pair(3,4));  // pair is first constructed, then passed as arugment, then its value copied to newly inserted element. So initial construction before passing in as arugment is wasteful
+```
+
 ##### `erase`
-`.erase(start, end)` removes all items from `start` inclusive to `end` exclusive. i.e. `\[start, end)`. If `end` is not supplied as arugment, just remove the single item at `start`. It returns iterator following the last removed element. If the iterator position refers to the last element, the `end()` iterator is returned. For `vector` this is a O(N) procedure. For `list` this is O(1).
+`<container>.erase(start, end)` removes all items from `start` inclusive to `end` exclusive. i.e. `\[start, end)`. If `end` is not supplied as arugment, just remove the single item at `start`. It returns iterator following the last removed element. If the iterator position refers to the last element, the `<container>.end()` iterator is returned. For `<vector>` this is a O(N) procedure. For `<list>` this is O(1).
 ```cpp
 vector<int> vect = {0,1,2,3,4,5};
 vector<int>::iterator it;
@@ -241,7 +252,7 @@ assert(it == vect.end());     //=> assertion true
 ###### Pitfall
 > Invalidates iterators and references at or after the point of the erase, including the end() iterator.[Source](https://en.cppreference.com/w/cpp/container/vector/erase)
 
-So it is important to update relevant iterator(s) with the returned iterator or re-assign them after calling `.erase()`!
+So it is important to update relevant iterator(s) with the returned iterator or re-assign them after calling `<container>.erase(...)`!
 
 ## Data structures
 
@@ -287,6 +298,7 @@ Import:
 #### Overview
 ##### Declaration and initialization
 ```cpp
+pair<int,int> p(1,2);
 pair<int,int> p = make_pair(1,2);
 ```
 ##### Accessor
@@ -301,8 +313,8 @@ p.first = 0;
 ##### Operation
 Equaliy via `==` is supported:
 ```cpp
-pair<int,int> p1 = make_pair(1,2);
-pair<int,int> p2 = make_pair(1,2);
+pair<int,int> p1(1,2);
+pair<int,int> p2(1,2);
 assert(p1 == p2);   //=> assertion true
 ```
 
@@ -314,6 +326,7 @@ Import:
 #### Overview
 ##### Declaration and initialization
 ```cpp
+tuple<int, int, int> triplet(1, 2, 3);
 tuple<int, int, int> triplet = make_tuple(1, 2, 3);
 ```
 ##### Accessor
@@ -327,8 +340,8 @@ get<0>(triplet) = 0;
 ##### Operation
 Equaliy via `==` is supported:
 ```cpp
-tuple<int,int> t1 = make_tuple(1,2);
-tuple<int,int> t2 = make_tuple(1,2);
+tuple<int,int> t1(1,2);
+tuple<int,int> t2(1,2);
 assertion(t1 == t2); //=> assertion true
 ```
 
@@ -482,7 +495,7 @@ deq.pop_back(item);     // Eject item at rear of deque
 ```
 #### Iterator
 ```cpp
-for (deque<int>::iterator it = deq.begin(); it != deq.end(); ++it) {
+for (auto it = deq.begin(); it != deq.end(); ++it) {
   // ...
 }
 ```
