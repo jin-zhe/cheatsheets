@@ -220,7 +220,7 @@ So it is important to update relevant iterator(s) with the returned iterator or 
 ##### `emplace`
 `<container>.emplace(it, args...)` inserts a new element constructed by given construction argument(s) into container at position specified by iterator `it`. Unlike `<container>.insert(...)` which receives a reference as argument and then copies the contents of referenced object into the new element, `<container>.emplace(...)` constructs the new element in-place using the given construction argument(s) and inserts it into the container. It returns an iterator pointing to the newly constructed element.
 
-The operations are identical to `<container>.insert(...)` so refer to [`insert`](#insert) for examples.
+The operations and pitfalls are identical to `<container>.insert(...)` so refer to [`insert`](#insert) for specifics.
 
 For containers of primitives, it doesn't really matter if `emplace` or `insert` is used, but for objects, use of `emplace` is preferred for efficiency reasons. This is highlighted in the following example:
 ```cpp
