@@ -906,7 +906,7 @@ int get_index(vector<int>::iterator it, vector<int> & vect) {
 ```
 
 #### Binary search
-```
+```cpp
 int binary_search(vector<int> & sorted_vect, int val) {
   vector<int>::iterator it = lower_bound(sorted_vect.begin(), sorted_vect.end(), val);
   return (it == sorted_vect.end())
