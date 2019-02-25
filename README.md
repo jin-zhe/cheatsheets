@@ -1,6 +1,7 @@
 # Cheatsheets
 Here is an assortment of programming cheatsheets that have helped me over the years. I have found them useful as quick references for language syntaxes, common APIs and their caveats. The information contained within these cheatsheets are by no means exhaustive as they cater only the most common usages that I face in my work.
 
+### [C++](c++.md)
 ### [GIT commands](GIT.md)
 ### [HTML](HTML.md)
 ### [jQuery](jQuery.md)
