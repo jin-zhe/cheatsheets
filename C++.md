@@ -563,13 +563,13 @@ Note: default `sort` is not stable. For stable sorting, use `stable_sort`
 #### Custom ordering
 A comparator function is a function that takes in 2 parameters, say `a` and `b`, which simply returns a `bool` that represents the condition to satisfy in order to rank `a` before `b` after sorting. Conceptually, the comparator function is a binary function that attempts to model `<` relationship between `a` and `b`, where it returns `true` iff `a < b` and `false` otherwise (`>=`). In other words, if the comparator returns `false` for a given pair of `a` and `b`, it's saying that we don't care about their relative order. I.E. if a case in your comparator wants to treat `a` and `b` as non-distinct (i.e. equal), you should return `false` for that case.
 
-Using a lambda expression:
+##### Lambda (anonymous) function
 ```cpp
 sort(s.begin(), s.end(), [](int a, int b) {
     return a < b;   
 });
 ```
-Using a custom function:
+##### Custom (named) function
 ```cpp
 bool customComparator(int a, int b) {
   return a > b;
@@ -577,7 +577,7 @@ bool customComparator(int a, int b) {
 //...
 sort(s.begin(), s.end(), customComparator);
 ```
-Using a function object:
+##### Function object
 ```cpp
 struct {
     bool operator()(int a, int b) const{   
