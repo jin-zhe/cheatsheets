@@ -744,12 +744,30 @@ int l, r;
 scanf("%d %d", &l, &r);
 ```
 
-### `istringstream`
+### `sstream`
 Import
 ```cpp
 #include <sstream>
 ```
-#### Overview
+#### `stringstream`
+Output
+```cpp
+stringstream ss;
+ss << "Hello";
+ss << " ";
+ss << "World!";
+cout << s.str();  /=> Hello World!
+```
+Input
+```cpp
+string str = "John Doe Johnson Mary";
+stringstream ss(str);
+string word;
+while(ss >> word) {
+  cout << word; //=> John, Doe, Johnson, Mary
+}
+```
+#### `istringstream`
 ```cpp
 string line = "5 6 22 8";
 istringstream iss;
