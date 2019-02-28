@@ -79,9 +79,11 @@ string str = std::string() + c; //=> "c"
 string str;
 str.push_back(c);
 ```
-#### Methods
+#### Overview
 ```cpp
-string str = "Hello World!";
+string str = "Hello";
+str.push_back(' ');                     //=> "Hello "       // push_back for characters
+str.append("World!");                   //=> "Hello World!" // append for strings
 int len = str.length();                 //=> 12
 string str2 = str.substr(6, 5);         //=> "World"
 size_t pos = str.find("World");         //=> 6
