@@ -1,5 +1,14 @@
 # C++ Cheatsheet
 *This is a work in progress*
+## TODO
+* http://www.cplusplus.com/reference/algorithm/binary_search/
+* http://www.cplusplus.com/reference/string/string/find/
+* https://en.cppreference.com/w/cpp/string/basic_string/find_last_of
+* http://www.cplusplus.com/reference/string/string/erase/
+* https://en.cppreference.com/w/cpp/algorithm/remove
+* https://en.cppreference.com/w/cpp/algorithm/copy
+* http://www.cplusplus.com/reference/algorithm/reverse/
+* https://en.cppreference.com/w/cpp/algorithm/count
 
 Unless otherwise specified, this is written for C++11.
 
