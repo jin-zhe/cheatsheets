@@ -560,7 +560,8 @@ Import:
 ### Sorting
 Note: default `sort` is not stable. For stable sorting, use `stable_sort`
 #### For containers
-To perform sorting on containers, we will have to use iterators
+To perform sorting on containers, we will have to use iterators.
+
 Sort using the default comparator for given type
 ```cpp
 sort(vect.begin(), vect.end());
