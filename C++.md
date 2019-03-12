@@ -558,18 +558,27 @@ Import:
 #include <functional> // if using lambda
 ```
 ### Sorting
-#### Default order
-```cpp
-// sort using the default operator
-sort(s.begin(), s.end());
-stable_sort(s.begin(), s.end());
-```
-#### Descending order
-```cpp
-// sort using a standard library compare function object
-sort(s.begin(), s.end(), greater<int>());
-```
 Note: default `sort` is not stable. For stable sorting, use `stable_sort`
+#### For containers
+To perform sorting on containers, we will have to use iterators
+Sort using the default comparator for given type
+```cpp
+sort(vect.begin(), vect.end());
+stable_sort(vect.begin(), vect.end());
+```
+sort using a standard library compare function object
+```cpp
+sort(vect.begin(), vect.end(), greater<int>()); // sorts descending
+```
+#### For arrays
+```cpp
+sort(arr, arr+n);
+stable_sort(arr, arr+n);
+```
+sort using a standard library compare function object
+```cpp
+sort(arr, arr+n, greater<int>()); // sorts descending
+```
 
 #### Custom ordering
 A comparator function is a function that takes in 2 parameters, say `a` and `b`, which simply returns a `bool` that answers the question: **must `a` come before `b` after sorting?** Conceptually, the comparator function is simply a binary function that attempts to model `<` relationship between `a` and `b`, where it returns `true` iff `a < b` and `false` otherwise (`>=`). In other words, if the comparator returns `false` for a given pair of `a` and `b`, it's saying that we don't care about their relative order. I.E. if a case in your comparator wants to treat `a` and `b` as non-distinct (i.e. equal), you should return `false` for that case.
