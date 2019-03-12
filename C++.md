@@ -99,7 +99,9 @@ size_t pos = str.find("World");         //=> 6
 size_t pos = str.find("Hey");           //=> string::npos
 string str3 = str.substr(6);            //=> "World!"
 string str4 = str + " Hey!";            //=> "Hello World! Hey!"
-int comp = str.compare("Hello World!"); //=> 0
+str.compare("Hello World!");            //=> 0
+str.compare("I");                       //=> -1
+str.compare("J");                       //=> -2
 assert("Hello" == "Hello");             //=> assertion true
 ```
 
