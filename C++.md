@@ -18,6 +18,33 @@ Importing
 #include <package_name>
 using namespace std;      // This will be assumed for the remaining of this cheatsheet
 ```
+### Type alias
+* Type alias using `typddef` is a means for us to provide alternative naming for a type
+* This is often done to provide a convenient shorthand for referring to verbose types
+* It also serve as a basic way of providing data abstraction
+```cpp
+typedef string nusnet_id;
+typedef string name;
+typedef string grade;
+typedef vector<tuple<nusnet_id, name, grade>> grades;
+grades CS2040C;
+CS2040C.push_back(make_tuple("A0123456I", "Kattis", "A+"));
+```
+
+### Macro definitions
+* Preprocessor macro is indicated by the directive `#define <identifier> <replacement>`
+* Preprocessor will replace any subsequent occurence of `<identifier>` in the code with the `<replacement>`
+* `<replacement>` can be an expression, a statement, a block or simply any code snippet
+* Note that preprocessor do not check for C++ syntax! It simply carries out pattern matching and replacement!
+* You can unset a preprocessor macro using `#undefine <identifier>`
+
+The following is an example of defining a shorthand for for-loop using preprocessor macro:
+```cpp
+#define loop(n) for(int i=0; i<n; i++)
+loop(5) {
+  cout << i << ", ";  // Prints: 0, 1, 2, 3, 4
+}
+```
 
 ### Switch statement
 ```cpp
