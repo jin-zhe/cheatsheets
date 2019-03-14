@@ -617,7 +617,7 @@ sort(arr, arr+n, greater<int>()); // sorts descending
 ```
 
 #### Custom ordering
-A comparator function is a function that takes in 2 parameters, say `a` and `b`, which simply returns a `bool` that answers the question: **must `a` come before `b` after sorting?** Conceptually, the comparator function is simply a binary function that attempts to model `<` relationship between `a` and `b`, where it returns `true` iff `a < b` and `false` otherwise (`>=`). In other words, if the comparator returns `false` for a given pair of `a` and `b`, it's saying that we don't care about their relative order. I.E. if a case in your comparator wants to treat `a` and `b` as non-distinct (i.e. equal), you should return `false` for that case.
+A comparator function is a function that takes in 2 parameters, say `a` and `b`, which simply returns a `bool` that answers the question: **must `a` come before `b` after sorting?** The comparator function is simply a binary function that is designated to replace the default `<` relationship between `a` and `b`, where it returns `true` iff `a < b` and `false` otherwise (`>=`). In other words, if the comparator returns `false` for a given pair of `a` and `b`, it's saying that we don't care about their relative order. I.E. if a case in your comparator wants to treat `a` and `b` as non-distinct (i.e. equal), you should return `false` for that case.
 
 ##### Lambda (anonymous) function
 ```cpp
