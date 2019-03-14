@@ -48,7 +48,9 @@ switch(1) {
 ## Strings
 In C++ and C, a string is an array of `char` terminated with the null character `\0`.
 
-Strings are mutable in C++
+However `std::string` is treated differently from `c-string`
+
+Strings are mutable in C++. This behaviour differs from other languages such as Java.
 
 ### Import
 ```cpp
@@ -88,7 +90,7 @@ string str = std::string() + c; //=> "c"
 string str;
 str.push_back(c);
 ```
-#### Overview
+#### Common manipulations
 ```cpp
 string str = "Hello";
 str.push_back(' ');                     //=> "Hello "       // push_back for characters
@@ -104,7 +106,11 @@ str.compare("I");                       //=> -1
 str.compare("J");                       //=> -2
 assert("Hello" == "Hello");             //=> assertion true
 ```
-
+```cpp
+string a = "abc";
+string b = &a[1];
+cout << b;
+```
 ## Iteration
 ### Loops
 #### For
