@@ -9,6 +9,7 @@
 * https://en.cppreference.com/w/cpp/algorithm/copy
 * http://www.cplusplus.com/reference/algorithm/reverse/
 * https://en.cppreference.com/w/cpp/algorithm/count
+* http://www.cplusplus.com/reference/cctype/isspace/
 
 Unless otherwise specified, this is written for C++11.
 
