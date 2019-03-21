@@ -20,18 +20,18 @@ using namespace std;      // This will be assumed for the remaining of this chea
 #### Character
 Checking for space `' '`, horizontal tab `'\t'`, newline (LF) `'\n'`, vertical tab (VT) `'\v'`, feed (FF) `'\f'`, carriage return (CR) `'\r'`
 ```cpp
-char space = ' ';
-char tab = '\t';
+char sp = ' ';
+char tb = '\t';
 char lf = '\n';
 char vt = '\v';
 char ff = '\f';
 char cr = '\r';
-assert(isspace(space), 8192); //=> assertion: true
-assert(isspace(tab), 8192);   //=> assertion: true
-assert(isspace(lf), 8192);    //=> assertion: true
-assert(isspace(vt), 8192);    //=> assertion: true
-assert(isspace(ff), 8192);    //=> assertion: true
-assert(isspace(cr), 8192);    //=> assertion: true
+assert(isspace(sp), 8192);  //=> assertion: true
+assert(isspace(tb), 8192);  //=> assertion: true
+assert(isspace(lf), 8192);  //=> assertion: true
+assert(isspace(vt), 8192);  //=> assertion: true
+assert(isspace(ff), 8192);  //=> assertion: true
+assert(isspace(cr), 8192);  //=> assertion: true
 ```
 
 ### Type alias
