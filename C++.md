@@ -118,6 +118,13 @@ string str = std::string() + c; //=> "c"
 string str;
 str.push_back(c);
 ```
+#### Length
+Both `.length()` and `.size()` (UTF-8) may be used.
+```cpp
+string str = "Hello";
+str.length(); //=> 5
+str.size();   //=> 5
+```
 #### Concatenation
 C++ strings can be concatenated simply using the `+` operator
 ```cpp
@@ -125,31 +132,44 @@ string str = "Hello" + " " + "World!;
 assert(str, "Hello World!");  //=> assertion true
 ```
 #### Appending
-The `+=` operator is the most generalised form of appending. However you may also use `push_back(c)` for appending a character or `apppend(str)` for appending a string.
+The `+=` operator is the most straightforward and generalised form of appending. However you may also use `push_back(c)` for appending a character or `apppend(str)` for appending a string.
 ```cpp
 string str = "Hello";
 str += " World";      // str: "Hello World"
 str.push_back('!');   // str: "Hello World!"
 str.append(" Hi!");   // str: "Hello World! Hi!"
 ```
-#### Common manipulations
+#### Comparison
+Either the relational operators or the function `compare` may be used
 ```cpp
-int len = str.length();                 //=> 12
-string str2 = str.substr(6, 5);         //=> "World"
+string str = "Hello";
+assert(str == "Hello");       //=> assertion true
+assert(str < "Hello World!"); //=> assertion true
+assert(str < "hello");        //=> assertion true
+str.compare("Hello");         //=> 0
+str.compare("I");             //=> -1
+str.compare("J");             //=> -2
+```
+#### Find
+```cpp
+string str = "Hello World";
 size_t pos = str.find("World");         //=> 6
 size_t pos = str.find("Hey");           //=> string::npos
-string str3 = str.substr(6);            //=> "World!"
-string str4 = str + " Hey!";            //=> "Hello World! Hey!"
-str.compare("Hello World!");            //=> 0
-str.compare("I");                       //=> -1
-str.compare("J");                       //=> -2
-assert("Hello" == "Hello");             //=> assertion true
 ```
+#### Substring
+Note that the second argument for `substr` is the length of substring to take and **not** the past-the-end index!
+```cpp
+string str = "Hello World!";
+string str2 = str.substr(6, 5);         //=> "World"
+string str3 = str.substr(6);            //=> "World!"
+```
+Quick and dirty way of getting a substring from an index to the end of string:
 ```cpp
 string a = "abc";
 string b = &a[1];
-cout << b;
+assert(b, "bc");  //=> assertion true
 ```
+
 ## Iteration
 ### Loops
 #### For
