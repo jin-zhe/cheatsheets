@@ -2,14 +2,11 @@
 *This is a work in progress*
 ## TODO
 * http://www.cplusplus.com/reference/algorithm/binary_search/
-* http://www.cplusplus.com/reference/string/string/find/
-* https://en.cppreference.com/w/cpp/string/basic_string/find_last_of
 * http://www.cplusplus.com/reference/string/string/erase/
 * https://en.cppreference.com/w/cpp/algorithm/remove
 * https://en.cppreference.com/w/cpp/algorithm/copy
 * http://www.cplusplus.com/reference/algorithm/reverse/
 * https://en.cppreference.com/w/cpp/algorithm/count
-* http://www.cplusplus.com/reference/cctype/isspace/
 
 Unless otherwise specified, this is written for C++11.
 
@@ -71,6 +68,23 @@ switch(1) {
   default: std::cout << "default\n"; // no error
            break;
 }
+```
+
+## Character
+Checking for space `' '`, horizontal tab `'\t'`, newline (LF) `'\n'`, vertical tab (VT) `'\v'`, feed (FF) `'\f'`, carriage return (CR) `'\r'`
+```cpp
+char space = ' ';
+char tab = '\t';
+char lf = '\n';
+char vt = '\v';
+char ff = '\f';
+char cr = '\r';
+assert(isspace(space), 8192); //=> assertion: true
+assert(isspace(tab), 8192);   //=> assertion: true
+assert(isspace(lf), 8192);    //=> assertion: true
+assert(isspace(vt), 8192);    //=> assertion: true
+assert(isspace(ff), 8192);    //=> assertion: true
+assert(isspace(cr), 8192);    //=> assertion: true
 ```
 
 ## Strings
@@ -155,6 +169,7 @@ str.compare("J");             //=> -2
 string str = "Hello World";
 size_t pos = str.find("World");         //=> 6
 size_t pos = str.find("Hey");           //=> string::npos
+size_t pos = str.find_last_of('o');     //=> 7
 ```
 #### Substring
 Note that the second argument for `substr` is the length of substring to take and **not** the past-the-end index!
