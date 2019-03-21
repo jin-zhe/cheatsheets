@@ -16,6 +16,24 @@ Importing
 #include <package_name>
 using namespace std;      // This will be assumed for the remaining of this cheatsheet
 ```
+### Primitives
+#### Character
+Checking for space `' '`, horizontal tab `'\t'`, newline (LF) `'\n'`, vertical tab (VT) `'\v'`, feed (FF) `'\f'`, carriage return (CR) `'\r'`
+```cpp
+char space = ' ';
+char tab = '\t';
+char lf = '\n';
+char vt = '\v';
+char ff = '\f';
+char cr = '\r';
+assert(isspace(space), 8192); //=> assertion: true
+assert(isspace(tab), 8192);   //=> assertion: true
+assert(isspace(lf), 8192);    //=> assertion: true
+assert(isspace(vt), 8192);    //=> assertion: true
+assert(isspace(ff), 8192);    //=> assertion: true
+assert(isspace(cr), 8192);    //=> assertion: true
+```
+
 ### Type alias
 * Type alias using `typddef` is a means for us to provide alternative naming for a type
 * This is often done to provide a convenient shorthand for referring to verbose types
@@ -68,23 +86,6 @@ switch(1) {
   default: std::cout << "default\n"; // no error
            break;
 }
-```
-
-## Character
-Checking for space `' '`, horizontal tab `'\t'`, newline (LF) `'\n'`, vertical tab (VT) `'\v'`, feed (FF) `'\f'`, carriage return (CR) `'\r'`
-```cpp
-char space = ' ';
-char tab = '\t';
-char lf = '\n';
-char vt = '\v';
-char ff = '\f';
-char cr = '\r';
-assert(isspace(space), 8192); //=> assertion: true
-assert(isspace(tab), 8192);   //=> assertion: true
-assert(isspace(lf), 8192);    //=> assertion: true
-assert(isspace(vt), 8192);    //=> assertion: true
-assert(isspace(ff), 8192);    //=> assertion: true
-assert(isspace(cr), 8192);    //=> assertion: true
 ```
 
 ## Strings
