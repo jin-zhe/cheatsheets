@@ -118,11 +118,22 @@ string str = std::string() + c; //=> "c"
 string str;
 str.push_back(c);
 ```
-#### Common manipulations
+#### Concatenation
+C++ strings can be concatenated simply using the `+` operator
+```cpp
+string str = "Hello" + " " + "World!;
+assert(str, "Hello World!");  //=> assertion true
+```
+#### Appending
+The `+=` operator is the most generalised form of appending. However you may also use `push_back(c)` for appending a character or `apppend(str)` for appending a string.
 ```cpp
 string str = "Hello";
-str.push_back(' ');                     //=> "Hello "       // push_back for characters
-str.append("World!");                   //=> "Hello World!" // append for strings
+str += " World";      // str: "Hello World"
+str.push_back('!');   // str: "Hello World!"
+str.append(" Hi!");   // str: "Hello World! Hi!"
+```
+#### Common manipulations
+```cpp
 int len = str.length();                 //=> 12
 string str2 = str.substr(6, 5);         //=> "World"
 size_t pos = str.find("World");         //=> 6
