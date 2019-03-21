@@ -2,7 +2,6 @@
 *This is a work in progress*
 ## TODO
 * http://www.cplusplus.com/reference/algorithm/binary_search/
-* http://www.cplusplus.com/reference/string/string/erase/
 * https://en.cppreference.com/w/cpp/algorithm/remove
 * https://en.cppreference.com/w/cpp/algorithm/copy
 * http://www.cplusplus.com/reference/algorithm/reverse/
@@ -184,6 +183,13 @@ Quick and dirty way of getting a substring from an index to the end of string:
 string a = "abc";
 string b = &a[1];
 assert(b, "bc");  //=> assertion true
+```
+#### Erasing
+```
+TODO
+sequence (1): string& erase(size_t pos = 0, size_t len = npos);
+character (2): iterator erase(const_iterator p);
+range (3): iterator erase(const_iterator first, const_iterator last);
 ```
 
 ## Iteration
