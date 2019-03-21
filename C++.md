@@ -128,7 +128,7 @@ str.size();   //=> 5
 #### Concatenation
 C++ strings can be concatenated simply using the `+` operator
 ```cpp
-string str = "Hello" + " " + "World!;
+string str = "Hello" + " " + "World!";
 assert(str, "Hello World!");  //=> assertion true
 ```
 #### Appending
