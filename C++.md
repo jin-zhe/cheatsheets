@@ -978,8 +978,8 @@ vector<string> & tokenizer(string str, char delimiter) {
 ```
 For multiple delimiters
 ```cpp
-vector<string> & tokenizer(string str, string delimiters) {
-    vector<string> tokens(str.length());
+vector<string> tokenizer(string str, string delimiters) {
+    vector<string> tokens;
     char* str_chars = to_char_array(str);
     char* del_chars = to_char_array(delimiters);
     char *token = strtok(str_chars, del_chars); 
