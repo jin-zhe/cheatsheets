@@ -966,7 +966,7 @@ For single delimiter
 ```cpp
 #include <sstream>
 // ...
-vector<string> & tokenizer(string str, char delimiter) {
+vector<string> tokenizer(string str, char delimiter) {
   string token;
   istringstream iss(str);
   vector<string> tokens(str.length());
@@ -992,7 +992,7 @@ vector<string> tokenizer(string str, string delimiters) {
 ```
 #### Reading until empty line
 ```cpp
-vector<string> & read_till_empty() {
+vector<string> read_till_empty() {
   vector<string> lines;
   string line; 
   while(getline(cin, line)){
