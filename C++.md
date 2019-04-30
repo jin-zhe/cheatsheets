@@ -16,6 +16,23 @@ Importing
 using namespace std;      // This will be assumed for the remaining of this cheatsheet
 ```
 ### Primitives
+Below are some commonly used primitive types. For the full list, please refer to [here](https://en.cppreference.com/w/cpp/language/types).
+
+| Data Type   | Size (Bytes)  | Typical Range*            |
+| ----------- |:-------------:| :------------------------:|
+| `bool`      | 1             | \[`false`, `true`\]       |
+| `char`      | 1             | ±127 OR \[0, 255\]        |
+| `int`       | 4             | ±(2^16 - 1) OR ±(2^32 - 1)|
+| `long`      | 4             | ±(2^32 - 1) OR ±(2^64 - 1)|
+| `long long` | 8             | ±(2^64 - 1)               |
+| `float`     | 4             | ±3.4e(±38)  (~7 digits)   |
+| `double`    | 8             | ±1.7e(±308) (~15 digits)  |
+
+* \*: Range can differ due to implementation specific definitions
+* (2^16 - 1) = 65,535
+* (2^32 - 1) = 2,147,483,648
+* (2^64 - 1) = 18,446,744,073,709,551,615
+
 #### Character
 Checking for space `' '`, horizontal tab `'\t'`, newline (LF) `'\n'`, vertical tab (VT) `'\v'`, feed (FF) `'\f'`, carriage return (CR) `'\r'`
 ```cpp
@@ -32,6 +49,14 @@ assert(isspace(vt), 8192);  //=> assertion: true
 assert(isspace(ff), 8192);  //=> assertion: true
 assert(isspace(cr), 8192);  //=> assertion: true
 ```
+
+Converting between character of numbers to character:
+```cpp
+char char_five = '5';
+int  int_five  = char_five - '0'; //=> 5
+```
+
+### Operators
 
 ### Type alias
 * Type alias using `typddef` is a means for us to provide alternative naming for a type
