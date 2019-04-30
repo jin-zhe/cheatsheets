@@ -425,6 +425,7 @@ Import:
 ```cpp
 pair<int,int> p(1,2);
 pair<int,int> p = make_pair(1,2);
+pair<int,int> p = {1,2};
 ```
 ##### Accessor
 ```cpp
@@ -451,8 +452,9 @@ Import:
 #### Overview
 ##### Declaration and initialization
 ```cpp
-tuple<int, int, int> triplet(1, 2, 3);
-tuple<int, int, int> triplet = make_tuple(1, 2, 3);
+tuple<int,int,int> triplet(1,2,3);
+tuple<int,int,int> triplet = make_tuple(1,2,3);
+tuple<int,int,int> triplet = {1,2,3};
 ```
 ##### Accessor
 ```cpp
