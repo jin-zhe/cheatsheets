@@ -57,6 +57,103 @@ int  int_five  = char_five - '0'; //=> 5
 ```
 
 ### Operators
+See [here](http://www.cplusplus.com/doc/tutorial/operators/) for the full list of C++ operators.
+#### Assignment
+```cpp
+y = x;
+```
+Assigns variable y with the value of x. Note however that if `Y` is [copy assignable](https://en.cppreference.com/w/cpp/named_req/CopyAssignable), then `=` will be a [copy assignment operator](https://en.cppreference.com/w/cpp/language/copy_assignment) so `Y` will take on a copy of `x` at the end of the operation.
+
+#### Arithmetic
+| Operator | Description   |
+|:--------:|:-------------:|
+| `+`      | Addition      |
+| `-`      | Subtraction   |
+| `*`      | Multiplication|
+| `/`      | Division      |
+| `%`      | Modulo        |
+
+#### Compound Assignment
+|Expression | Equivalence  |
+|:---------:|:------------:|
+| `y += x;` | `y = y + x;` |
+| `y -= x;` | `y = y - x;` |
+| `y *= x;` | `y = y * x;` |
+| `y /= x;` | `y = y / x;` |
+| `y %= x;` | `y = y % x;` |
+
+#### Increment and Decrement
+|Expression | Equivalence        |
+|:---------:|:------------------:|
+| `y = ++x;` | `x += 1; y  = x;` |
+| `y = x++;` | `y  = x; x += 1;` |
+| `y = --x;` | `x -= 1; y  = x;` |
+| `y = x--;` | `y  = x; x -= 1;` |
+
+#### Relational and comparison operators
+| Operator | Description              |
+|:--------:|:------------------------:|
+| `==`     | Equal to                 |
+| `!=`     | Not equal to             |
+| `<`      | Less than                |
+| `>`      | Greater than             |
+| `<=`     | Less than or equal to    |
+| `>=`     | Greater than or equal to |
+
+#### Logical operators
+| Operator | Description  |
+|:--------:|:------------:|
+| `!`      | Logical NOT  |
+| `&&`     | Logical AND  |
+| `||`     | Logical OR   |
+
+#### Conditional ternary operator
+```cpp
+x = (predicate)? consequent: alternative;
+```
+Is equivalent to:
+```cpp
+if (predicate)
+  x = consequent;
+else
+  x = alternative;
+```
+
+##### Comma operator
+> In the C and C++ programming languages, the comma operator (represented by the token ,) is a binary operator that evaluates its first operand and **discards the result**, and then evaluates the second operand and returns this value (and type). The use of the comma token as an operator is distinct from its use in function calls and definitions, variable declarations, enum declarations, and similar constructs, where it acts as a separator. [source](https://en.wikipedia.org/wiki/Comma_operator)
+
+Example:
+```cpp
+int a,b;
+a = (b=3, b+2); //=> a = 5;
+```
+This can be particularly useful for reading inputs that are terminated by a given condition, for instance:
+```
+// While loop terminates when a == b == c == d == 0
+while(cin >> a >> b >> c >> d, a || b || c || d) {
+  // Do something
+}
+```
+
+##### Bitwise operators
+| Operator | Description     |
+|:--------:|:---------------:|
+| `&`      | Bitwise AND     |
+| `|`      | Bitwise OR      |
+| `^`      | Bitwise XOR     |
+| `~`      | NOT             |
+| `<<`     | Bit-shift left  |
+| `>>`     | Bit-shift right |
+
+##### Casting
+```cpp
+int i;
+float pi = 3.14;
+
+// Both methods below are equivalent
+i = (int) pi;
+i = int (pi);
+```
 
 ### Type alias
 * Type alias using `typddef` is a means for us to provide alternative naming for a type
