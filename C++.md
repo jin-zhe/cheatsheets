@@ -10,11 +10,18 @@
 Unless otherwise specified, this is written for C++11.
 
 ## General
-Importing
+### Importing
 ```cpp
 #include <package_name>
 using namespace std;      // This will be assumed for the remaining of this cheatsheet
 ```
+
+Sometimes you may want to import everything available to your compiler. This is usually a bad idea in the case of software engineering, but may be convenient for quick testing and simple codes. To do so:
+```cpp
+#include <bits/stdc++.h>
+```
+For a list of what libraries are included with that import, see [here](https://gcc.gnu.org/onlinedocs/gcc-4.6.2/libstdc++/api/a01040_source.html)
+
 ### Primitives
 Below are some commonly used primitive types. For the full list, please refer to [here](https://en.cppreference.com/w/cpp/language/types).
 
