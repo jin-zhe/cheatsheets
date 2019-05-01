@@ -128,7 +128,7 @@ int a,b;
 a = (b=3, b+2); //=> a = 5;
 ```
 This can be particularly useful for reading inputs that are terminated by a given condition, for instance:
-```
+```cpp
 // While loop terminates when a == b == c == d == 0
 while(cin >> a >> b >> c >> d, a || b || c || d) {
   // Do something
