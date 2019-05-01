@@ -105,7 +105,7 @@ Assigns variable y with the value of x. Note however that if `Y` is [copy assign
 |:--------:|:------------:|
 | `!`      | Logical NOT  |
 | `&&`     | Logical AND  |
-| `||`     | Logical OR   |
+| `\|\|`   | Logical OR   |
 
 #### Conditional ternary operator
 ```cpp
@@ -139,7 +139,7 @@ while(cin >> a >> b >> c >> d, a || b || c || d) {
 | Operator | Description     |
 |:--------:|:---------------:|
 | `&`      | Bitwise AND     |
-| `|`      | Bitwise OR      |
+| `\|`     | Bitwise OR      |
 | `^`      | Bitwise XOR     |
 | `~`      | NOT             |
 | `<<`     | Bit-shift left  |
