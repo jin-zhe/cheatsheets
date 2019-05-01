@@ -1,11 +1,5 @@
 # C++ Cheatsheet
 *This is a work in progress*
-## TODO
-* http://www.cplusplus.com/reference/algorithm/binary_search/
-* https://en.cppreference.com/w/cpp/algorithm/remove
-* https://en.cppreference.com/w/cpp/algorithm/copy
-* http://www.cplusplus.com/reference/algorithm/reverse/
-* https://en.cppreference.com/w/cpp/algorithm/count
 
 Unless otherwise specified, this is written for C++11.
 
@@ -477,6 +471,44 @@ The C++ Standard Template Library (STL) is a set of template classes that provid
 * Numeric algorithms
 
 ### Containers
+#### Operators
+Containers of primitive types can be directly compared using relational and comparison operators, for instance:
+``` cpp
+pair<int,int> p1(1,2);
+pair<int,int> p2(1,2);
+pair<int,int> p3(1,4);
+assert(p1 == p2);   //=> assertion true
+assert(p3 > p1);    //=> assertion true
+
+tuple<int,int> t1(1,2,3);
+tuple<int,int> t2(1,2,3);
+tuple<int,int> t3(1,2,4);
+assert(t1 == t2);   //=> assertion true
+assert(t3 > t1);    //=> assertion true
+
+vector<int> v1 = {1,2,3,4,5};
+vector<int> v2 = {1,2,5,6,7};
+vector<int> v3 = {2};
+assert(v2 > v1);    //=> assertion true
+assert(v3 > v2)     //=> assertion true
+```
+
+STL containers are [copy assignable](https://en.cppreference.com/w/cpp/named_req/CopyAssignable) and so `=` operator will serve as [copy assignment operator](https://en.cppreference.com/w/cpp/language/copy_assignment) if LHS of the expression is not a pointer or reference. To illustrate:
+```cpp
+vector<int> vect1  = {1,2,3};
+vector<int> vect2  = vect1; // vect2 is a copy of vect1
+vector<int> &vect3 = vect1; // vect3 refers to the same vector as vect1 
+```
+
+#### Structured bindings
+Since C++17, [strutcured bindings](https://en.cppreference.com/w/cpp/language/structured_binding) provide a convenient way to unpack values in containers.
+```cpp
+tuple<int,float,string> t_iii = {1,3.14,"Hello"};
+auto [first, second, third] = t_iii;
+assert(first, 1);         //=> Assertion true
+assert(second, 3.14);     //=> Assertion true
+assert(third, "Hello");   //=> Assertion true
+```
 
 #### C-Style Array
 ##### Initializations
@@ -535,13 +567,6 @@ int first = p.second; //=> 2
 ```cpp
 p.first = 0;
 ```
-##### Operation
-Equaliy via `==` is supported:
-```cpp
-pair<int,int> p1(1,2);
-pair<int,int> p2(1,2);
-assert(p1 == p2);   //=> assertion true
-```
 
 #### `std::tuple`
 ##### Import
@@ -561,13 +586,6 @@ int first = get<0>(triplet); //=> 1
 ##### Modifier
 ```cpp
 get<0>(triplet) = 0;
-```
-##### Operation
-Equaliy via `==` is supported:
-```cpp
-tuple<int,int> t1(1,2);
-tuple<int,int> t2(1,2);
-assert(t1 == t2); //=> assertion true
 ```
 
 #### `std::vector`
@@ -780,6 +798,14 @@ Import:
 #include <algorithm>
 #include <functional> // if using lambda
 ```
+
+**TODO**
+* http://www.cplusplus.com/reference/algorithm/binary_search/
+* https://en.cppreference.com/w/cpp/algorithm/remove
+* https://en.cppreference.com/w/cpp/algorithm/copy
+* http://www.cplusplus.com/reference/algorithm/reverse/
+* https://en.cppreference.com/w/cpp/algorithm/count
+
 #### Sorting
 Note: default `sort` is not stable. For stable sorting, use `stable_sort`
 #### For containers
