@@ -452,7 +452,7 @@ queue<int> & get_curr_queue(bool on_left, queue<int> &left_queue, queue<int> &ri
 queue<int> &curr_queue = get_curr_queue(on_left, left_queue, right_queue); // Important! If not assigning to a reference, a copy is made instead
 ```
 
-## STL
+## [STL](http://www.cplusplus.com/reference/stl/)
 The C++ Standard Template Library (STL) is a set of template classes that provides standard data structures (DS) and their associated ADT operations. It is a library consisting of the following:
 
 * Algorithm (e.g. sorting, searching etc.)
@@ -470,7 +470,7 @@ The C++ Standard Template Library (STL) is a set of template classes that provid
 * Functions
 * Numeric algorithms
 
-### Containers
+### [Containers](https://en.cppreference.com/w/cpp/container)
 #### Operators
 Containers of primitive types can be directly compared using relational and comparison operators, for instance:
 ``` cpp
@@ -759,8 +759,13 @@ for (auto it = deq.begin(); it != deq.end(); ++it) {
 ```
 ##### Declaration and initialization
 ```cpp
-priority_queue<int> pq;                             // Creates a max heap
-priority_queue<int, vector<int>, greater<int>> pq;  // Creates a min heap
+priority_queue<int> pq;                             // Creates a max-heap
+priority_queue<int, vector<int>, greater<int>> pq;  // Creates a min-heap
+
+priority_queue<int> pq(less<int>(), {1,2,3});       // Initialize max-heap with {1,2,3} | O(N)
+
+vector<int> vect = {1,2,3};
+priority_queue<int> pq(less<int>(), vect);          // Initialize max-heap with vector | O(N)
 ```
 To create a priority queue with custom comparator:
 ```cpp
