@@ -120,7 +120,7 @@ else
   x = alternative;
 ```
 
-##### Comma operator
+#### Comma operator
 > In the C and C++ programming languages, the comma operator (represented by the token ,) is a binary operator that evaluates its first operand and **discards the result**, and then evaluates the second operand and returns this value (and type). The use of the comma token as an operator is distinct from its use in function calls and definitions, variable declarations, enum declarations, and similar constructs, where it acts as a separator. [source](https://en.wikipedia.org/wiki/Comma_operator)
 
 Example:
@@ -136,7 +136,7 @@ while(cin >> a >> b >> c >> d, a || b || c || d) {
 }
 ```
 
-##### Bitwise operators
+#### Bitwise operators
 | Operator | Description     |
 |:--------:|:---------------:|
 | `&`      | Bitwise AND     |
@@ -146,7 +146,7 @@ while(cin >> a >> b >> c >> d, a || b || c || d) {
 | `<<`     | Bit-shift left  |
 | `>>`     | Bit-shift right |
 
-##### Casting
+### Casting
 ```cpp
 int i;
 float pi = 3.14;
