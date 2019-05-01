@@ -447,7 +447,7 @@ int arr[n] = {0};
 ```
 Instead, consider using [`std::vector`](#stdvector)
 
-##### Overview
+##### Common operations
 Array size
 ```cpp
 int size = int n = sizeof(arr) / sizeof(arr[0]);
@@ -468,27 +468,26 @@ array<int, 10> s = {5, 7, 4, 2, 8, 6, 1, 9, 0, 3};
 ```
 
 #### `std::pair`
-Import:
+##### Import
 ```cpp
 #include <utility>
 ```
-##### Overview
-###### Declaration and initialization
+##### Declaration and initialization
 ```cpp
 pair<int,int> p(1,2);
 pair<int,int> p = make_pair(1,2);
 pair<int,int> p = {1,2};
 ```
-###### Accessor
+##### Accessor
 ```cpp
 int first = p.first;  //=> 1
 int first = p.second; //=> 2
 ```
-###### Modifier
+##### Modifier
 ```cpp
 p.first = 0;
 ```
-###### Operation
+##### Operation
 Equaliy via `==` is supported:
 ```cpp
 pair<int,int> p1(1,2);
@@ -497,26 +496,25 @@ assert(p1 == p2);   //=> assertion true
 ```
 
 #### `std::tuple`
-Import:
+##### Import
 ```cpp
 #include <tuple>
 ```
-##### Overview
-###### Declaration and initialization
+##### Declaration and initialization
 ```cpp
 tuple<int,int,int> triplet(1,2,3);
 tuple<int,int,int> triplet = make_tuple(1,2,3);
 tuple<int,int,int> triplet = {1,2,3};
 ```
-###### Accessor
+##### Accessor
 ```cpp
 int first = get<0>(triplet); //=> 1
 ```
-###### Modifier
+##### Modifier
 ```cpp
 get<0>(triplet) = 0;
 ```
-###### Operation
+##### Operation
 Equaliy via `==` is supported:
 ```cpp
 tuple<int,int> t1(1,2);
@@ -525,12 +523,11 @@ assertion(t1 == t2); //=> assertion true
 ```
 
 #### `std::vector`
-Import:
+##### Import
 ```cpp
 #include <vector>
 ```
-##### Overview
-###### Declaration and initialization
+##### Declaration and initialization
 ```cpp
 // Initialization
 vector<int> vect;           // init empty vector
@@ -542,15 +539,15 @@ vector<int> vect(1, 2, 3);  // init vector with items {1, 2, 3}
 int arr[3] = {10, 20, 30};
 vector<int> vect(arr, arr + 3); // init vector with items {10, 20, 30} 
 ```
-###### Capacity
+##### Capacity
 ```cpp
 vect.size():
 ```
-###### Accessors
+##### Accessors
 ```cpp
 vect[i] = x;
 ```
-###### Modifiers
+##### Modifiers
 ```cpp
 vect[i]++;
 vect.push_back(99); // Appending
@@ -561,17 +558,16 @@ vect.erase(vect.begin(), vect.begin() + 3);  // erase the first 3 elements:
 ```
 
 #### `std::list`
-Import
+##### Import
 ```cpp
 #include <list>
 ```
-##### Overview
-###### Declaration and initialization
+##### Declaration and initialization
 ```cpp
 list<int> lst;              
 list<int> lst({1, 2, 3});   // Initialize with items
 ```
-###### Capacity
+##### Capacity
 ```cpp
 lst.empty();    // Checks if list is empty
 lst.size();     // Returns size of list
@@ -591,17 +587,16 @@ lst.pop_back();         // Removes last item
 ```
 
 #### `std::stack`
-Import
+##### Import
 ```cpp
 #include <stack>
 ```
-##### Overview
-###### Declaration and initialization
+##### Declaration and initialization
 ```cpp
 stack<int> stk;
 stack<int> stk(vector<int>{1,2,3,4});
 ```
-###### Capacity
+##### Capacity
 ```cpp
 stk.empty();    // Checks if stack is empty
 stk.size();     // Returns current size on stack
@@ -615,17 +610,17 @@ stk.top();      // Returns the topmost element
 stk.push(item); // Push item to top of stack
 stk.pop(item);  // Pop item off top of stack
 ```
+
 #### `std::queue`
-Import
+##### Import
 ```cpp
 #include <queue>
 ```
-##### Overview
-###### Declaration and initialization
+##### Declaration and initialization
 ```cpp
 queue<int> q;
 ```
-###### Capacity
+##### Capacity
 ```cpp
 q.empty();    // Checks if queue is empty
 q.size();     // Returns current size on queue
@@ -644,17 +639,17 @@ q.pop(item);  // dequeue item from front of queue
 ```cpp
 print_queue(q);
 ```
+
 #### `std:deque`
-Import
+##### Import
 ```cpp
 #include <deque>
 ```
-##### Overview
-###### Declaration and initialization
+##### Declaration and initialization
 ```cpp
 deque<int> deq;
 ```
-###### Capacity
+##### Capacity
 ```cpp
 deq.empty();    // Checks if deque is empty
 deq.size();     // Returns current size on deque
@@ -672,18 +667,19 @@ deq.pop_front(item);    // Pop item from front of deque
 deq.push_back(item);    // Inject item at rear of deque
 deq.pop_back(item);     // Eject item at rear of deque
 ```
-### Iterator
+
+##### Iterator
 ```cpp
 for (auto it = deq.begin(); it != deq.end(); ++it) {
   // ...
 }
 ```
-### `std:priority_queue`
-Import
+
+#### `std:priority_queue`
+##### Import
 ```cpp
 #include <queue>
 ```
-#### Overview
 ##### Declaration and initialization
 ```cpp
 priority_queue<int> pq;                             // Creates a max heap
@@ -705,11 +701,11 @@ priority_queue<int, vector<int>, CustomCompare > pq;
 pq.empty();
 pq.size();
 ```
-#### Accessors
+##### Accessors
 ```cpp
 pq.top();
 ```
-#### Modifiers
+##### Modifiers
 ```cpp
 pq.push(item);
 pq.pop();
@@ -719,13 +715,13 @@ pq.pop();
 print_queue(q);
 ```
 
-## algorithm
+### Algorithm
 Import:
 ```cpp
 #include <algorithm>
 #include <functional> // if using lambda
 ```
-### Sorting
+#### Sorting
 Note: default `sort` is not stable. For stable sorting, use `stable_sort`
 #### For containers
 To perform sorting on containers, we will have to use iterators.
@@ -749,16 +745,16 @@ sort using a standard library compare function object
 sort(arr, arr+n, greater<int>()); // sorts descending
 ```
 
-#### Custom ordering
+##### Custom ordering
 A comparator function is a function that takes in 2 parameters, say `a` and `b`, which simply returns a `bool` that answers the question: **must `a` come before `b` after sorting?** The comparator function is simply a binary function that is designated to replace the default `<` relationship between `a` and `b`, where it returns `true` iff `a < b` and `false` otherwise (`>=`). In other words, if the comparator returns `false` for a given pair of `a` and `b`, it's saying that we don't care about their relative order. I.E. if a case in your comparator wants to treat `a` and `b` as non-distinct (i.e. equal), you should return `false` for that case.
 
-##### Lambda (anonymous) function
+###### Lambda (anonymous) function
 ```cpp
 sort(s.begin(), s.end(), [](int a, int b) {
     return a < b;   
 });
 ```
-##### Custom (named) function
+###### Custom (named) function
 ```cpp
 bool customComparator(int a, int b) {
   return a > b;
@@ -766,7 +762,7 @@ bool customComparator(int a, int b) {
 //...
 sort(s.begin(), s.end(), customComparator);
 ```
-##### Function object
+###### Function object
 ```cpp
 struct {
     bool operator()(int a, int b) const{   
@@ -777,7 +773,7 @@ struct {
 sort(s.begin(), s.end(), customComparator);
 ```
 
-### Bounds
+#### Bounds
 ##### `lower_bound`
 Returns an iterator to the first item in container encountered that is greater or equal to given value. i.e. `>= val`. If no items qualify in the container, return iterator pointing to `.end()` of container. Performance is O(log N). Note that for this operation to be meangingful, the items should be sorted in some ordering.
 ```cpp
