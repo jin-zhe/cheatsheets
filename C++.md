@@ -355,131 +355,83 @@ do {
 }
 while (loop_condition);
 ```
-### Iterators
-Available to the following STL container types
+
+### Pointer
+#### Basics
 ```cpp
-#include <array>
-#include <deque>
-#include <forward_list>
-#include <list>
-#include <map>
-#include <regex>
-#include <set>
-#include <span>         // (since C++20)
-#include <string>
-#include <string_view>  // (since C++17)
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
+int a = 3;
+int *ptr1;              // Declaration
+ptr1 = &a;              // Assignment
+cout << *ptr1 << endl;  // De-reference to retrieve value
+*ptr1 = 4;              // Modify value
+cout << a << endl;      //=> 4
+
+int b = 6;
+int *ptr2 = &b;
+ptr1 = ptr2;            // Re-assignment
+cout << *ptr1 << endl;  //=> 6
+cout << a << endl;      //=> 4
+```
+#### Object pointers
+```cpp
+MyObject* my_object = new MyObject();
+
+/* The following are equivalent when accessing attributes of an object pointer */
+(*my_object).attr1;
+my_object->attr1;
 ```
 
-#### Iterating an iterable
-For-loop:
+### Reference
+[Pointers vs references](https://stackoverflow.com/questions/57483/what-are-the-differences-between-a-pointer-variable-and-a-reference-variable-in)
+#### Basics
 ```cpp
-for (vector<int>::iterator it=vect.begin(); it!=vect.end(); ++it) {
-    // Do something with *it;
+int a = 3;
+int &ref = a;
+cout << ref;    // Acess value of reference
+```
+#### Examples
+Swap function
+```cpp
+void swap(int &a, int &b) {
+  int temp = a;
+  a = b;
+  b = temp;
 }
 ```
-While-loop:
+By default C++ passes by value (i.e make copy). Thus when writing functions to modify objects, be sure to pass (and return) them via reference!
 ```cpp
-vector<int>::iterator it=vect.begin();
-while(it != vect.end()) {
-  // Do something with *it
-  ++it;
+void update_val(vector<int> &vect, int index, int val) {
+  vect[index] = val;
 }
+
+queue<int> & get_curr_queue(bool on_left, queue<int> &left_queue, queue<int> &right_queue) {
+  return (on_left)? left_queue : right_queue;
+}
+queue<int> &curr_queue = get_curr_queue(on_left, left_queue, right_queue); // Important! If not assigning to a reference, a copy is made instead
 ```
 
-#### Common manipulations
-##### Conversion
-Index to iterator:
-```cpp
-vector<int>::iterator it;
-vector<int> vect = {0,1,2,3,4,5};
-int index = 4;
-it = vect.begin() + index;
-cout << *it << endl;    //=> 4
-```
+## STL
+The C++ Standard Template Library (STL) is a set of template classes that provides standard data structures (DS) and their associated ADT operations. It is a library consisting of the following:
 
-Iterator to index:
-```cpp
-vector<int> vect = {0,1,2,3,4,5};
-vector<int>::iterator it = lower_bound(vect.begin(), vect.end(), 2);
-int index = it - vect.begin(); // alternatively: distance(vect.begin(), it);
-cout << index << endl;  //=> 2
-```
-##### Advancement
-```cpp
-++it            // Advance iterator to the next item
-it += k;        // Advance iterator by k items. We can do this without worring about size of item
-advance(it, k); // Advance iterator by k items 
-```
-##### `insert`
-`<container>.insert(it, val)` inserts the reference of given argument `val` into container at position specified by iterator `it`. It returns an iterator pointing to the inserted value. For `<vector>` this is a O(N) procedure. For `<list>` this is O(1).
-```cpp
-vector<int>::iterator it;
-vector<int> vect = {1,2,4,5};
+* Algorithm (e.g. sorting, searching etc.)
+* Containers: Stores objects and data
+  * Sequence Containers: DS for accessing data in sequential manner
+    * `arrays`, `vector`, `list`, `deque`, `forward_list`
+  * Container Adaptors: Provides abstracted interface for sequential containers
+    * `queue`, `priority_queue`, `stack`
+  * Associative Containers: Ordered DS where an item can be searched in O(log n) time
+    * `set`, `multiset`, `map`, `multimap`
+  * Unordered Associative Containers: Unordered DS where an item is supported by random access
+    * `unordered_set`, `unordered_multiset`, `unordered_map`, `unordered_multimap`
+* Utility Library: `pair`
+* Iterators
+* Functions
+* Numeric algorithms
 
-/* Prepending to the front */
-it = vect.begin();
-it = vect.insert(it, 0);  // vect: {0,1,2,4,5}
-cout << *it << endl;      //=> 0
+### Containers
 
-/* Inserting in bewteen */
-it = vect.begin() + 3;
-it = vect.insert(it, 3);  // vect: {0,1,2,3,4,5}
-cout << *it << endl;      //=> 3
-
-/* Appending to the back */
-it = vect.end();
-it = vect.insert(it, 6);  // vect: {0,1,2,3,4,5,6}
-cout << *it << endl;      //=> 6
-```
-###### Pitfall
-> Causes reallocation if the new `<container>.size()` is greater than the old `<container>.capacity()`. **If the new `size()` is greater than `<container>.capacity()`,  all iterators and references are invalidated. Otherwise, only the iterators and references before the insertion point remain valid.** The past-the-end iterator is also invalidated. [source](https://en.cppreference.com/w/cpp/container/vector/insert)
-
-So it is important to update relevant iterator(s) with the returned iterator or re-assign them after calling `.insert()`!
-
-##### `emplace`
-`<container>.emplace(it, args...)` inserts a new element constructed by given construction argument(s) into container at position specified by iterator `it`. Unlike `<container>.insert(...)` which receives a reference as argument and then copies the contents of referenced object into the new element, `<container>.emplace(...)` constructs the new element in-place using the given construction argument(s) and inserts it into the container. It returns an iterator pointing to the newly constructed element.
-
-The operations and pitfalls are identical to `<container>.insert(...)` so refer to [`insert`](#insert) for specifics.
-
-For containers of primitives, it doesn't really matter if `emplace` or `insert` is used, but for objects, use of `emplace` is preferred for efficiency reasons. This is highlighted in the following example:
-```cpp
-vector<pair<int,int>> vect;
-vect.emplace(vect.begin(),1,2);             // new pair to be inserted is constructed in-place
-vect.insert (vect.begin(),make_pair(3,4));  // pair is first constructed, then passed as arugment, then its value copied to newly inserted element. So initial construction before passing in as arugment is wasteful
-```
-
-##### `erase`
-`<container>.erase(start, end)` removes all items from `start` inclusive to `end` exclusive. i.e. `\[start, end)`. If `end` is not supplied as arugment, just remove the single item at `start`. It returns iterator following the last removed element. If the iterator position refers to the last element, the `<container>.end()` iterator is returned. For `<vector>` this is a O(N) procedure. For `<list>` this is O(1).
-```cpp
-vector<int> vect = {0,1,2,3,4,5};
-vector<int>::iterator it;
-
-/* If erasing iterator item at non-last position, returned iterator is automatically advanced to the next item */
-it = vect.begin() + 2;
-it = vect.erase(it);          // vect: {0,1,3,4,5}
-cout << *it << endl;          //=> 3
-
-it = vect.begin() + 1;
-it = vect.erase(it, it + 3);  // vect: {0,5}
-cout << *it << endl;          //=> 5
-
-/* If erasing iterator item at last position, returned iterator is new end iterator */
-it = vect.end() - 1;
-it = vect.erase(it);          // vect: {0}
-assert(it == vect.end());     //=> assertion true
-```
-###### Pitfall
-> Invalidates iterators and references at or after the point of the erase, including the end() iterator.[Source](https://en.cppreference.com/w/cpp/container/vector/erase)
-
-So it is important to update relevant iterator(s) with the returned iterator or re-assign them after calling `<container>.erase(...)`!
-
-## Data structures
-
-### Array
-#### Initializations
+#### C-Style Array
+##### Initializations
 ```cpp
 int arr[3] = {1, 2, 3}; //=> [1, 2, 3]
 int arr[5] = {1, 2, 3}; //=> [1, 2, 3, 0, 0]  // unspecified values are assigned default values
@@ -495,7 +447,7 @@ int arr[n] = {0};
 ```
 Instead, consider using [`std::vector`](#stdvector)
 
-#### Overview
+##### Overview
 Array size
 ```cpp
 int size = int n = sizeof(arr) / sizeof(arr[0]);
@@ -507,33 +459,36 @@ Array copy
 copy(begin(src), end(src), begin(dest));
 ```
 
-### `std::array`
+Note that C-style arrays does not enjoy the convenience of C++11's foreach loop. Instead consider using `std:array`
+
+#### `std::array`
+A thin wrapper around C-style arrays
 ```cpp
 array<int, 10> s = {5, 7, 4, 2, 8, 6, 1, 9, 0, 3};
 ```
 
-### `std::pair`
+#### `std::pair`
 Import:
 ```cpp
 #include <utility>
 ```
-#### Overview
-##### Declaration and initialization
+##### Overview
+###### Declaration and initialization
 ```cpp
 pair<int,int> p(1,2);
 pair<int,int> p = make_pair(1,2);
 pair<int,int> p = {1,2};
 ```
-##### Accessor
+###### Accessor
 ```cpp
 int first = p.first;  //=> 1
 int first = p.second; //=> 2
 ```
-##### Modifier
+###### Modifier
 ```cpp
 p.first = 0;
 ```
-##### Operation
+###### Operation
 Equaliy via `==` is supported:
 ```cpp
 pair<int,int> p1(1,2);
@@ -541,27 +496,27 @@ pair<int,int> p2(1,2);
 assert(p1 == p2);   //=> assertion true
 ```
 
-### `std::tuple`
+#### `std::tuple`
 Import:
 ```cpp
 #include <tuple>
 ```
-#### Overview
-##### Declaration and initialization
+##### Overview
+###### Declaration and initialization
 ```cpp
 tuple<int,int,int> triplet(1,2,3);
 tuple<int,int,int> triplet = make_tuple(1,2,3);
 tuple<int,int,int> triplet = {1,2,3};
 ```
-##### Accessor
+###### Accessor
 ```cpp
 int first = get<0>(triplet); //=> 1
 ```
-##### Modifier
+###### Modifier
 ```cpp
 get<0>(triplet) = 0;
 ```
-##### Operation
+###### Operation
 Equaliy via `==` is supported:
 ```cpp
 tuple<int,int> t1(1,2);
@@ -569,13 +524,13 @@ tuple<int,int> t2(1,2);
 assertion(t1 == t2); //=> assertion true
 ```
 
-### `std::vector`
+#### `std::vector`
 Import:
 ```cpp
 #include <vector>
 ```
-#### Overview
-##### Declaration and initialization
+##### Overview
+###### Declaration and initialization
 ```cpp
 // Initialization
 vector<int> vect;           // init empty vector
@@ -587,15 +542,15 @@ vector<int> vect(1, 2, 3);  // init vector with items {1, 2, 3}
 int arr[3] = {10, 20, 30};
 vector<int> vect(arr, arr + 3); // init vector with items {10, 20, 30} 
 ```
-##### Capacity
+###### Capacity
 ```cpp
 vect.size():
 ```
-##### Accessors
+###### Accessors
 ```cpp
 vect[i] = x;
 ```
-##### Modifiers
+###### Modifiers
 ```cpp
 vect[i]++;
 vect.push_back(99); // Appending
@@ -605,28 +560,28 @@ vect.erase(vect.begin() + 5);                // erase the 6th element
 vect.erase(vect.begin(), vect.begin() + 3);  // erase the first 3 elements:
 ```
 
-### `std::list`
+#### `std::list`
 Import
 ```cpp
 #include <list>
 ```
-#### Overview
-##### Declaration and initialization
+##### Overview
+###### Declaration and initialization
 ```cpp
 list<int> lst;              
 list<int> lst({1, 2, 3});   // Initialize with items
 ```
-##### Capacity
+###### Capacity
 ```cpp
 lst.empty();    // Checks if list is empty
 lst.size();     // Returns size of list
 ```
-#### Accessors
+##### Accessors
 ```cpp
 lst.front();    // Get head item
 lst.back();     // Get tail item
 ```
-#### Modifiers
+##### Modifiers
 ```cpp
 lst.clear();            // clear all contents of list
 lst.push_back(item);    // Appends item to the rear
@@ -635,89 +590,89 @@ lst.insert(it, item);   // Inserts item before iterator position
 lst.pop_back();         // Removes last item
 ```
 
-### `std::stack`
+#### `std::stack`
 Import
 ```cpp
 #include <stack>
 ```
-#### Overview
-##### Declaration and initialization
+##### Overview
+###### Declaration and initialization
 ```cpp
 stack<int> stk;
 stack<int> stk(vector<int>{1,2,3,4});
 ```
-##### Capacity
+###### Capacity
 ```cpp
 stk.empty();    // Checks if stack is empty
 stk.size();     // Returns current size on stack
 ```
-#### Accessors
+##### Accessors
 ```cpp
 stk.top();      // Returns the topmost element
 ```
-#### Modifiers
+##### Modifiers
 ```cpp
 stk.push(item); // Push item to top of stack
 stk.pop(item);  // Pop item off top of stack
 ```
-### `std::queue`
+#### `std::queue`
 Import
 ```cpp
 #include <queue>
 ```
-#### Overview
-##### Declaration and initialization
+##### Overview
+###### Declaration and initialization
 ```cpp
 queue<int> q;
 ```
-##### Capacity
+###### Capacity
 ```cpp
 q.empty();    // Checks if queue is empty
 q.size();     // Returns current size on queue
 ```
-#### Accessors
+##### Accessors
 ```cpp
 q.front();  // Returns front item of queue
 q.back();   // Returns rear item of queue
 ```
-#### Modifiers
+##### Modifiers
 ```cpp
 q.push(item); // enqueue item to rear of queue
 q.pop(item);  // dequeue item from front of queue
 ```
-#### Misc
+##### Misc
 ```cpp
 print_queue(q);
 ```
-### `std:deque`
+#### `std:deque`
 Import
 ```cpp
 #include <deque>
 ```
-#### Overview
-##### Declaration and initialization
+##### Overview
+###### Declaration and initialization
 ```cpp
 deque<int> deq;
 ```
-##### Capacity
+###### Capacity
 ```cpp
 deq.empty();    // Checks if deque is empty
 deq.size();     // Returns current size on deque
 ```
-#### Accessors
+##### Accessors
 ```cpp
 deq.front();  // Returns front item of deque
 deq.back();   // Returns rear item of deque
 deq.at(i);    // Returns the item at position i in O(1)
 ```
-#### Modifiers
+##### Modifiers
 ```cpp
 deq.push_front(item);   // Push item to front of deque
 deq.pop_front(item);    // Pop item from front of deque
 deq.push_back(item);    // Inject item at rear of deque
 deq.pop_back(item);     // Eject item at rear of deque
 ```
-#### Iterator
+### Iterator
 ```cpp
 for (auto it = deq.begin(); it != deq.end(); ++it) {
   // ...
@@ -863,59 +818,126 @@ it = upper_bound(vect2.begin(), vect2.end(), 7);
 assert(it == vect2.end());                        //=> assertion true
 ```
 
-## Pointer
-### Basics
+### Iterators
+Available to the following STL container types
 ```cpp
-int a = 3;
-int *ptr1;              // Declaration
-ptr1 = &a;              // Assignment
-cout << *ptr1 << endl;  // De-reference to retrieve value
-*ptr1 = 4;              // Modify value
-cout << a << endl;      //=> 4
-
-int b = 6;
-int *ptr2 = &b;
-ptr1 = ptr2;            // Re-assignment
-cout << *ptr1 << endl;  //=> 6
-cout << a << endl;      //=> 4
-```
-### Object pointers
-```cpp
-MyObject* my_object = new MyObject();
-
-/* The following are equivalent when accessing attributes of an object pointer */
-(*my_object).attr1;
-my_object->attr1;
+#include <array>
+#include <deque>
+#include <forward_list>
+#include <list>
+#include <map>
+#include <regex>
+#include <set>
+#include <span>         // (since C++20)
+#include <string>
+#include <string_view>  // (since C++17)
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
 ```
 
-## Reference
-[Pointers vs references](https://stackoverflow.com/questions/57483/what-are-the-differences-between-a-pointer-variable-and-a-reference-variable-in)
-### Basics
+#### Iterating an iterable
+For-loop:
 ```cpp
-int a = 3;
-int &ref = a;
-cout << ref;    // Acess value of reference
-```
-### Examples
-Swap function
-```cpp
-void swap(int &a, int &b) {
-  int temp = a;
-  a = b;
-  b = temp;
+for (vector<int>::iterator it=vect.begin(); it!=vect.end(); ++it) {
+    // Do something with *it;
 }
 ```
-By default C++ passes by value (i.e make copy). Thus when writing functions to modify objects, be sure to pass (and return) them via reference!
+While-loop:
 ```cpp
-void update_val(vector<int> &vect, int index, int val) {
-  vect[index] = val;
+vector<int>::iterator it=vect.begin();
+while(it != vect.end()) {
+  // Do something with *it
+  ++it;
 }
-
-queue<int> & get_curr_queue(bool on_left, queue<int> &left_queue, queue<int> &right_queue) {
-  return (on_left)? left_queue : right_queue;
-}
-queue<int> &curr_queue = get_curr_queue(on_left, left_queue, right_queue); // Important! If not assigning to a reference, a copy is made instead
 ```
+
+#### Common manipulations
+##### Conversion
+Index to iterator:
+```cpp
+vector<int>::iterator it;
+vector<int> vect = {0,1,2,3,4,5};
+int index = 4;
+it = vect.begin() + index;
+cout << *it << endl;    //=> 4
+```
+
+Iterator to index:
+```cpp
+vector<int> vect = {0,1,2,3,4,5};
+vector<int>::iterator it = lower_bound(vect.begin(), vect.end(), 2);
+int index = it - vect.begin(); // alternatively: distance(vect.begin(), it);
+cout << index << endl;  //=> 2
+```
+##### Advancement
+```cpp
+++it            // Advance iterator to the next item
+it += k;        // Advance iterator by k items. We can do this without worring about size of item
+advance(it, k); // Advance iterator by k items 
+```
+##### `insert`
+`<container>.insert(it, val)` inserts the reference of given argument `val` into container at position specified by iterator `it`. It returns an iterator pointing to the inserted value. For `<vector>` this is a O(N) procedure. For `<list>` this is O(1).
+```cpp
+vector<int>::iterator it;
+vector<int> vect = {1,2,4,5};
+
+/* Prepending to the front */
+it = vect.begin();
+it = vect.insert(it, 0);  // vect: {0,1,2,4,5}
+cout << *it << endl;      //=> 0
+
+/* Inserting in bewteen */
+it = vect.begin() + 3;
+it = vect.insert(it, 3);  // vect: {0,1,2,3,4,5}
+cout << *it << endl;      //=> 3
+
+/* Appending to the back */
+it = vect.end();
+it = vect.insert(it, 6);  // vect: {0,1,2,3,4,5,6}
+cout << *it << endl;      //=> 6
+```
+###### Pitfall
+> Causes reallocation if the new `<container>.size()` is greater than the old `<container>.capacity()`. **If the new `size()` is greater than `<container>.capacity()`,  all iterators and references are invalidated. Otherwise, only the iterators and references before the insertion point remain valid.** The past-the-end iterator is also invalidated. [source](https://en.cppreference.com/w/cpp/container/vector/insert)
+
+So it is important to update relevant iterator(s) with the returned iterator or re-assign them after calling `.insert()`!
+
+##### `emplace`
+`<container>.emplace(it, args...)` inserts a new element constructed by given construction argument(s) into container at position specified by iterator `it`. Unlike `<container>.insert(...)` which receives a reference as argument and then copies the contents of referenced object into the new element, `<container>.emplace(...)` constructs the new element in-place using the given construction argument(s) and inserts it into the container. It returns an iterator pointing to the newly constructed element.
+
+The operations and pitfalls are identical to `<container>.insert(...)` so refer to [`insert`](#insert) for specifics.
+
+For containers of primitives, it doesn't really matter if `emplace` or `insert` is used, but for objects, use of `emplace` is preferred for efficiency reasons. This is highlighted in the following example:
+```cpp
+vector<pair<int,int>> vect;
+vect.emplace(vect.begin(),1,2);             // new pair to be inserted is constructed in-place
+vect.insert (vect.begin(),make_pair(3,4));  // pair is first constructed, then passed as arugment, then its value copied to newly inserted element. So initial construction before passing in as arugment is wasteful
+```
+
+##### `erase`
+`<container>.erase(start, end)` removes all items from `start` inclusive to `end` exclusive. i.e. `\[start, end)`. If `end` is not supplied as arugment, just remove the single item at `start`. It returns iterator following the last removed element. If the iterator position refers to the last element, the `<container>.end()` iterator is returned. For `<vector>` this is a O(N) procedure. For `<list>` this is O(1).
+```cpp
+vector<int> vect = {0,1,2,3,4,5};
+vector<int>::iterator it;
+
+/* If erasing iterator item at non-last position, returned iterator is automatically advanced to the next item */
+it = vect.begin() + 2;
+it = vect.erase(it);          // vect: {0,1,3,4,5}
+cout << *it << endl;          //=> 3
+
+it = vect.begin() + 1;
+it = vect.erase(it, it + 3);  // vect: {0,5}
+cout << *it << endl;          //=> 5
+
+/* If erasing iterator item at last position, returned iterator is new end iterator */
+it = vect.end() - 1;
+it = vect.erase(it);          // vect: {0}
+assert(it == vect.end());     //=> assertion true
+```
+###### Pitfall
+> Invalidates iterators and references at or after the point of the erase, including the end() iterator.[Source](https://en.cppreference.com/w/cpp/container/vector/erase)
+
+So it is important to update relevant iterator(s) with the returned iterator or re-assign them after calling `<container>.erase(...)`!
 
 ## I/O
 ### `iostream`
