@@ -1263,8 +1263,7 @@ vector<string> tokenizer(string str, string delimiters) {
 vector<string> read_till_empty() {
   vector<string> lines;
   string line; 
-  while(getline(cin, line)){
-    if (!line.length()) break;
+  while(getline(cin, line), line.length()){
     lines.push_back(line);
   }
   return lines;
