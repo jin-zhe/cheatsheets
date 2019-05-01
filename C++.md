@@ -216,20 +216,19 @@ switch(1) {
 }
 ```
 
-## Strings
+### Strings
 In C++ and C, a string is an array of `char` terminated with the null character `\0`.
 
 However `std::string` is treated differently from `c-string`
 
 Strings are mutable in C++. This behaviour differs from other languages such as Java.
 
-### Import
+##### Import
 ```cpp
 #include <string>
 ````
 
-### Overview
-#### Declaration
+##### Declaration
 ```cpp
 // Assignment via string literal
 string str = "Hello world!";
@@ -238,13 +237,13 @@ string str = "Hello world!";
 char arr[] = "Hello world!";
 string str(arr);
 ```
-#### Accessing chars
+##### Accessing chars
 ```cpp
 string hello = "Hello";
 str.at(0); //=> 'H'
 str[0];    //=> 'H'
 ```
-#### Parsing
+##### Parsing
 `int` <-> `string`
 ```cpp
 to_string(42); //=> "42"
@@ -261,20 +260,20 @@ string str = std::string() + c; //=> "c"
 string str;
 str.push_back(c);
 ```
-#### Length
+##### Length
 Both `.length()` and `.size()` (UTF-8) may be used.
 ```cpp
 string str = "Hello";
 str.length(); //=> 5
 str.size();   //=> 5
 ```
-#### Concatenation
+##### Concatenation
 C++ strings can be concatenated simply using the `+` operator
 ```cpp
 string str = "Hello" + " " + "World!";
 assert(str, "Hello World!");  //=> assertion true
 ```
-#### Appending
+##### Appending
 The `+=` operator is the most straightforward and generalised form of appending. However you may also use `push_back(c)` for appending a character or `apppend(str)` for appending a string.
 ```cpp
 string str = "Hello";
@@ -282,7 +281,7 @@ str += " World";      // str: "Hello World"
 str.push_back('!');   // str: "Hello World!"
 str.append(" Hi!");   // str: "Hello World! Hi!"
 ```
-#### Comparison
+##### Comparison
 Either the relational operators or the function `compare` may be used
 ```cpp
 string str = "Hello";
@@ -293,14 +292,34 @@ str.compare("Hello");         //=> 0
 str.compare("I");             //=> -1
 str.compare("J");             //=> -2
 ```
-#### Find
+##### Search
+[find](http://www.cplusplus.com/reference/string/string/find/)
 ```cpp
 string str = "Hello World";
 size_t pos = str.find("World");         //=> 6
+size_t pos = str.find("o", 6);          //=> 7
 size_t pos = str.find("Hey");           //=> string::npos
+```
+[rfind](http://www.cplusplus.com/reference/string/string/rfind/)
+```cpp
+string str = "Hello World";
+size_t pos = str.rfind("o");            //=> 7
+size_t pos = str.rfind("o", 6);         //=> 4
+```
+
+[find_last_of](http://www.cplusplus.com/reference/string/string/find_last_of/)
+```cpp
+string str = "Hello World";
 size_t pos = str.find_last_of('o');     //=> 7
 ```
-#### Substring
+
+[find_last_not_of](http://www.cplusplus.com/reference/string/string/find_last_not_of/)
+```cpp
+string str = "Hello World       ";
+size_t pos = str.find_last_not_of(' '); //=> 10
+```
+
+##### [Substring](http://www.cplusplus.com/reference/string/string/substr/)
 Note that the second argument for `substr` is the length of substring to take and **not** the past-the-end index!
 ```cpp
 string str = "Hello World!";
@@ -313,12 +332,34 @@ string a = "abc";
 string b = &a[1];
 assert(b, "bc");  //=> assertion true
 ```
-#### Erasing
+##### [Erase](http://www.cplusplus.com/reference/string/string/erase/)
+```cpp
+str.erase(pos_begin, length);   // Erase a range of characters via (size_t) pos_begin, (size_t) length
+str.erase(it_begin, it_end);    // Erase a range of characters via (iterator) it_begin, (iterator) it_end
+str.erase(it);                  // Erase a single character via iterator
 ```
-TODO
-sequence (1): string& erase(size_t pos = 0, size_t len = npos);
-character (2): iterator erase(const_iterator p);
-range (3): iterator erase(const_iterator first, const_iterator last);
+##### [Replace](http://www.cplusplus.com/reference/string/string/replace/)
+Using positions
+```cpp
+// Replace position range [start_pos_1, start_pos_1 + length_1 - 1] in str1 with str2
+str1.replace(start_pos_1, length_1, str2); 
+
+// Replace position range [start_pos_1, start_pos_1 + length_1 - 1] in str1 with position range [0, length_2 - 1] in str2
+str1.replace(start_pos_1, length_1, str2, length_2);
+
+// Replace position range [start_pos_1, start_pos_1 + length_1 - 1] in str1 with position range [start_pos_2, start_pos_2 + length_2 - 1] in str2
+str1.replace(start_pos_1, length_1, str2, start_pos_2, length_2);
+```
+Using iterators
+```cpp
+// Replace iterator range [it_start_1, it_end_1 - 1] in str1 with str2
+str1.replace(it_start_1, it_end_1, str2);
+
+// Replace iterator range [it_start_1, it_end_1 - 1] in str1 with position range [0, length_2 - 1] in str2
+str1.replace(it_start_1, it_end_1, str2, length_2);
+
+// Replace iterator range [it_start_1, it_end_1 - 1] in str1 with iterator range [it_start_2, it_end_2 - 1] in str2
+str1.replace(it_start_1, it_end_1, str2, it_start_2, it_end_2);
 ```
 
 ## Iteration
@@ -526,7 +567,7 @@ Equaliy via `==` is supported:
 ```cpp
 tuple<int,int> t1(1,2);
 tuple<int,int> t2(1,2);
-assertion(t1 == t2); //=> assertion true
+assert(t1 == t2); //=> assertion true
 ```
 
 #### `std::vector`
@@ -537,14 +578,15 @@ assertion(t1 == t2); //=> assertion true
 ##### Declaration and initialization
 ```cpp
 // Initialization
-vector<int> vect;           // init empty vector
-vector<int> vect(n);        // init vector of size n
-vector<int> vect(n, 10);    // init vector of size n with all values being 10
-vector<int> vect(1, 2, 3);  // init vector with items {1, 2, 3}
+vector<int> vect;               // Initialize empty vector
+vector<int> vect(n);            // Initialize vector of size n
+vector<int> vect(n, 10);        // Initialize vector of size n with all values being 10
+vector<int> vect({1, 2, 3});    // Initialize with items {1, 2, 3}
+vector<int> vect = {1, 2, 3};   // Initialize with items {1, 2, 3}
 
-// Init using array
+// Initialize using array
 int arr[3] = {10, 20, 30};
-vector<int> vect(arr, arr + 3); // init vector with items {10, 20, 30} 
+vector<int> vect(arr, arr + 3); // Initialize with items {10, 20, 30} 
 ```
 ##### Capacity
 ```cpp
@@ -572,7 +614,8 @@ vect.erase(vect.begin(), vect.begin() + 3);  // erase the first 3 elements:
 ##### Declaration and initialization
 ```cpp
 list<int> lst;              
-list<int> lst({1, 2, 3});   // Initialize with items
+list<int> lst({1, 2, 3});   // Initialize with items {1, 2, 3}
+list<int> lst = {1, 2, 3};  // Initialize with items {1, 2, 3}
 ```
 ##### Capacity
 ```cpp
@@ -591,6 +634,15 @@ lst.push_back(item);    // Appends item to the rear
 lst.push_front(item);   // Prepends item at head
 lst.insert(it, item);   // Inserts item before iterator position
 lst.pop_back();         // Removes last item
+```
+
+[Splice](http://www.cplusplus.com/reference/list/list/splice/)
+```cpp
+list<int> lst1 = {1, 2, 3};
+list<int> lst2 = {4, 5, 6};
+lst1.splice(lst1.end(), lst2); // O(1)
+list<int> lst3 = {1, 2, 3, 4, 5, 6};
+assert(lst1 == lst3); //=> assertion true
 ```
 
 #### `std::stack`
