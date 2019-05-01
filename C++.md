@@ -541,13 +541,13 @@ copy(begin(src), end(src), begin(dest));
 
 Note that C-style arrays does not enjoy the convenience of C++11's foreach loop. Instead consider using `std:array`
 
-#### `std::array`
+#### [`std::array`](https://en.cppreference.com/w/cpp/container/array)
 A thin wrapper around C-style arrays
 ```cpp
 array<int, 10> s = {5, 7, 4, 2, 8, 6, 1, 9, 0, 3};
 ```
 
-#### `std::pair`
+#### [`std::pair`](https://en.cppreference.com/w/cpp/utility/pair)
 ##### Import
 ```cpp
 #include <utility>
@@ -568,7 +568,7 @@ int first = p.second; //=> 2
 p.first = 0;
 ```
 
-#### `std::tuple`
+#### [`std::tuple`](https://en.cppreference.com/w/cpp/utility/tuple)
 ##### Import
 ```cpp
 #include <tuple>
@@ -588,7 +588,7 @@ int first = get<0>(triplet); //=> 1
 get<0>(triplet) = 0;
 ```
 
-#### `std::vector`
+#### [`std::vector`](https://en.cppreference.com/w/cpp/container/vector)
 ##### Import
 ```cpp
 #include <vector>
@@ -624,7 +624,7 @@ vect.erase(vect.begin() + 5);                // erase the 6th element
 vect.erase(vect.begin(), vect.begin() + 3);  // erase the first 3 elements:
 ```
 
-#### `std::list`
+#### [`std::list`](https://en.cppreference.com/w/cpp/container/list)
 ##### Import
 ```cpp
 #include <list>
@@ -663,7 +663,7 @@ list<int> lst3 = {1, 2, 3, 4, 5, 6};
 assert(lst1 == lst3); //=> assertion true
 ```
 
-#### `std::stack`
+#### [`std::stack`](https://en.cppreference.com/w/cpp/container/stack)
 ##### Import
 ```cpp
 #include <stack>
@@ -688,7 +688,7 @@ stk.push(item); // Push item to top of stack
 stk.pop(item);  // Pop item off top of stack
 ```
 
-#### `std::queue`
+#### [`std::queue`](https://en.cppreference.com/w/cpp/container/queue)
 ##### Import
 ```cpp
 #include <queue>
@@ -717,7 +717,7 @@ q.pop(item);  // dequeue item from front of queue
 print_queue(q);
 ```
 
-#### `std:deque`
+#### [`std:deque`](https://en.cppreference.com/w/cpp/container/deque)
 ##### Import
 ```cpp
 #include <deque>
@@ -752,7 +752,7 @@ for (auto it = deq.begin(); it != deq.end(); ++it) {
 }
 ```
 
-#### `std:priority_queue`
+#### [`std:priority_queue`](https://en.cppreference.com/w/cpp/container/priority_queue)
 ##### Import
 ```cpp
 #include <queue>
@@ -796,8 +796,44 @@ pq.pop();
 ```cpp
 print_queue(q);
 ```
+#### [`std:set`](https://en.cppreference.com/w/cpp/container/set), [`std:multiset`](https://en.cppreference.com/w/cpp/container/multiset)
+The STL BBST implementation for storing keys. `set` can only store a single occurence of a unique key whereas `multiset` can store multiple occurences of the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
 
-### Algorithm
+##### Import
+```cpp
+#include <set>
+```
+
+#### [`std:map`](https://en.cppreference.com/w/cpp/container/map), [`std:multimap`](https://en.cppreference.com/w/cpp/container/multimap)
+The STL BBST implementation for storing key-value pairs. `map` can only store a single occurence of key-value for the given key whereas `multimap` can store multiple occurences of key-value pairs for the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
+
+##### Import
+```cpp
+#include <map>
+```
+
+TODO
+#### [`std:unordered_set`](https://en.cppreference.com/w/cpp/container/unordered_set), [`unordered_multiset`](https://en.cppreference.com/w/cpp/container/unordered_multiset)
+The STL Hash Table implementation for storing keys. `unordered_set` can only store a single occurence of a unique key whereas `unordered_multiset` can store multiple occurences of the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
+
+##### Import
+```cpp
+#include <unordered_set>
+```
+
+TODO
+
+#### [`std:unordered_map`](https://en.cppreference.com/w/cpp/container/unordered_map), [`unordered_multimap`](https://en.cppreference.com/w/cpp/container/unordered_multimap)
+The STL Hash Table implementation for storing key-value pairs. `unordered_map` can only store a single occurence of key-value for the given key whereas `unordered_multimap` can store multiple occurences of key-value pairs for the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
+
+##### Import
+```cpp
+#include <unordered_map>
+```
+
+TODO
+
+### [Algorithm](https://en.cppreference.com/w/cpp/algorithm)
 Import:
 ```cpp
 #include <algorithm>
