@@ -490,6 +490,49 @@ do {
 while (loop_condition);
 ```
 
+### Math libraries
+#### [cmath](https://en.cppreference.com/w/cpp/numeric/math)
+##### Import
+```cpp
+#import <math.h>
+```
+##### [floor](https://en.cppreference.com/w/cpp/numeric/math/floor)
+```cpp
+floor(+2.7);      //=> 2.000000
+floor(-2.7);      //=> -3.000000
+floor(-0.0);      //=> -0.000000
+floor(-INFINITY); //=> -INFINITY
+```
+##### [ceil](https://en.cppreference.com/w/cpp/numeric/math/ceil)
+```cpp
+ceil(+2.4);       //=> 3.000000
+ceil(-2.4);       //=> -2.000000
+ceil(-0.0);       //=> -0.000000
+ceil(-INFINITY);  //=> -INFINITY
+```
+##### [pow](https://en.cppreference.com/w/cpp/numeric/math/pow)
+```cpp
+pow(2, 10);   //=> 1024
+pow(2, 10.0); //=> 1024.0
+```
+##### [Infinity](https://en.cppreference.com/w/c/numeric/math/INFINITY)
+`INFINITY` is a macro for numberic types supporting floating-point infinites.
+```cpp
+int     inf_int = INFINITY; //=> 4196512 (unsupported)
+long    inf_lng = INFINITY; //=> 160     (unsupported)
+float   inf_flt = INFINITY; //=> inf
+double  inf_dbl = INFINITY; //=> inf
+```
+
+#### [numberic_limits](https://en.cppreference.com/w/cpp/types/numeric_limits/infinity)
+Example
+```cpp
+#include <limits>
+double max = numeric_limits<double>::max();
+double inf = numeric_limits<double>::infinity();
+assert(inf > max);  //=> assertion true
+```
+
 ---
 
 ## [STL](http://www.cplusplus.com/reference/stl/)
@@ -1381,13 +1424,13 @@ ios:sync_with_stdio(false); cin.tie(NULL);
 See [here](https://www.geeksforgeeks.org/fast-io-for-competitive-programming/) for the reason.
 
 #### [`std::cin`](https://en.cppreference.com/w/cpp/io/cin)
-Integers
+##### Integers
 ```cpp
 // Read 2 numbers
 int l, r;
 cin >> l >> r;
 ```
-Strings
+##### Strings
 ```cpp
 string str;
 // Read a word (terminated with space/tab)
@@ -1396,13 +1439,28 @@ cin >> str;
 // Read an entire line
 getline(cin, str);
 ```
+##### [`get`](https://en.cppreference.com/w/cpp/io/basic_istream/get)
+Low level input that extracts a single character from stream:
+```cpp
+char c; cin.get(c);
+```
+It is also a common method to consume the newline character:
+```cpp
+cin.get(); // Consumed character discarded when no arguments given
+```
+
 #### [`std::cout`](https://en.cppreference.com/w/cpp/io/cout)
 ```cpp
 cout << "Hello World!" << endl;
 ```
+##### [`std::setprecision`]
+Sets the desired output precision format for real number representations e.g. `float`, `double` etc.
+```cpp
+std::cout << std::setprecision(5) << 1.123456789 << endl;  //=> 1.12345
+```
 
 ### [`stdio.h`](https://en.cppreference.com/w/cpp/header/cstdio)
-Import
+#### Import
 ```cpp
 #include <stdio.h>
 ```
@@ -1437,7 +1495,7 @@ scanf("%d %d", &l, &r);
 ```
 
 ### [`sstream`](https://en.cppreference.com/w/cpp/header/sstream)
-Import
+#### Import
 ```cpp
 #include <sstream>
 ```
@@ -1468,6 +1526,7 @@ iss.str(line);
 int num1, num2, num3, num4;
 iss >> num1 >> num2 >> num3 >> num4;
 ```
+
 #### [freopen](https://en.cppreference.com/w/cpp/io/c/freopen), [fclose](https://en.cppreference.com/w/cpp/io/c/fclose)
 ##### Reading
 ```cpp
