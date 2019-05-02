@@ -872,9 +872,9 @@ s.size();
 s.count(key);
 
 // Find
-auto it = s.find(key);  // O(log N)
-auto ancestor = ++it;   // O(log N)
-auto descendant = --it; // O(log N)
+auto it = s.find(key);    // O(log N)
+auto ancestor = it + 1;   // O(log N)
+auto descendant = it - 1; // O(log N)
 
 // Bound
 /*
