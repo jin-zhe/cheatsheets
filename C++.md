@@ -1297,7 +1297,7 @@ assert(it == vect2.end());                        //=> assertion true
 
 
 
-### Iterators
+### [Iterators](https://en.cppreference.com/w/cpp/header/iterator)
 Available to the following STL container types
 ```cpp
 #include <array>
@@ -1314,8 +1314,15 @@ Available to the following STL container types
 #include <unordered_set>
 #include <vector>
 ```
-
-TODO reverse iterator rbegin, crbegin
+Iterators are typically initialized via STL container functions, which comes in 2 forms
+* Forward iterators (most common)
+  * `<container>.begin()` returns the iterator pointing to the first item, 
+  * `<container>.end()` returns the iterator pointing to past-the-last element
+  * Increment of iterator progresses it forward toward the end
+* [Reverse iterators](https://en.cppreference.com/w/cpp/iterator/reverse_iterator)
+  * `<container>.rbegin()` returns the iterator pointing to the last item, 
+  * `<container>.rend()` returns the iterator pointing to past-the-first element
+  * Increment of iterator progresses it backwards toward the beginning
 
 #### Iterating an iterable
 For-loop:
