@@ -1194,19 +1194,26 @@ Import:
 * https://en.cppreference.com/w/cpp/algorithm/copy
 * http://www.cplusplus.com/reference/algorithm/reverse/
 * https://en.cppreference.com/w/cpp/algorithm/count
+* max_element
+* equal_range
+* fill
 
-
+#### [`random_shuffle`](https://en.cppreference.com/w/cpp/algorithm/random_shuffle)
+Example:
+```cpp
+vector<int> v = {1,2,3,4,5,6,7};
+srand(time(NULL));
+random_shuffle(v.begin(), v.end());
+```
 
 #### [`sort`](https://en.cppreference.com/w/cpp/algorithm/sort), [`stable_sort`](https://en.cppreference.com/w/cpp/algorithm/stable_sort)
 STL sorting functions are namely [`sort`](https://en.cppreference.com/w/cpp/algorithm/sort) and [`stable_sort`](https://en.cppreference.com/w/cpp/algorithm/stable_sort). As their names suggest, the former is not guaranteed to be stable while the latter is.
 ##### Sorting arrays
 ```cpp
-sort(arr, arr+n);
-stable_sort(arr, arr+n);
-```
-sort using a standard library compare function object
-```cpp
-sort(arr, arr+n, greater<int>()); // sorts descending
+sort(arr, arr+n);                 // Sorts ascending (default)
+sort(arr, arr+n, less<int>());    // Sorts descending
+sort(arr, arr+n, greater<int>()); // Sorts descending
+stable_sort(arr, arr+n);          // Stable sorts ascending
 ```
 ##### Sorting STL containers
 To perform sorting on containers, we will have to use iterators.
@@ -1308,6 +1315,8 @@ Available to the following STL container types
 #include <vector>
 ```
 
+TODO reverse iterator rbegin, crbegin
+
 #### Iterating an iterable
 For-loop:
 ```cpp
@@ -1352,12 +1361,19 @@ advance(it, k); // Advance iterator by k items
 ---
 
 ## I/O
-### `iostream`
+### [`iostream`](https://en.cppreference.com/w/cpp/io/basic_iostream)
 Import
 ```cpp
 #include <iostream>
 ```
-#### `std::cin`
+#### Optimization for competitive programming
+If only `cin`/`cout` will be used in place of `printf`/`scanf`, I/O can be optimized via:
+```cpp
+ios:sync_with_stdio(false); cin.tie(NULL);
+```
+See [here](https://www.geeksforgeeks.org/fast-io-for-competitive-programming/) for the reason.
+
+#### [`std::cin`](https://en.cppreference.com/w/cpp/io/cin)
 Integers
 ```cpp
 // Read 2 numbers
@@ -1373,16 +1389,17 @@ cin >> str;
 // Read an entire line
 getline(cin, str);
 ```
-#### `std::cout`
+#### [`std::cout`](https://en.cppreference.com/w/cpp/io/cout)
 ```cpp
 cout << "Hello World!" << endl;
 ```
-### `stdio.h`
+
+### [`stdio.h`](https://en.cppreference.com/w/cpp/header/cstdio)
 Import
 ```cpp
 #include <stdio.h>
 ```
-#### `printf`
+#### [`printf`](https://en.cppreference.com/w/cpp/io/c/fprintf)
 ```cpp
 printf("Hello World!\n");
 printf ("Characters: %c %c \n", 'a', 65);
@@ -1406,18 +1423,18 @@ Width trick:    10
 A string
 ```
 
-#### `scanf`
+#### [`scanf`](https://en.cppreference.com/w/cpp/io/c/fscanf)
 ```cpp
 int l, r;
 scanf("%d %d", &l, &r);
 ```
 
-### `sstream`
+### [`sstream`](https://en.cppreference.com/w/cpp/header/sstream)
 Import
 ```cpp
 #include <sstream>
 ```
-#### `stringstream`
+#### [`stringstream`](https://en.cppreference.com/w/cpp/io/basic_stringstream)
 Output
 ```cpp
 stringstream ss;
@@ -1435,7 +1452,7 @@ while(ss >> word) {
   cout << word; //=> John, Doe, Johnson, Mary
 }
 ```
-#### `istringstream`
+#### [`istringstream`](https://en.cppreference.com/w/cpp/io/basic_istringstream)
 ```cpp
 string line = "5 6 22 8";
 istringstream iss;
@@ -1444,7 +1461,20 @@ iss.str(line);
 int num1, num2, num3, num4;
 iss >> num1 >> num2 >> num3 >> num4;
 ```
-
+#### [freopen](https://en.cppreference.com/w/cpp/io/c/freopen), [fclose](https://en.cppreference.com/w/cpp/io/c/fclose)
+##### Reading
+```cpp
+freopen("input.txt", "r", stdin);   // redirects standard input
+string x;
+cin >> x;                           // reads from input.txt
+```
+##### Writing
+```cpp
+freopen("output.txt", "w", stdout); // redirects standard output
+string x = "Write this out to file";
+cout << x << endl;                  // writes to output.txt
+fclose(stdout);                     // end standard output redirection to file
+```
 ---
 
 ## OOP
