@@ -891,6 +891,22 @@ s.emplace(key);
 // Remove
 s.erase(it);
 ```
+###### Iteration
+The following 2 loops are equivalent in looping over key values. Both are in *O(N)* . 
+Caveat: Keys will be unique for set but may not be for multiset
+```cpp
+for (auto &key: s)
+  cout << key << endl;
+```
+```cpp
+for (auto it = s.begin(); it != s.end(); ++it)
+  cout << *it << endl;
+```
+To loop over unique keys in multiset:
+```cpp
+for (auto it = s.begin(); it != s.end(); it = it.upper_bound(*it))
+  cout << *it << endl;
+```
 
 ##### [`std:map`](https://en.cppreference.com/w/cpp/container/map), [`std:multimap`](https://en.cppreference.com/w/cpp/container/multimap)
 The STL BBST implementation for storing key-value pairs. `map` can only store a single occurence of key-value for the given key whereas `multimap` can store multiple occurences of key-value pairs for the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
