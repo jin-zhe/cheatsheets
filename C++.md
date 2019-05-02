@@ -593,7 +593,7 @@ Array copy
 copy(begin(src), end(src), begin(dest));
 ```
 Note that C-style arrays does not enjoy the convenience of C++11's foreach loop. Instead consider using `std:array`
-#### Sequence Containers
+#### [Sequence Containers](https://en.wikipedia.org/wiki/Sequence_container_(C%2B%2B))
 ##### [`std::array`](https://en.cppreference.com/w/cpp/container/array)
 A thin wrapper around C-style arrays
 ###### Import
@@ -744,66 +744,42 @@ for (auto it = deq.begin(); it != deq.end(); ++it) {
 }
 ```
 
-#### [`std::stack`](https://en.cppreference.com/w/cpp/container/stack)
-##### Import
-```cpp
-#include <stack>
-```
-##### Declaration and initialization
-```cpp
-stack<int> stk;
-stack<int> stk(vector<int>{1,2,3,4});
-```
-##### Capacity
-```cpp
-stk.empty();    // Checks if stack is empty
-stk.size();     // Returns current size on stack
-```
-##### Accessors
-```cpp
-stk.top();      // Returns the topmost element
-```
-##### Modifiers
-```cpp
-stk.push(item); // Push item to top of stack
-stk.pop(item);  // Pop item off top of stack
-```
-
-#### [`std::queue`](https://en.cppreference.com/w/cpp/container/queue)
-##### Import
+#### Container adaptors
+##### [`std::queue`](https://en.cppreference.com/w/cpp/container/queue)
+###### Import
 ```cpp
 #include <queue>
 ```
-##### Declaration and initialization
+###### Declaration and initialization
 ```cpp
 queue<int> q;
 ```
-##### Capacity
+###### Capacity
 ```cpp
 q.empty();    // Checks if queue is empty
 q.size();     // Returns current size on queue
 ```
-##### Accessors
+###### Accessors
 ```cpp
 q.front();  // Returns front item of queue
 q.back();   // Returns rear item of queue
 ```
-##### Modifiers
+###### Modifiers
 ```cpp
 q.push(item); // enqueue item to rear of queue
 q.pop(item);  // dequeue item from front of queue
 ```
-##### Misc
+###### Misc
 ```cpp
 print_queue(q);
 ```
 
-#### [`std:priority_queue`](https://en.cppreference.com/w/cpp/container/priority_queue)
-##### Import
+##### [`std:priority_queue`](https://en.cppreference.com/w/cpp/container/priority_queue)
+###### Import
 ```cpp
 #include <queue>
 ```
-##### Declaration and initialization
+###### Declaration and initialization
 ```cpp
 priority_queue<int> pq;                             // Creates a max-heap
 priority_queue<int, vector<int>, greater<int>> pq;  // Creates a min-heap
@@ -823,32 +799,60 @@ struct CustomCompare {
 // ...
 priority_queue<int, vector<int>, CustomCompare > pq;
 ```
-##### Capacity
+###### Capacity
 ```cpp
 pq.empty();
 pq.size();
 ```
-##### Accessors
+###### Accessors
 ```cpp
 pq.top();
 ```
-##### Modifiers
+###### Modifiers
 ```cpp
 pq.push(item);  // Add
 pq.pop();       // Remove
 ```
-#### Misc
+###### Misc
 ```cpp
 print_queue(q);
 ```
-#### [`std:set`](https://en.cppreference.com/w/cpp/container/set), [`std:multiset`](https://en.cppreference.com/w/cpp/container/multiset)
+
+##### [`std::stack`](https://en.cppreference.com/w/cpp/container/stack)
+###### Import
+```cpp
+#include <stack>
+```
+###### Declaration and initialization
+```cpp
+stack<int> stk;
+stack<int> stk(vector<int>{1,2,3,4});
+```
+###### Capacity
+```cpp
+stk.empty();    // Checks if stack is empty
+stk.size();     // Returns current size on stack
+```
+###### Accessors
+```cpp
+stk.top();      // Returns the topmost element
+```
+###### Modifiers
+```cpp
+stk.push(item); // Push item to top of stack
+stk.pop(item);  // Pop item off top of stack
+```
+
+#### [Associative containers](https://en.wikipedia.org/wiki/Associative_containers)
+
+##### [`std:set`](https://en.cppreference.com/w/cpp/container/set), [`std:multiset`](https://en.cppreference.com/w/cpp/container/multiset)
 The STL BBST implementation for storing keys. `set` can only store a single occurence of a unique key whereas `multiset` can store multiple occurences of the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
 
-##### Import
+###### Import
 ```cpp
 #include <set>
 ```
-##### Initialization
+###### Declaration and initialization
 ```cpp
 set<int> s({1,2,3});
 set<int> s = {1,2,3};
@@ -857,12 +861,12 @@ set<int> s = {1,2,3};
 vector<int> v = {1,2,3};
 set<int> s(v.begin(), v.end());
 ```
-#### Capacity
+###### Capacity
 ```cpp
 s.empty();
 s.size();
 ```
-#### Accessors
+###### Accessors
 ```cpp
 // Count
 s.count(key);
@@ -878,7 +882,7 @@ auto it = s.find(key);
 auto it = s.lower_bound(key); // O(log N)
 auto it = s.upper_bound(key); // O(log N)
 ```
-#### Modifier
+###### Modifier
 ```cpp
 // Add
 s.insert(key);
@@ -887,28 +891,45 @@ s.emplace(key);
 // Remove
 s.erase(it);
 ```
-#### [`std:map`](https://en.cppreference.com/w/cpp/container/map), [`std:multimap`](https://en.cppreference.com/w/cpp/container/multimap)
+
+##### [`std:map`](https://en.cppreference.com/w/cpp/container/map), [`std:multimap`](https://en.cppreference.com/w/cpp/container/multimap)
 The STL BBST implementation for storing key-value pairs. `map` can only store a single occurence of key-value for the given key whereas `multimap` can store multiple occurences of key-value pairs for the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
-##### Import
+###### Import
 ```cpp
 #include <map>
 ```
+###### Declaration and initialization
+```cpp
+map<string, int> m({{"John",25}, {"Alice",19}, {"Bob",30}});
+map<string, int> m = {{"John",25}, {"Alice",19}, {"Bob",30}};
 
+// Using vector
+vector<pair<string, int>> v = {{"John",25}, {"Alice",19}, {"Bob",30}};
+map<string, int> m(v.begin(), v.end());
+```
+###### Capacity
+```cpp
+m.empty();
+m.size();
+```
 TODO
-#### [`std:unordered_set`](https://en.cppreference.com/w/cpp/container/unordered_set), [`unordered_multiset`](https://en.cppreference.com/w/cpp/container/unordered_multiset)
+
+#### [Unordered associative containers](https://en.wikipedia.org/wiki/Unordered_associative_containers_(C%2B%2B))
+
+##### [`std:unordered_set`](https://en.cppreference.com/w/cpp/container/unordered_set), [`unordered_multiset`](https://en.cppreference.com/w/cpp/container/unordered_multiset)
 The STL Hash Table implementation for storing keys. `unordered_set` can only store a single occurence of a unique key whereas `unordered_multiset` can store multiple occurences of the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
 
-##### Import
+###### Import
 ```cpp
 #include <unordered_set>
 ```
 
 TODO
 
-#### [`std:unordered_map`](https://en.cppreference.com/w/cpp/container/unordered_map), [`unordered_multimap`](https://en.cppreference.com/w/cpp/container/unordered_multimap)
+##### [`std:unordered_map`](https://en.cppreference.com/w/cpp/container/unordered_map), [`unordered_multimap`](https://en.cppreference.com/w/cpp/container/unordered_multimap)
 The STL Hash Table implementation for storing key-value pairs. `unordered_map` can only store a single occurence of key-value for the given key whereas `unordered_multimap` can store multiple occurences of key-value pairs for the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
 
-##### Import
+###### Import
 ```cpp
 #include <unordered_map>
 ```
