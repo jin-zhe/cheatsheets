@@ -3,6 +3,8 @@
 
 Unless otherwise specified, this is written for C++11.
 
+---
+
 ## General
 ### Importing
 ```cpp
@@ -16,7 +18,9 @@ Sometimes you may want to import everything available to your compiler. This is 
 ```
 For a list of what libraries are included with that import, see [here](https://gcc.gnu.org/onlinedocs/gcc-4.6.2/libstdc++/api/a01040_source.html)
 
-### Primitives
+
+
+### Primitive data types
 Below are some commonly used primitive types. For the full list, please refer to [here](https://en.cppreference.com/w/cpp/language/types).
 
 | Data Type   | Size (Bytes)  | Typical Range*            |
@@ -56,97 +60,7 @@ Converting between character of numbers to character:
 char char_five = '5';
 int  int_five  = char_five - '0'; //=> 5
 ```
-
-### Operators
-See [here](http://www.cplusplus.com/doc/tutorial/operators/) for the full list of C++ operators.
-#### Assignment
-```cpp
-y = x;
-```
-Assigns variable y with the value of x. Note however that if `Y` is [copy assignable](https://en.cppreference.com/w/cpp/named_req/CopyAssignable), then `=` will be a [copy assignment operator](https://en.cppreference.com/w/cpp/language/copy_assignment) so `Y` will take on a copy of `x` at the end of the operation.
-
-#### Arithmetic
-| Operator | Description   |
-|:--------:|:-------------:|
-| `+`      | Addition      |
-| `-`      | Subtraction   |
-| `*`      | Multiplication|
-| `/`      | Division      |
-| `%`      | Modulo        |
-
-#### Compound Assignment
-|Expression | Equivalence  |
-|:---------:|:------------:|
-| `y += x;` | `y = y + x;` |
-| `y -= x;` | `y = y - x;` |
-| `y *= x;` | `y = y * x;` |
-| `y /= x;` | `y = y / x;` |
-| `y %= x;` | `y = y % x;` |
-
-#### Increment and Decrement
-|Expression | Equivalence        |
-|:---------:|:------------------:|
-| `y = ++x;` | `x += 1; y  = x;` |
-| `y = x++;` | `y  = x; x += 1;` |
-| `y = --x;` | `x -= 1; y  = x;` |
-| `y = x--;` | `y  = x; x -= 1;` |
-
-#### Relational and comparison operators
-| Operator | Description              |
-|:--------:|:------------------------:|
-| `==`     | Equal to                 |
-| `!=`     | Not equal to             |
-| `<`      | Less than                |
-| `>`      | Greater than             |
-| `<=`     | Less than or equal to    |
-| `>=`     | Greater than or equal to |
-
-#### Logical operators
-| Operator | Description  |
-|:--------:|:------------:|
-| `!`      | Logical NOT  |
-| `&&`     | Logical AND  |
-| `\|\|`   | Logical OR   |
-
-#### Conditional ternary operator
-```cpp
-x = (predicate)? consequent: alternative;
-```
-Is equivalent to:
-```cpp
-if (predicate)
-  x = consequent;
-else
-  x = alternative;
-```
-
-#### Comma operator
-> In the C and C++ programming languages, the comma operator (represented by the token ,) is a binary operator that evaluates its first operand and **discards the result**, and then evaluates the second operand and returns this value (and type). The use of the comma token as an operator is distinct from its use in function calls and definitions, variable declarations, enum declarations, and similar constructs, where it acts as a separator. [source](https://en.wikipedia.org/wiki/Comma_operator)
-
-Example:
-```cpp
-int a,b;
-a = (b=3, b+2); //=> a = 5;
-```
-This can be particularly useful for reading inputs that are terminated by a given condition, for instance:
-```cpp
-// While loop terminates when a == b == c == d == 0
-while(cin >> a >> b >> c >> d, a || b || c || d) {
-  // Do something
-}
-```
-
-#### Bitwise operators
-| Operator | Description     |
-|:--------:|:---------------:|
-| `&`      | Bitwise AND     |
-| `\|`     | Bitwise OR      |
-| `^`      | Bitwise XOR     |
-| `~`      | NOT             |
-| `<<`     | Bit-shift left  |
-| `>>`     | Bit-shift right |
-
-### Casting
+#### Type casting
 ```cpp
 int i;
 float pi = 3.14;
@@ -156,60 +70,25 @@ i = (int) pi;
 i = int (pi);
 ```
 
-### Type alias
-* Type alias using `typddef` is a means for us to provide alternative naming for a type
-* This is often done to provide a convenient shorthand for referring to verbose types
-* It also serve as a basic way of providing data abstraction
-```cpp
-typedef string nusnet_id;
-typedef string name;
-typedef string grade;
-typedef vector<tuple<nusnet_id, name, grade>> grades;
-// ...
-grades CS2040C;
-CS2040C.push_back(make_tuple("A0123456I", "Kattis", "A+"));
-```
 
-### Macro definitions
-* Preprocessor macro is indicated by the directive `#define <identifier> <replacement>`
-* Preprocessor will replace any subsequent occurence of `<identifier>` in the code with the `<replacement>`
-* `<replacement>` can be an expression, a statement, a block or simply any code snippet
-* Note that preprocessor do not check for C++ syntax! It simply carries out pattern matching and replacement!
-* You can unset a preprocessor macro using `#undefine <identifier>`
 
-The following is an example of defining a shorthand for for-loop using preprocessor macro:
+### Other data types
+#### C-Style Array
+##### Initializations
 ```cpp
-#define loop(n) for(int i=0; i<n; i++)
-loop(5) {
-  cout << i << ", ";  // Prints: 0, 1, 2, 3, 4
-}
+int arr[3] = {1, 2, 3}; //=> [1, 2, 3]
+int arr[5] = {1, 2, 3}; //=> [1, 2, 3, 0, 0]  // unspecified values are assigned default values
+int arr[5] = {};        //=> [0, 0, 0, 0, 0]
+int arr[5];             //=> [?, ?, ?, ?, ?]
+int arr[] = {1, 2, 3}   //=> [1, 2, 3]        // implicit size understood by compiler
+int arr[] {1, 2, 3}     //=> [1, 2, 3]        // universal initialization
 ```
-
-### Switch statement
+Note array size cannot be initialized with a variable. i.e. the following is illegal
 ```cpp
-int test = 1;
-switch(test) {
-  case 1 : cout << '1'; // prints "1"
-           break;       // and exits the switch
-  case 2 : cout << '2';
-           break;
-  // ...
-  default:
-           cout << 'Default case';
-           break;
-}
+int n = 100;
+int arr[n] = {0};
 ```
-If declaration statement exists within a case, it has to be scoped. e.g.
-```cpp
-switch(1) {
-  case 1: {  int x = 0;
-             std::cout << x << '\n';
-             break;
-          } // scope of 'x' ends here
-  default: std::cout << "default\n"; // no error
-           break;
-}
-```
+Instead, consider using [`std::vector`](#stdvector)
 
 #### Strings
 In C++ and C, a string is an array of `char` terminated with the null character `\0`.
@@ -313,7 +192,6 @@ size_t pos = str.find_last_of('o');     //=> 7
 string str = "Hello World       ";
 size_t pos = str.find_last_not_of(' '); //=> 10
 ```
-
 ##### [Substring](http://www.cplusplus.com/reference/string/string/substr/)
 Note that the second argument for `substr` is the length of substring to take and **not** the past-the-end index!
 ```cpp
@@ -357,67 +235,8 @@ str1.replace(it_start_1, it_end_1, str2, length_2);
 str1.replace(it_start_1, it_end_1, str2, it_start_2, it_end_2);
 ```
 
-#### C-Style Array
-##### Initializations
-```cpp
-int arr[3] = {1, 2, 3}; //=> [1, 2, 3]
-int arr[5] = {1, 2, 3}; //=> [1, 2, 3, 0, 0]  // unspecified values are assigned default values
-int arr[5] = {};        //=> [0, 0, 0, 0, 0]
-int arr[5];             //=> [?, ?, ?, ?, ?]
-int arr[] = {1, 2, 3}   //=> [1, 2, 3]        // implicit size understood by compiler
-int arr[] {1, 2, 3}     //=> [1, 2, 3]        // universal initialization
-```
-Note array size cannot be initialized with a variable. i.e. the following is illegal
-```cpp
-int n = 100;
-int arr[n] = {0};
-```
-Instead, consider using [`std::vector`](#stdvector)
-
-## Iteration
-### Loops
-#### For
-```cpp
-for (int i=0; i<n; ++i) {
-  // ...
-}
-
-// a is a copy of the items we are iterating over
-for (auto a : s) {
-  cout << a << " ";
-}
-
-// a is a reference of the items we are iterating over
-for (auto &a : s) {
-  cout << a << " ";
-}  
-```
-#### While
-```cpp
-while(loop_conditon) {
-   // ...
-}
-
-int n = 5;
-while(--n) {
-  // n = 4, 3, 2, 1
-}
-
-int m = 5;
-while(m--) {
-  // m = 4, 3, 2, 1, 0
-}
-```
-#### Do-while
-```cpp
-do {
-   // ...
-}
-while (loop_condition);
-```
-
-### Pointer
-#### Basics
+#### Pointer
+##### Basics
 ```cpp
 int a = 3;
 int *ptr1;              // Declaration
@@ -432,7 +251,7 @@ ptr1 = ptr2;            // Re-assignment
 cout << *ptr1 << endl;  //=> 6
 cout << a << endl;      //=> 4
 ```
-#### Object pointers
+##### Object pointers
 ```cpp
 MyObject* my_object = new MyObject();
 
@@ -440,16 +259,15 @@ MyObject* my_object = new MyObject();
 (*my_object).attr1;
 my_object->attr1;
 ```
-
-### Reference
+#### Reference
 [Pointers vs references](https://stackoverflow.com/questions/57483/what-are-the-differences-between-a-pointer-variable-and-a-reference-variable-in)
-#### Basics
+##### Basics
 ```cpp
 int a = 3;
 int &ref = a;
 cout << ref;    // Acess value of reference
 ```
-#### Examples
+##### Examples
 Swap function
 ```cpp
 void swap(int &a, int &b) {
@@ -470,6 +288,198 @@ queue<int> & get_curr_queue(bool on_left, queue<int> &left_queue, queue<int> &ri
 queue<int> &curr_queue = get_curr_queue(on_left, left_queue, right_queue); // Important! If not assigning to a reference, a copy is made instead
 ```
 
+
+
+### Operators
+See [here](http://www.cplusplus.com/doc/tutorial/operators/) for the full list of C++ operators.
+#### Assignment
+```cpp
+y = x;
+```
+Assigns variable y with the value of x. Note however that if `Y` is [copy assignable](https://en.cppreference.com/w/cpp/named_req/CopyAssignable), then `=` will be a [copy assignment operator](https://en.cppreference.com/w/cpp/language/copy_assignment) so `Y` will take on a copy of `x` at the end of the operation.
+
+#### Arithmetic
+| Operator | Description   |
+|:--------:|:-------------:|
+| `+`      | Addition      |
+| `-`      | Subtraction   |
+| `*`      | Multiplication|
+| `/`      | Division      |
+| `%`      | Modulo        |
+
+#### Compound Assignment
+|Expression | Equivalence  |
+|:---------:|:------------:|
+| `y += x;` | `y = y + x;` |
+| `y -= x;` | `y = y - x;` |
+| `y *= x;` | `y = y * x;` |
+| `y /= x;` | `y = y / x;` |
+| `y %= x;` | `y = y % x;` |
+
+#### Increment and Decrement
+|Expression | Equivalence        |
+|:---------:|:------------------:|
+| `y = ++x;` | `x += 1; y  = x;` |
+| `y = x++;` | `y  = x; x += 1;` |
+| `y = --x;` | `x -= 1; y  = x;` |
+| `y = x--;` | `y  = x; x -= 1;` |
+
+#### Relational and comparison operators
+| Operator | Description              |
+|:--------:|:------------------------:|
+| `==`     | Equal to                 |
+| `!=`     | Not equal to             |
+| `<`      | Less than                |
+| `>`      | Greater than             |
+| `<=`     | Less than or equal to    |
+| `>=`     | Greater than or equal to |
+
+#### Logical operators
+| Operator | Description  |
+|:--------:|:------------:|
+| `!`      | Logical NOT  |
+| `&&`     | Logical AND  |
+| `\|\|`   | Logical OR   |
+
+#### Conditional ternary operator
+```cpp
+x = (predicate)? consequent: alternative;
+```
+Is equivalent to:
+```cpp
+if (predicate)
+  x = consequent;
+else
+  x = alternative;
+```
+#### Comma operator
+> In the C and C++ programming languages, the comma operator (represented by the token ,) is a binary operator that evaluates its first operand and **discards the result**, and then evaluates the second operand and returns this value (and type). The use of the comma token as an operator is distinct from its use in function calls and definitions, variable declarations, enum declarations, and similar constructs, where it acts as a separator. [source](https://en.wikipedia.org/wiki/Comma_operator)
+
+Example:
+```cpp
+int a,b;
+a = (b=3, b+2); //=> a = 5;
+```
+This can be particularly useful for reading inputs that are terminated by a given condition, for instance:
+```cpp
+// While loop terminates when a == b == c == d == 0
+while(cin >> a >> b >> c >> d, a || b || c || d) {
+  // Do something
+}
+```
+#### Bitwise operators
+| Operator | Description     |
+|:--------:|:---------------:|
+| `&`      | Bitwise AND     |
+| `\|`     | Bitwise OR      |
+| `^`      | Bitwise XOR     |
+| `~`      | NOT             |
+| `<<`     | Bit-shift left  |
+| `>>`     | Bit-shift right |
+
+
+
+### Type alias
+* Type alias using `typddef` is a means for us to provide alternative naming for a type
+* This is often done to provide a convenient shorthand for referring to verbose types
+* It also serve as a basic way of providing data abstraction
+```cpp
+typedef string nusnet_id;
+typedef string name;
+typedef string grade;
+typedef vector<tuple<nusnet_id, name, grade>> grades;
+// ...
+grades CS2040C;
+CS2040C.push_back(make_tuple("A0123456I", "Kattis", "A+"));
+```
+### Macro definitions
+* Preprocessor macro is indicated by the directive `#define <identifier> <replacement>`
+* Preprocessor will replace any subsequent occurence of `<identifier>` in the code with the `<replacement>`
+* `<replacement>` can be an expression, a statement, a block or simply any code snippet
+* Note that preprocessor do not check for C++ syntax! It simply carries out pattern matching and replacement!
+* You can unset a preprocessor macro using `#undefine <identifier>`
+
+The following is an example of defining a shorthand for for-loop using preprocessor macro:
+```cpp
+#define loop(n) for(int i=0; i<n; i++)
+loop(5) {
+  cout << i << ", ";  // Prints: 0, 1, 2, 3, 4
+}
+```
+
+
+
+### Control flow
+#### Selection
+##### Switch statement
+```cpp
+int test = 1;
+switch(test) {
+  case 1 : cout << '1'; // prints "1"
+           break;       // and exits the switch
+  case 2 : cout << '2';
+           break;
+  // ...
+  default:
+           cout << 'Default case';
+           break;
+}
+```
+If declaration statement exists within a case, it has to be scoped. e.g.
+```cpp
+switch(1) {
+  case 1: {  int x = 0;
+             std::cout << x << '\n';
+             break;
+          } // scope of 'x' ends here
+  default: std::cout << "default\n"; // no error
+           break;
+}
+```
+
+#### Repetition
+##### For-loop
+```cpp
+for (int i=0; i<n; ++i) {
+  // ...
+}
+
+// a is a copy of the items we are iterating over
+for (auto a : s) {
+  cout << a << " ";
+}
+
+// a is a reference of the items we are iterating over
+for (auto &a : s) {
+  cout << a << " ";
+}  
+```
+##### While-loop
+```cpp
+while(loop_conditon) {
+   // ...
+}
+
+int n = 5;
+while(--n) {
+  // n = 4, 3, 2, 1
+}
+
+int m = 5;
+while(m--) {
+  // m = 4, 3, 2, 1, 0
+}
+```
+##### Do-while-loop
+```cpp
+do {
+   // ...
+}
+while (loop_condition);
+```
+
+---
+
 ## [STL](http://www.cplusplus.com/reference/stl/)
 The C++ Standard Template Library (STL) is a set of template classes that provides standard data structures (DS) and their associated ADT operations. It is a library consisting of the following:
 
@@ -487,6 +497,8 @@ The C++ Standard Template Library (STL) is a set of template classes that provid
 * Iterators
 * Functions
 * Numeric algorithms
+
+
 
 ### [Utility](https://en.cppreference.com/w/cpp/utility)
 #### [`std::pair`](https://en.cppreference.com/w/cpp/utility/pair)
@@ -530,8 +542,9 @@ int first = get<0>(triplet); //=> 1
 get<0>(triplet) = 0;
 ```
 
-### [Containers](https://en.cppreference.com/w/cpp/container)
 
+
+### [Containers](https://en.cppreference.com/w/cpp/container)
 #### Operators
 Containers of primitive types can be directly compared using relational and comparison operators, for instance:
 ``` cpp
@@ -553,14 +566,12 @@ vector<int> v3 = {2};
 assert(v2 > v1);    //=> assertion true
 assert(v3 > v2)     //=> assertion true
 ```
-
 STL containers are [copy assignable](https://en.cppreference.com/w/cpp/named_req/CopyAssignable) and so `=` operator will serve as [copy assignment operator](https://en.cppreference.com/w/cpp/language/copy_assignment) if LHS of the expression is not a pointer or reference. To illustrate:
 ```cpp
 vector<int> vect1  = {1,2,3};
 vector<int> vect2  = vect1; // vect2 is a copy of vect1
 vector<int> &vect3 = vect1; // vect3 refers to the same vector as vect1 
 ```
-
 #### Structured bindings
 Since C++17, [strutcured bindings](https://en.cppreference.com/w/cpp/language/structured_binding) provide a convenient way to unpack values in containers.
 ```cpp
@@ -570,7 +581,6 @@ assert(first, 1);         //=> Assertion true
 assert(second, 3.14);     //=> Assertion true
 assert(third, "Hello");   //=> Assertion true
 ```
-
 ##### Common operations
 Array size
 ```cpp
@@ -582,17 +592,13 @@ Array copy
 ```cpp
 copy(begin(src), end(src), begin(dest));
 ```
-
 Note that C-style arrays does not enjoy the convenience of C++11's foreach loop. Instead consider using `std:array`
-
 #### Sequence Containers
-
 ##### [`std::array`](https://en.cppreference.com/w/cpp/container/array)
 A thin wrapper around C-style arrays
 ```cpp
 array<int, 10> s = {5, 7, 4, 2, 8, 6, 1, 9, 0, 3};
 ```
-
 ##### [`std::vector`](https://en.cppreference.com/w/cpp/container/vector)
 ###### Import
 ```cpp
@@ -669,7 +675,6 @@ lst.push_front(item);   // Prepends item at head
 lst.insert(it, item);   // Inserts item before iterator position
 lst.pop_back();         // Removes last item
 ```
-
 [Splice](http://www.cplusplus.com/reference/list/list/splice/)
 ```cpp
 list<int> lst1 = {1, 2, 3};
@@ -706,7 +711,6 @@ deq.pop_front(item);    // Pop item from front of deque
 deq.push_back(item);    // Inject item at rear of deque
 deq.pop_back(item);     // Eject item at rear of deque
 ```
-
 ###### Iterator
 ```cpp
 for (auto it = deq.begin(); it != deq.end(); ++it) {
@@ -793,7 +797,6 @@ struct CustomCompare {
 // ...
 priority_queue<int, vector<int>, CustomCompare > pq;
 ```
-
 ##### Capacity
 ```cpp
 pq.empty();
@@ -858,10 +861,8 @@ s.emplace(key);
 // Remove
 s.erase(it);
 ```
-
 #### [`std:map`](https://en.cppreference.com/w/cpp/container/map), [`std:multimap`](https://en.cppreference.com/w/cpp/container/multimap)
 The STL BBST implementation for storing key-value pairs. `map` can only store a single occurence of key-value for the given key whereas `multimap` can store multiple occurences of key-value pairs for the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
-
 ##### Import
 ```cpp
 #include <map>
@@ -995,6 +996,8 @@ it = upper_bound(vect2.begin(), vect2.end(), 7);
 assert(it == vect2.end());                        //=> assertion true
 ```
 
+
+
 ### Iterators
 Available to the following STL container types
 ```cpp
@@ -1090,7 +1093,6 @@ vector<pair<int,int>> vect;
 vect.emplace(vect.begin(),1,2);             // new pair to be inserted is constructed in-place
 vect.insert (vect.begin(),make_pair(3,4));  // pair is first constructed, then passed as arugment, then its value copied to newly inserted element. So initial construction before passing in as arugment is wasteful
 ```
-
 ##### `erase`
 `<container>.erase(start, end)` removes all items from `start` inclusive to `end` exclusive. i.e. `\[start, end)`. If `end` is not supplied as arugment, just remove the single item at `start`. It returns iterator following the last removed element. If the iterator position refers to the last element, the `<container>.end()` iterator is returned. For `<vector>` this is a O(N) procedure. For `<list>` this is O(1).
 ```cpp
@@ -1115,6 +1117,8 @@ assert(it == vect.end());     //=> assertion true
 > Invalidates iterators and references at or after the point of the erase, including the end() iterator.[Source](https://en.cppreference.com/w/cpp/container/vector/erase)
 
 So it is important to update relevant iterator(s) with the returned iterator or re-assign them after calling `<container>.erase(...)`!
+
+---
 
 ## I/O
 ### `iostream`
@@ -1210,6 +1214,8 @@ int num1, num2, num3, num4;
 iss >> num1 >> num2 >> num3 >> num4;
 ```
 
+---
+
 ## OOP
 ### Struct
 All attributes in a struct are publicly accessible
@@ -1254,6 +1260,8 @@ Human* john = new Human("john", 25);
 john->father = jack;
 john->mother = mary;
 ```
+
+---
 
 ## Custom utils
 #### String to char array
