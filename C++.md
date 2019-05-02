@@ -89,6 +89,18 @@ int n = 100;
 int arr[n] = {0};
 ```
 Instead, consider using [`std::vector`](#stdvector)
+##### Common operations
+Array size
+```cpp
+int size = int n = sizeof(arr) / sizeof(arr[0]);
+```
+Array copy 
+* items exceeding size of dest will be ignored
+* `begin()` and `end()` only works for arrays and not array pointer/references
+```cpp
+copy(begin(src), end(src), begin(dest));
+```
+Note that C-style arrays does not enjoy the convenience of C++11's foreach loop. Instead consider using `std:array`
 
 #### Strings
 In C++ and C, a string is an array of `char` terminated with the null character `\0`.
@@ -581,18 +593,69 @@ assert(first, 1);         //=> Assertion true
 assert(second, 3.14);     //=> Assertion true
 assert(third, "Hello");   //=> Assertion true
 ```
-##### Common operations
-Array size
+#### Common functions
+##### `insert`
+`<container>.insert(it, val)` inserts the reference of given argument `val` into container at position specified by iterator `it`. It returns an iterator pointing to the inserted value. For `<vector>` this is a O(N) procedure. For `<list>` this is O(1).
 ```cpp
-int size = int n = sizeof(arr) / sizeof(arr[0]);
+vector<int>::iterator it;
+vector<int> vect = {1,2,4,5};
+
+/* Prepending to the front */
+it = vect.begin();
+it = vect.insert(it, 0);  // vect: {0,1,2,4,5}
+cout << *it << endl;      //=> 0
+
+/* Inserting in bewteen */
+it = vect.begin() + 3;
+it = vect.insert(it, 3);  // vect: {0,1,2,3,4,5}
+cout << *it << endl;      //=> 3
+
+/* Appending to the back */
+it = vect.end();
+it = vect.insert(it, 6);  // vect: {0,1,2,3,4,5,6}
+cout << *it << endl;      //=> 6
 ```
-Array copy 
-* items exceeding size of dest will be ignored
-* `begin()` and `end()` only works for arrays and not array pointer/references
+###### Pitfall
+> Causes reallocation if the new `<container>.size()` is greater than the old `<container>.capacity()`. **If the new `size()` is greater than `<container>.capacity()`,  all iterators and references are invalidated. Otherwise, only the iterators and references before the insertion point remain valid.** The past-the-end iterator is also invalidated. [source](https://en.cppreference.com/w/cpp/container/vector/insert)
+
+So it is important to update relevant iterator(s) with the returned iterator or re-assign them after calling `.insert()`!
+
+##### `emplace`
+`<container>.emplace(it, args...)` inserts a new element constructed by given construction argument(s) into container at position specified by iterator `it`. Unlike `<container>.insert(...)` which receives a reference as argument and then copies the contents of referenced object into the new element, `<container>.emplace(...)` constructs the new element in-place using the given construction argument(s) and inserts it into the container. It returns an iterator pointing to the newly constructed element.
+
+The operations and pitfalls are identical to `<container>.insert(...)` so refer to [`insert`](#insert) for specifics.
+
+For containers of primitives, it doesn't really matter if `emplace` or `insert` is used, but for objects, use of `emplace` is preferred for efficiency reasons. This is highlighted in the following example:
 ```cpp
-copy(begin(src), end(src), begin(dest));
+vector<pair<int,int>> vect;
+vect.emplace(vect.begin(),1,2);             // new pair to be inserted is constructed in-place
+vect.insert (vect.begin(),make_pair(3,4));  // pair is first constructed, then passed as arugment, then its value copied to newly inserted element. So initial construction before passing in as arugment is wasteful
 ```
-Note that C-style arrays does not enjoy the convenience of C++11's foreach loop. Instead consider using `std:array`
+##### `erase`
+`<container>.erase(start, end)` removes all items from `start` inclusive to `end` exclusive. i.e. `\[start, end)`. If `end` is not supplied as arugment, just remove the single item at `start`. It returns iterator following the last removed element. If the iterator position refers to the last element, the `<container>.end()` iterator is returned. For `<vector>` this is a O(N) procedure. For `<list>` this is O(1).
+```cpp
+vector<int> vect = {0,1,2,3,4,5};
+vector<int>::iterator it;
+
+/* If erasing iterator item at non-last position, returned iterator is automatically advanced to the next item */
+it = vect.begin() + 2;
+it = vect.erase(it);          // vect: {0,1,3,4,5}
+cout << *it << endl;          //=> 3
+
+it = vect.begin() + 1;
+it = vect.erase(it, it + 3);  // vect: {0,5}
+cout << *it << endl;          //=> 5
+
+/* If erasing iterator item at last position, returned iterator is new end iterator */
+it = vect.end() - 1;
+it = vect.erase(it);          // vect: {0}
+assert(it == vect.end());     //=> assertion true
+```
+###### Pitfall
+> Invalidates iterators and references at or after the point of the erase, including the end() iterator.[Source](https://en.cppreference.com/w/cpp/container/vector/erase)
+
+So it is important to update relevant iterator(s) with the returned iterator or re-assign them after calling `<container>.erase(...)`!
+
 #### [Sequence Containers](https://en.wikipedia.org/wiki/Sequence_container_(C%2B%2B))
 ##### [`std::array`](https://en.cppreference.com/w/cpp/container/array)
 A thin wrapper around C-style arrays
@@ -1019,7 +1082,7 @@ us.size();
 us.count(key);
 
 // Find
-auto it = us.find(key);    // For unordered_multiset, this returns one key out of all the equivalent keys. O(log N)
+auto it = us.find(key);    // For unordered_multiset, this returns one key out of all the equivalent keys. O(1)
 
 // Iterator range for equivalent keys (only for unordered_multiset)
 auto [it_begin, it_end] = us.equal_range(key);
@@ -1077,7 +1140,7 @@ um.size();
 um.count(key);
 
 // Find
-auto it = um.find(key);   // For unordered_multimap, this returns one (key, value) pair out of all the equivalent keys. O(log N)
+auto it = um.find(key);   // For unordered_multimap, this returns one (key, value) pair out of all the equivalent keys. O(1)
 
 // Resolving key and value from iterator
 auto &[key, value] = *it;                      // Using C++17 structured binding
@@ -1132,9 +1195,20 @@ Import:
 * http://www.cplusplus.com/reference/algorithm/reverse/
 * https://en.cppreference.com/w/cpp/algorithm/count
 
-#### Sorting
-Note: default `sort` is not stable. For stable sorting, use `stable_sort`
-#### For containers
+
+
+#### [`sort`](https://en.cppreference.com/w/cpp/algorithm/sort), [`stable_sort`](https://en.cppreference.com/w/cpp/algorithm/stable_sort)
+STL sorting functions are namely [`sort`](https://en.cppreference.com/w/cpp/algorithm/sort) and [`stable_sort`](https://en.cppreference.com/w/cpp/algorithm/stable_sort). As their names suggest, the former is not guaranteed to be stable while the latter is.
+##### Sorting arrays
+```cpp
+sort(arr, arr+n);
+stable_sort(arr, arr+n);
+```
+sort using a standard library compare function object
+```cpp
+sort(arr, arr+n, greater<int>()); // sorts descending
+```
+##### Sorting STL containers
 To perform sorting on containers, we will have to use iterators.
 
 Sort using the default comparator for given type
@@ -1146,16 +1220,6 @@ sort using a standard library compare function object
 ```cpp
 sort(vect.begin(), vect.end(), greater<int>()); // sorts descending
 ```
-#### For arrays
-```cpp
-sort(arr, arr+n);
-stable_sort(arr, arr+n);
-```
-sort using a standard library compare function object
-```cpp
-sort(arr, arr+n, greater<int>()); // sorts descending
-```
-
 ##### Custom ordering
 A comparator function is a function that takes in 2 parameters, say `a` and `b`, which simply returns a `bool` that answers the question: **must `a` come before `b` after sorting?** The comparator function is simply a binary function that is designated to replace the default `<` relationship between `a` and `b`, where it returns `true` iff `a < b` and `false` otherwise (`>=`). In other words, if the comparator returns `false` for a given pair of `a` and `b`, it's saying that we don't care about their relative order. I.E. if a case in your comparator wants to treat `a` and `b` as non-distinct (i.e. equal), you should return `false` for that case.
 
@@ -1184,8 +1248,7 @@ struct {
 sort(s.begin(), s.end(), customComparator);
 ```
 
-#### Bounds
-##### `lower_bound`
+#### [`lower_bound`](https://en.cppreference.com/w/cpp/algorithm/lower_bound)
 Returns an iterator to the first item in container encountered that is greater or equal to given value. i.e. `>= val`. If no items qualify in the container, return iterator pointing to `.end()` of container. Performance is O(log N). Note that for this operation to be meangingful, the items should be sorted in some ordering.
 ```cpp
 vector<int>::iterator it;
@@ -1205,7 +1268,7 @@ it = lower_bound(vect2.begin(), vect2.end(), 7);
 assert(it == vect2.end());                        //=> assertion true
 ```
 
-##### `upper_bound`
+#### [`upper_bound`](https://en.cppreference.com/w/cpp/algorithm/upper_bound)
 Returns an iterator to the first item in container encountered that is **strictly greater than** than given value. i.e. `> val`. If no items qualify in the container, return iterator pointing to `.end()` of container. Performance is O(log N). Note that for this operation to be meangingful, the items should be sorted in some ordering.
 ```cpp
 vector<int>::iterator it;
@@ -1285,67 +1348,6 @@ cout << index << endl;  //=> 2
 it += k;        // Advance iterator by k items. We can do this without worring about size of item
 advance(it, k); // Advance iterator by k items 
 ```
-##### `insert`
-`<container>.insert(it, val)` inserts the reference of given argument `val` into container at position specified by iterator `it`. It returns an iterator pointing to the inserted value. For `<vector>` this is a O(N) procedure. For `<list>` this is O(1).
-```cpp
-vector<int>::iterator it;
-vector<int> vect = {1,2,4,5};
-
-/* Prepending to the front */
-it = vect.begin();
-it = vect.insert(it, 0);  // vect: {0,1,2,4,5}
-cout << *it << endl;      //=> 0
-
-/* Inserting in bewteen */
-it = vect.begin() + 3;
-it = vect.insert(it, 3);  // vect: {0,1,2,3,4,5}
-cout << *it << endl;      //=> 3
-
-/* Appending to the back */
-it = vect.end();
-it = vect.insert(it, 6);  // vect: {0,1,2,3,4,5,6}
-cout << *it << endl;      //=> 6
-```
-###### Pitfall
-> Causes reallocation if the new `<container>.size()` is greater than the old `<container>.capacity()`. **If the new `size()` is greater than `<container>.capacity()`,  all iterators and references are invalidated. Otherwise, only the iterators and references before the insertion point remain valid.** The past-the-end iterator is also invalidated. [source](https://en.cppreference.com/w/cpp/container/vector/insert)
-
-So it is important to update relevant iterator(s) with the returned iterator or re-assign them after calling `.insert()`!
-
-##### `emplace`
-`<container>.emplace(it, args...)` inserts a new element constructed by given construction argument(s) into container at position specified by iterator `it`. Unlike `<container>.insert(...)` which receives a reference as argument and then copies the contents of referenced object into the new element, `<container>.emplace(...)` constructs the new element in-place using the given construction argument(s) and inserts it into the container. It returns an iterator pointing to the newly constructed element.
-
-The operations and pitfalls are identical to `<container>.insert(...)` so refer to [`insert`](#insert) for specifics.
-
-For containers of primitives, it doesn't really matter if `emplace` or `insert` is used, but for objects, use of `emplace` is preferred for efficiency reasons. This is highlighted in the following example:
-```cpp
-vector<pair<int,int>> vect;
-vect.emplace(vect.begin(),1,2);             // new pair to be inserted is constructed in-place
-vect.insert (vect.begin(),make_pair(3,4));  // pair is first constructed, then passed as arugment, then its value copied to newly inserted element. So initial construction before passing in as arugment is wasteful
-```
-##### `erase`
-`<container>.erase(start, end)` removes all items from `start` inclusive to `end` exclusive. i.e. `\[start, end)`. If `end` is not supplied as arugment, just remove the single item at `start`. It returns iterator following the last removed element. If the iterator position refers to the last element, the `<container>.end()` iterator is returned. For `<vector>` this is a O(N) procedure. For `<list>` this is O(1).
-```cpp
-vector<int> vect = {0,1,2,3,4,5};
-vector<int>::iterator it;
-
-/* If erasing iterator item at non-last position, returned iterator is automatically advanced to the next item */
-it = vect.begin() + 2;
-it = vect.erase(it);          // vect: {0,1,3,4,5}
-cout << *it << endl;          //=> 3
-
-it = vect.begin() + 1;
-it = vect.erase(it, it + 3);  // vect: {0,5}
-cout << *it << endl;          //=> 5
-
-/* If erasing iterator item at last position, returned iterator is new end iterator */
-it = vect.end() - 1;
-it = vect.erase(it);          // vect: {0}
-assert(it == vect.end());     //=> assertion true
-```
-###### Pitfall
-> Invalidates iterators and references at or after the point of the erase, including the end() iterator.[Source](https://en.cppreference.com/w/cpp/container/vector/erase)
-
-So it is important to update relevant iterator(s) with the returned iterator or re-assign them after calling `<container>.erase(...)`!
 
 ---
 
