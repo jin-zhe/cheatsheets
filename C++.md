@@ -872,7 +872,7 @@ s.size();
 s.count(key);
 
 // Find
-auto it = s.find(key);    // O(log N)
+auto it = s.find(key);    // For multiset, this returns one key out of all the equivalent keys. O(log N)
 auto ancestor = it + 1;   // O(log N)
 auto descendant = it - 1; // O(log N)
 
@@ -883,6 +883,9 @@ auto descendant = it - 1; // O(log N)
  */
 auto it = s.lower_bound(key); // O(log N)
 auto it = s.upper_bound(key); // O(log N)
+
+// Iterator range for equivalent keys (only for multiset)
+auto [it_begin, it_end] = s.equal_range(key);
 ```
 ###### Modifier
 ```cpp
@@ -911,7 +914,7 @@ for (auto it = s.begin(); it != s.end(); it = it.upper_bound(*it))
 ```
 
 ##### [`std:map`](https://en.cppreference.com/w/cpp/container/map), [`std:multimap`](https://en.cppreference.com/w/cpp/container/multimap)
-The STL BBST implementation for storing key-value pairs. `map` can only store a single occurence of key-value for the given key whereas `multimap` can store multiple occurences of key-value pairs for the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
+The STL BBST implementation for storing key-value pairs. `map` can only store a single occurence of (key, value) for the given key whereas `multimap` can store multiple occurences of key-value pairs for the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
 ###### Import
 ```cpp
 #include <map>
@@ -930,7 +933,62 @@ map<string, int> m(v.begin(), v.end());
 m.empty();
 m.size();
 ```
-TODO
+###### Accessors
+```cpp
+// Count
+m.count(key);
+
+// Find
+auto it = m.find(key);    // For multimap, this returns one (key, value) pair out of all the equivalent keys. O(log N)
+auto ancestor = it + 1;   // O(log N)
+auto descendant = it - 1; // O(log N)
+
+// Bound
+/*
+ * Important note! Using std::lower_bound incurs O(N log N) compexity!
+ * Please use the member functon lower_bound as shown below!
+ */
+auto it = m.lower_bound(key); // O(log N)
+auto it = m.upper_bound(key); // O(log N)
+
+// Resolving key and value from iterator
+auto &[key, value] = *it;                      // Using C++17 structured binding
+auto key = it->first; auto value = it->second; // From the pair the iterator points to
+
+// Iterator range for equivalent keys (only for multimap)
+auto [it_begin, it_end] = m.equal_range(key);
+```
+###### Operator
+For `map`, the `[]` operator may be used to obtain the value directly given the key.  
+**Important**: The caveat is that if the key does not yet exist in the `map`, this will insert (key, default value) pair into the multimap and return that default value.
+```cpp
+auto value = m[key]; // O(log N)
+```
+###### Modifier
+```cpp
+// Add
+m[key] = value;
+m.insert({key, value});
+m.emplace(key, value);
+
+// Remove
+m.erase(it);
+```
+###### Iteration
+The following 2 loops are equivalent in looping over (key, value pairs). Both are in *O(N)*
+```cpp
+for (auto &[key, value]: m)
+  cout << key << ', ' << value << endl;
+```
+```cpp
+for (auto it = m.begin(); it != m.end(); ++it)
+  cout << it->first << ', ' << it->second << endl;
+```
+To loop over unique keys in multimap:
+```cpp
+for (auto it = s.begin(); it != s.end(); it = it.upper_bound(*it))
+  cout << it->first << endl;
+```
 
 #### [Unordered associative containers](https://en.wikipedia.org/wiki/Unordered_associative_containers_(C%2B%2B))
 
