@@ -872,7 +872,9 @@ s.size();
 s.count(key);
 
 // Find
-auto it = s.find(key);
+auto it = s.find(key);  // O(log N)
+auto ancestor = ++it;   // O(log N)
+auto descendant = --it; // O(log N)
 
 // Bound
 /*
@@ -892,7 +894,7 @@ s.emplace(key);
 s.erase(it);
 ```
 ###### Iteration
-The following 2 loops are equivalent in looping over key values. Both are in *O(N)* . 
+The following 2 loops are equivalent in looping over key values. Both are in *O(N)*  
 Caveat: Keys will be unique for set but may not be for multiset
 ```cpp
 for (auto &key: s)
