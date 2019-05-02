@@ -596,9 +596,32 @@ Note that C-style arrays does not enjoy the convenience of C++11's foreach loop.
 #### Sequence Containers
 ##### [`std::array`](https://en.cppreference.com/w/cpp/container/array)
 A thin wrapper around C-style arrays
+###### Import
 ```cpp
-array<int, 10> s = {5, 7, 4, 2, 8, 6, 1, 9, 0, 3};
+#include <array>
 ```
+###### Declaration and initialization
+```cpp
+array<int, 10> a = {5, 7, 4, 2, 8, 6, 1, 9, 0, 3};
+```
+###### Capacity
+```cpp
+a.empty();
+a.size();
+```
+###### Accessors
+```cpp
+a[i];
+```
+###### Modifiers
+```cpp
+// Assignment
+a[i] = x;
+
+// Increment
+a[i]++;
+```
+
 ##### [`std::vector`](https://en.cppreference.com/w/cpp/container/vector)
 ###### Import
 ```cpp
@@ -624,10 +647,13 @@ vect.size():
 ```
 ###### Accessors
 ```cpp
-vect[i] = x;
+vect[i];
 ```
 ###### Modifiers
 ```cpp
+// Assignment
+vect[i] = x;
+
 // Increment
 vect[i]++;
 
