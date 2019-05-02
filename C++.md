@@ -897,8 +897,8 @@ s.emplace(key);
 s.erase(it);
 ```
 ###### Iteration
-The following 2 loops are equivalent in looping over key values. Both are in *O(N)*  
-Caveat: Keys will be unique for set but may not be for multiset
+The following 2 loops are equivalent in looping over key values, in the order of keys dictated by the comparator. Both are in *O(N)*  
+Caveat: Keys iterated will be unique for `set` but may not be for `multiset`
 ```cpp
 for (auto &key: s)
   cout << key << endl;
@@ -909,12 +909,12 @@ for (auto it = s.begin(); it != s.end(); ++it)
 ```
 To loop over unique keys in multiset:
 ```cpp
-for (auto it = s.begin(); it != s.end(); it = it.upper_bound(*it))
+for (auto it = s.begin(); it != s.end(); it = s.upper_bound(*it))
   cout << *it << endl;
 ```
 
 ##### [`std:map`](https://en.cppreference.com/w/cpp/container/map), [`std:multimap`](https://en.cppreference.com/w/cpp/container/multimap)
-The STL BBST implementation for storing key-value pairs. `map` can only store a single occurence of (key, value) for the given key whereas `multimap` can store multiple occurences of key-value pairs for the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
+The STL BBST implementation for storing (key, value) pairs. `map` can only store a single occurence of (key, value) for the given key whereas `multimap` can store multiple occurences of (key, value) pairs for the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
 ###### Import
 ```cpp
 #include <map>
@@ -960,7 +960,7 @@ auto [it_begin, it_end] = m.equal_range(key);
 ```
 ###### Operator
 For `map`, the `[]` operator may be used to obtain the value directly given the key.  
-**Important**: The caveat is that if the key does not yet exist in the `map`, this will insert (key, default value) pair into the multimap and return that default value.
+**Important**: The caveat is that if the key does not yet exist in the `(multi)map`, this will insert (key, default value) pair into it and return that default value.
 ```cpp
 auto value = m[key]; // O(log N)
 ```
@@ -975,7 +975,7 @@ m.emplace(key, value);
 m.erase(it);
 ```
 ###### Iteration
-The following 2 loops are equivalent in looping over (key, value pairs). Both are in *O(N)*
+The following 2 loops are equivalent in looping over (key, value), in the order of keys dictated by the comparator. Both are in *O(N)*
 ```cpp
 for (auto &[key, value]: m)
   cout << key << ', ' << value << endl;
@@ -984,9 +984,9 @@ for (auto &[key, value]: m)
 for (auto it = m.begin(); it != m.end(); ++it)
   cout << it->first << ', ' << it->second << endl;
 ```
-To loop over unique keys in multimap:
+To loop over unique keys in `multimap`:
 ```cpp
-for (auto it = s.begin(); it != s.end(); it = it.upper_bound(*it))
+for (auto it = m.begin(); it != m.end(); it = m.upper_bound(*it))
   cout << it->first << endl;
 ```
 
@@ -999,18 +999,124 @@ The STL Hash Table implementation for storing keys. `unordered_set` can only sto
 ```cpp
 #include <unordered_set>
 ```
+###### Declaration and initialization
+```cpp
+unordered_set<int> us({1,2,3});
+unordered_set<int> us = {1,2,3};
 
-TODO
+// Using vector
+vector<int> v = {1,2,3};
+set<int> us(v.begin(), v.end());
+```
+###### Capacity
+```cpp
+us.empty();
+us.size();
+```
+###### Accessors
+```cpp
+// Count
+us.count(key);
+
+// Find
+auto it = us.find(key);    // For unordered_multiset, this returns one key out of all the equivalent keys. O(log N)
+
+// Iterator range for equivalent keys (only for unordered_multiset)
+auto [it_begin, it_end] = us.equal_range(key);
+```
+###### Modifier
+```cpp
+// Add
+us.insert(key);
+us.emplace(key);
+
+// Remove
+us.erase(it);
+```
+###### Iteration
+The following 2 loops are equivalent in looping over key values, in no particular order. Both are in *O(N)*  
+Caveat: Keys iterated will be unique for `unordered_set` but may not be for `unordered_multiset`
+```cpp
+for (auto &key: us)
+  cout << key << endl;
+```
+```cpp
+for (auto it = us.begin(); it != us.end(); ++it)
+  cout << *it << endl;
+```
+To loop over unique keys in `unordered_multiset`:
+```cpp
+for (auto it = us.begin(); it != us.end(); it = us.equal_range(*it)->second)
+  cout << *it << endl;
+```
 
 ##### [`std:unordered_map`](https://en.cppreference.com/w/cpp/container/unordered_map), [`unordered_multimap`](https://en.cppreference.com/w/cpp/container/unordered_multimap)
-The STL Hash Table implementation for storing key-value pairs. `unordered_map` can only store a single occurence of key-value for the given key whereas `unordered_multimap` can store multiple occurences of key-value pairs for the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
+The STL Hash Table implementation for storing (key, value) pairs. `unordered_map` can only store a single occurence of (key, value) pair for the given key whereas `unordered_multimap` can store multiple occurences of (key, value) pairs for the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
 
 ###### Import
 ```cpp
 #include <unordered_map>
 ```
+###### Declaration and initialization
+```cpp
+unordered_map<string, int> um({{"John",25}, {"Alice",19}, {"Bob",30}});
+unordered_map<string, int> um = {{"John",25}, {"Alice",19}, {"Bob",30}};
 
-TODO
+// Using vector
+vector<pair<string, int>> v = {{"John",25}, {"Alice",19}, {"Bob",30}};
+unordered_map<string, int> um(v.begin(), v.end());
+```
+###### Capacity
+```cpp
+um.empty();
+um.size();
+```
+###### Accessors
+```cpp
+// Count
+um.count(key);
+
+// Find
+auto it = um.find(key);   // For unordered_multimap, this returns one (key, value) pair out of all the equivalent keys. O(log N)
+
+// Resolving key and value from iterator
+auto &[key, value] = *it;                      // Using C++17 structured binding
+auto key = it->first; auto value = it->second; // From the pair the iterator points to
+
+// Iterator range for equivalent keys (only for unordered_multimap)
+auto [it_begin, it_end] = m.equal_range(key);
+```
+###### Operator
+For `unordered_(multi)(multi)map`, the `[]` operator may be used to obtain the value directly given the key.  
+**Important**: The caveat is that if the key does not yet exist in the `unordered_(multi)map`, this will insert (key, default value) pair into it and return that default value.
+```cpp
+auto value = um[key]; // O(log N)
+```
+###### Modifier
+```cpp
+// Add
+um[key] = value;
+um.insert({key, value});
+um.emplace(key, value);
+
+// Remove
+um.erase(it);
+```
+###### Iteration
+The following 2 loops are equivalent in looping over (key, value), in no particular order. Both are in *O(N)*
+```cpp
+for (auto &[key, value]: um)
+  cout << key << ', ' << value << endl;
+```
+```cpp
+for (auto it = um.begin(); it != um.end(); ++it)
+  cout << it->first << ', ' << it->second << endl;
+```
+To loop over unique keys in `unordered_multimap`:
+```cpp
+for (auto it = um.begin(); it != um.end(); it = um.equal_range(*it)->second)
+  cout << *it << endl;
+```
 
 ### [Algorithm](https://en.cppreference.com/w/cpp/algorithm)
 Import:
