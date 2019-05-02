@@ -165,6 +165,7 @@ typedef string nusnet_id;
 typedef string name;
 typedef string grade;
 typedef vector<tuple<nusnet_id, name, grade>> grades;
+// ...
 grades CS2040C;
 CS2040C.push_back(make_tuple("A0123456I", "Kattis", "A+"));
 ```
@@ -210,7 +211,7 @@ switch(1) {
 }
 ```
 
-### Strings
+#### Strings
 In C++ and C, a string is an array of `char` terminated with the null character `\0`.
 
 However `std::string` is treated differently from `c-string`
@@ -222,7 +223,7 @@ Strings are mutable in C++. This behaviour differs from other languages such as 
 #include <string>
 ````
 
-##### Declaration
+##### Initialization and declaration
 ```cpp
 // Assignment via string literal
 string str = "Hello world!";
@@ -356,6 +357,23 @@ str1.replace(it_start_1, it_end_1, str2, length_2);
 str1.replace(it_start_1, it_end_1, str2, it_start_2, it_end_2);
 ```
 
+#### C-Style Array
+##### Initializations
+```cpp
+int arr[3] = {1, 2, 3}; //=> [1, 2, 3]
+int arr[5] = {1, 2, 3}; //=> [1, 2, 3, 0, 0]  // unspecified values are assigned default values
+int arr[5] = {};        //=> [0, 0, 0, 0, 0]
+int arr[5];             //=> [?, ?, ?, ?, ?]
+int arr[] = {1, 2, 3}   //=> [1, 2, 3]        // implicit size understood by compiler
+int arr[] {1, 2, 3}     //=> [1, 2, 3]        // universal initialization
+```
+Note array size cannot be initialized with a variable. i.e. the following is illegal
+```cpp
+int n = 100;
+int arr[n] = {0};
+```
+Instead, consider using [`std::vector`](#stdvector)
+
 ## Iteration
 ### Loops
 #### For
@@ -470,83 +488,7 @@ The C++ Standard Template Library (STL) is a set of template classes that provid
 * Functions
 * Numeric algorithms
 
-### [Containers](https://en.cppreference.com/w/cpp/container)
-#### Operators
-Containers of primitive types can be directly compared using relational and comparison operators, for instance:
-``` cpp
-pair<int,int> p1(1,2);
-pair<int,int> p2(1,2);
-pair<int,int> p3(1,4);
-assert(p1 == p2);   //=> assertion true
-assert(p3 > p1);    //=> assertion true
-
-tuple<int,int> t1(1,2,3);
-tuple<int,int> t2(1,2,3);
-tuple<int,int> t3(1,2,4);
-assert(t1 == t2);   //=> assertion true
-assert(t3 > t1);    //=> assertion true
-
-vector<int> v1 = {1,2,3,4,5};
-vector<int> v2 = {1,2,5,6,7};
-vector<int> v3 = {2};
-assert(v2 > v1);    //=> assertion true
-assert(v3 > v2)     //=> assertion true
-```
-
-STL containers are [copy assignable](https://en.cppreference.com/w/cpp/named_req/CopyAssignable) and so `=` operator will serve as [copy assignment operator](https://en.cppreference.com/w/cpp/language/copy_assignment) if LHS of the expression is not a pointer or reference. To illustrate:
-```cpp
-vector<int> vect1  = {1,2,3};
-vector<int> vect2  = vect1; // vect2 is a copy of vect1
-vector<int> &vect3 = vect1; // vect3 refers to the same vector as vect1 
-```
-
-#### Structured bindings
-Since C++17, [strutcured bindings](https://en.cppreference.com/w/cpp/language/structured_binding) provide a convenient way to unpack values in containers.
-```cpp
-tuple<int,float,string> t_iii = {1,3.14,"Hello"};
-auto [first, second, third] = t_iii;
-assert(first, 1);         //=> Assertion true
-assert(second, 3.14);     //=> Assertion true
-assert(third, "Hello");   //=> Assertion true
-```
-
-#### C-Style Array
-##### Initializations
-```cpp
-int arr[3] = {1, 2, 3}; //=> [1, 2, 3]
-int arr[5] = {1, 2, 3}; //=> [1, 2, 3, 0, 0]  // unspecified values are assigned default values
-int arr[5] = {};        //=> [0, 0, 0, 0, 0]
-int arr[5];             //=> [?, ?, ?, ?, ?]
-int arr[] = {1, 2, 3}   //=> [1, 2, 3]        // implicit size understood by compiler
-int arr[] {1, 2, 3}     //=> [1, 2, 3]        // universal initialization
-```
-Note array size cannot be initialized with a variable. i.e. the following is illegal
-```cpp
-int n = 100;
-int arr[n] = {0};
-```
-Instead, consider using [`std::vector`](#stdvector)
-
-##### Common operations
-Array size
-```cpp
-int size = int n = sizeof(arr) / sizeof(arr[0]);
-```
-Array copy 
-* items exceeding size of dest will be ignored
-* `begin()` and `end()` only works for arrays and not array pointer/references
-```cpp
-copy(begin(src), end(src), begin(dest));
-```
-
-Note that C-style arrays does not enjoy the convenience of C++11's foreach loop. Instead consider using `std:array`
-
-#### [`std::array`](https://en.cppreference.com/w/cpp/container/array)
-A thin wrapper around C-style arrays
-```cpp
-array<int, 10> s = {5, 7, 4, 2, 8, 6, 1, 9, 0, 3};
-```
-
+### [Utility](https://en.cppreference.com/w/cpp/utility)
 #### [`std::pair`](https://en.cppreference.com/w/cpp/utility/pair)
 ##### Import
 ```cpp
@@ -588,12 +530,75 @@ int first = get<0>(triplet); //=> 1
 get<0>(triplet) = 0;
 ```
 
-#### [`std::vector`](https://en.cppreference.com/w/cpp/container/vector)
-##### Import
+### [Containers](https://en.cppreference.com/w/cpp/container)
+
+#### Operators
+Containers of primitive types can be directly compared using relational and comparison operators, for instance:
+``` cpp
+pair<int,int> p1(1,2);
+pair<int,int> p2(1,2);
+pair<int,int> p3(1,4);
+assert(p1 == p2);   //=> assertion true
+assert(p3 > p1);    //=> assertion true
+
+tuple<int,int> t1(1,2,3);
+tuple<int,int> t2(1,2,3);
+tuple<int,int> t3(1,2,4);
+assert(t1 == t2);   //=> assertion true
+assert(t3 > t1);    //=> assertion true
+
+vector<int> v1 = {1,2,3,4,5};
+vector<int> v2 = {1,2,5,6,7};
+vector<int> v3 = {2};
+assert(v2 > v1);    //=> assertion true
+assert(v3 > v2)     //=> assertion true
+```
+
+STL containers are [copy assignable](https://en.cppreference.com/w/cpp/named_req/CopyAssignable) and so `=` operator will serve as [copy assignment operator](https://en.cppreference.com/w/cpp/language/copy_assignment) if LHS of the expression is not a pointer or reference. To illustrate:
+```cpp
+vector<int> vect1  = {1,2,3};
+vector<int> vect2  = vect1; // vect2 is a copy of vect1
+vector<int> &vect3 = vect1; // vect3 refers to the same vector as vect1 
+```
+
+#### Structured bindings
+Since C++17, [strutcured bindings](https://en.cppreference.com/w/cpp/language/structured_binding) provide a convenient way to unpack values in containers.
+```cpp
+tuple<int,float,string> t_iii = {1,3.14,"Hello"};
+auto [first, second, third] = t_iii;
+assert(first, 1);         //=> Assertion true
+assert(second, 3.14);     //=> Assertion true
+assert(third, "Hello");   //=> Assertion true
+```
+
+##### Common operations
+Array size
+```cpp
+int size = int n = sizeof(arr) / sizeof(arr[0]);
+```
+Array copy 
+* items exceeding size of dest will be ignored
+* `begin()` and `end()` only works for arrays and not array pointer/references
+```cpp
+copy(begin(src), end(src), begin(dest));
+```
+
+Note that C-style arrays does not enjoy the convenience of C++11's foreach loop. Instead consider using `std:array`
+
+#### Sequence Containers
+
+##### [`std::array`](https://en.cppreference.com/w/cpp/container/array)
+A thin wrapper around C-style arrays
+```cpp
+array<int, 10> s = {5, 7, 4, 2, 8, 6, 1, 9, 0, 3};
+```
+
+##### [`std::vector`](https://en.cppreference.com/w/cpp/container/vector)
+###### Import
 ```cpp
 #include <vector>
 ```
-##### Declaration and initialization
+###### Declaration and initialization
 ```cpp
 // Initialization
 vector<int> vect;               // Initialize empty vector
@@ -606,46 +611,57 @@ vector<int> vect = {1, 2, 3};   // Initialize with items {1, 2, 3}
 int arr[3] = {10, 20, 30};
 vector<int> vect(arr, arr + 3); // Initialize with items {10, 20, 30} 
 ```
-##### Capacity
+###### Capacity
 ```cpp
+vect.empty();
 vect.size():
 ```
-##### Accessors
+###### Accessors
 ```cpp
 vect[i] = x;
 ```
-##### Modifiers
+###### Modifiers
 ```cpp
+// Increment
 vect[i]++;
-vect.push_back(99); // Appending
 
-// Removing
+// Append
+vect.push_back(99);
+vect.emplace_back(100);
+
+// Mass assign
+vect.assign(n, val); // assign first n items with value val
+
+// Remove
 vect.erase(vect.begin() + 5);                // erase the 6th element
 vect.erase(vect.begin(), vect.begin() + 3);  // erase the first 3 elements:
+
+// Empty
+vect.clear();
 ```
 
-#### [`std::list`](https://en.cppreference.com/w/cpp/container/list)
-##### Import
+##### [`std::list`](https://en.cppreference.com/w/cpp/container/list)
+###### Import
 ```cpp
 #include <list>
 ```
-##### Declaration and initialization
+###### Declaration and initialization
 ```cpp
 list<int> lst;              
 list<int> lst({1, 2, 3});   // Initialize with items {1, 2, 3}
 list<int> lst = {1, 2, 3};  // Initialize with items {1, 2, 3}
 ```
-##### Capacity
+###### Capacity
 ```cpp
 lst.empty();    // Checks if list is empty
 lst.size();     // Returns size of list
 ```
-##### Accessors
+###### Accessors
 ```cpp
 lst.front();    // Get head item
 lst.back();     // Get tail item
 ```
-##### Modifiers
+###### Modifiers
 ```cpp
 lst.clear();            // clear all contents of list
 lst.push_back(item);    // Appends item to the rear
@@ -661,6 +677,41 @@ list<int> lst2 = {4, 5, 6};
 lst1.splice(lst1.end(), lst2); // O(1)
 list<int> lst3 = {1, 2, 3, 4, 5, 6};
 assert(lst1 == lst3); //=> assertion true
+```
+
+##### [`std:deque`](https://en.cppreference.com/w/cpp/container/deque)
+###### Import
+```cpp
+#include <deque>
+```
+###### Declaration and initialization
+```cpp
+deque<int> deq;
+```
+###### Capacity
+```cpp
+deq.empty();    // Checks if deque is empty
+deq.size();     // Returns current size on deque
+```
+###### Accessors
+```cpp
+deq.front();  // Returns front item of deque
+deq.back();   // Returns rear item of deque
+deq.at(i);    // Returns the item at position i in O(1)
+```
+###### Modifiers
+```cpp
+deq.push_front(item);   // Push item to front of deque
+deq.pop_front(item);    // Pop item from front of deque
+deq.push_back(item);    // Inject item at rear of deque
+deq.pop_back(item);     // Eject item at rear of deque
+```
+
+###### Iterator
+```cpp
+for (auto it = deq.begin(); it != deq.end(); ++it) {
+  // ...
+}
 ```
 
 #### [`std::stack`](https://en.cppreference.com/w/cpp/container/stack)
@@ -717,41 +768,6 @@ q.pop(item);  // dequeue item from front of queue
 print_queue(q);
 ```
 
-#### [`std:deque`](https://en.cppreference.com/w/cpp/container/deque)
-##### Import
-```cpp
-#include <deque>
-```
-##### Declaration and initialization
-```cpp
-deque<int> deq;
-```
-##### Capacity
-```cpp
-deq.empty();    // Checks if deque is empty
-deq.size();     // Returns current size on deque
-```
-##### Accessors
-```cpp
-deq.front();  // Returns front item of deque
-deq.back();   // Returns rear item of deque
-deq.at(i);    // Returns the item at position i in O(1)
-```
-##### Modifiers
-```cpp
-deq.push_front(item);   // Push item to front of deque
-deq.pop_front(item);    // Pop item from front of deque
-deq.push_back(item);    // Inject item at rear of deque
-deq.pop_back(item);     // Eject item at rear of deque
-```
-
-##### Iterator
-```cpp
-for (auto it = deq.begin(); it != deq.end(); ++it) {
-  // ...
-}
-```
-
 #### [`std:priority_queue`](https://en.cppreference.com/w/cpp/container/priority_queue)
 ##### Import
 ```cpp
@@ -789,8 +805,8 @@ pq.top();
 ```
 ##### Modifiers
 ```cpp
-pq.push(item);
-pq.pop();
+pq.push(item);  // Add
+pq.pop();       // Remove
 ```
 #### Misc
 ```cpp
@@ -802,6 +818,45 @@ The STL BBST implementation for storing keys. `set` can only store a single occu
 ##### Import
 ```cpp
 #include <set>
+```
+##### Initialization
+```cpp
+set<int> s({1,2,3});
+set<int> s = {1,2,3};
+
+// Using vector
+vector<int> v = {1,2,3};
+set<int> s(v.begin(), v.end());
+```
+#### Capacity
+```cpp
+s.empty();
+s.size();
+```
+#### Accessors
+```cpp
+// Count
+s.count(key);
+
+// Find
+auto it = s.find(key);
+
+// Bound
+/*
+ * Important note! Using std::lower_bound incurs O(N log N) compexity!
+ * Please use the member functon lower_bound as shown below!
+ */
+auto it = s.lower_bound(key); // O(log N)
+auto it = s.upper_bound(key); // O(log N)
+```
+#### Modifier
+```cpp
+// Add
+s.insert(key);
+s.emplace(key);
+
+// Remove
+s.erase(it);
 ```
 
 #### [`std:map`](https://en.cppreference.com/w/cpp/container/map), [`std:multimap`](https://en.cppreference.com/w/cpp/container/multimap)
