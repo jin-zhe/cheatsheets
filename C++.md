@@ -1076,6 +1076,21 @@ set<int> s = {1,2,3};
 vector<int> v = {1,2,3};
 set<int> s(v.begin(), v.end());
 ```
+Ordering:
+```cpp
+set<int, std::less> s;    // Order ascending (default)
+set<int, std::greater> s; // Order descending
+```
+Use custom comparator:
+```cpp
+// Custom comparator to order descending
+struct custom_cmp {
+  bool operator() (const int & l, const int & r) const {
+    return l > r;
+  }
+};
+set<int, custom_cmp> s;
+```
 ###### Capacity
 ```cpp
 s.empty();
@@ -1142,6 +1157,21 @@ map<string, int> m = {{"John",25}, {"Alice",19}, {"Bob",30}};
 // Using vector
 vector<pair<string, int>> v = {{"John",25}, {"Alice",19}, {"Bob",30}};
 map<string, int> m(v.begin(), v.end());
+```
+Ordering:
+```cpp
+map<string, int, std::less> m;    // Order ascending (default)
+map<string, int, std::greater> m; // Order descending
+```
+Use custom comparator:
+```cpp
+// Custom comparator to order descending
+struct custom_cmp {
+  bool operator() (const string & l, const string & r) const {
+    return l > r;
+  }
+};
+map<string, int, custom_cmp> m;
 ```
 ###### Capacity
 ```cpp
@@ -1223,6 +1253,23 @@ unordered_set<int> us = {1,2,3};
 vector<int> v = {1,2,3};
 set<int> us(v.begin(), v.end());
 ```
+Using custom hash function:
+```cpp
+// Method 1: Function object
+struct custom_hash
+{
+  size_t operator()(const int & key) const {
+    return key * 2; // Return hashed value here
+  }
+};
+unordered_set<int, custom_hash> us;
+
+// Method 2: Lambda
+auto custom_hash = [](const int & key) {
+    return key * 2; // Return hashed value here
+};
+unordered_set<int, decltype(custom_hash)> us(n, custom_hash); // Where n is the minimum number of initial buckets
+```
 ###### Capacity
 ```cpp
 us.empty();
@@ -1280,6 +1327,23 @@ unordered_map<string, int> um = {{"John",25}, {"Alice",19}, {"Bob",30}};
 // Using vector
 vector<pair<string, int>> v = {{"John",25}, {"Alice",19}, {"Bob",30}};
 unordered_map<string, int> um(v.begin(), v.end());
+```
+Using custom hash function:
+```cpp
+// Method 1: Function object
+struct custom_hash
+{
+  size_t operator()(const string & key) const {
+    return key[0] * 2; // Return hashed value here
+  }
+};
+unordered_map<string, int, custom_hash> um;
+
+// Method 2: Lambda
+auto custom_hash = [](const string & key) {
+    return key[0] * 2; // Return hashed value here
+};
+unordered_map<string, int, decltype(custom_hash)> um(n, custom_hash); // Where n is the minimum number of initial buckets
 ```
 ###### Capacity
 ```cpp
