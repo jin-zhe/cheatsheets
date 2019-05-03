@@ -1235,7 +1235,8 @@ Import:
 #include <functional> // if using lambda
 ```
 #### [`std::binary_search`](https://en.cppreference.com/w/cpp/algorithm/binary_search)
-Note: Caller is responsible of ensuring iterator range \[first, last\) is fully ordered prior to calling `binary_search`. Parital ordering is also possible if it meets certain criteria (see documentation page).
+Checks if a given value exists in the container.  
+Note: Caller is responsible of ensuring iterator range \[first, last\) is fully ordered prior to calling `binary_search`. Parital ordering is also possible if iterator range meets certain ordering criteria (see documentation page).
 ```cpp
 vector<int> v = {1,2,4,5,9};
 bool found_4 = binary_search(v.begin(), v.end(), 4);  //=> true
@@ -1259,10 +1260,26 @@ vector<int> v{1,2,1,3,1,4,1,5,1,6};
 int count_eq1   = count(v.begin(), v.end(), 1);                               //=> 5
 int count_geq3  = count_if(v.begin(), v.end(), [](int i){ return i >= 3; });  //=> 4
 ```
-#### [`std::equal_range`](https://en.cppreference.com/w/cpp/algorithm/count)
-TODO
-#### [`std::fill`](https://en.cppreference.com/w/cpp/algorithm/count)
-TODO
+#### [`std::equal_range`](https://en.cppreference.com/w/cpp/algorithm/equal_range)
+Returns an iterator range containing all elements equivalent to value in the range \[first, last\).  
+Note: Caller is responsible of ensuring iterator range \[first, last\) is fully ordered prior to calling `equal_range`. Parital ordering is also possible if iterator range meets certain ordering criteria (see documentation page).
+```cpp
+vector<pair<int, char>> v_ic = { {1,'A'}, {2,'B'}, {2,'C'}, {2,'D'}, {4,'G'}, {3,'F'} };
+pair<int, char> value = {2, '?'};
+auto [it_begin, it_end] = equal_range(v_ic.begin(), v_ic.end(), value);
+auto it_lower = lower_bound(v_ic.begin(), v_ic.end(), value);
+auto it_upper = upper_bound(v_ic.begin(), v_ic.end(), value);
+assert(it_begin == it_lower);
+assert(it_end == it_upper);
+```
+#### [`std::fill`](https://en.cppreference.com/w/cpp/algorithm/fill)
+Note: `vector` has member function `assign` to achieve the same behaviour.
+```cpp
+vector<int> v1{1,2,3,4,5};
+vector<int> v2{8,8,8,8,8};
+fill(v1.begin(), v1.end(), 8);
+assert(v1 == v2);   //=> assertion true
+```
 #### [`std::max`](https://en.cppreference.com/w/cpp/algorithm/max)
 ```cpp
 max_xy = max(x, y);
@@ -1283,7 +1300,6 @@ assert(*it_max == 9); //=> assertion true
 auto it_abs_max = max_element(v.begin(), v.end(), [](int a, int b){ return abs(a) < abs(b); });
 assert(*it_abs_max == -14); //=> assertion true
 ```
-
 #### [`random_shuffle`](https://en.cppreference.com/w/cpp/algorithm/random_shuffle)
 ```cpp
 vector<int> v = {1,2,3,4,5,6,7};
