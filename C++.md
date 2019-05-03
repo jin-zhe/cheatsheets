@@ -29,7 +29,7 @@ Unless otherwise specified, this is written for C++11.
     - [Selection](#selection)
     - [Repetition](#repetition)
   - [Math libraries](#math-libraries)
-    - [`cmath`](#cmath)
+    - [`cmathh`](#cmath)
     - [`numeric_limits`](#numberic_limits)
 - [STL](#stl)
   - [Utility](#utility)
@@ -515,6 +515,18 @@ loop(5) {
 
 ### Control flow
 #### Selection
+##### If-else statement
+```cpp
+if (condition_1) {
+  // Do something
+}
+else if (condition_2) {
+  // Do something
+}
+else {
+  // Do something
+}
+```
 ##### Switch statement
 ```cpp
 int test = 1;
@@ -583,31 +595,30 @@ while (loop_condition);
 ```
 
 ### Math libraries
-#### [cmath](https://en.cppreference.com/w/cpp/numeric/math)
-##### Import
+#### [`cmath.h`](https://en.cppreference.com/w/cpp/numeric/math)
 ```cpp
 #import <math.h>
 ```
-##### [floor](https://en.cppreference.com/w/cpp/numeric/math/floor)
+##### [`floor`](https://en.cppreference.com/w/cpp/numeric/math/floor)
 ```cpp
 floor(+2.7);      //=> 2.000000
 floor(-2.7);      //=> -3.000000
 floor(-0.0);      //=> -0.000000
 floor(-INFINITY); //=> -INFINITY
 ```
-##### [ceil](https://en.cppreference.com/w/cpp/numeric/math/ceil)
+##### [`ceil`](https://en.cppreference.com/w/cpp/numeric/math/ceil)
 ```cpp
 ceil(+2.4);       //=> 3.000000
 ceil(-2.4);       //=> -2.000000
 ceil(-0.0);       //=> -0.000000
 ceil(-INFINITY);  //=> -INFINITY
 ```
-##### [pow](https://en.cppreference.com/w/cpp/numeric/math/pow)
+##### [`pow`](https://en.cppreference.com/w/cpp/numeric/math/pow)
 ```cpp
 pow(2, 10);   //=> 1024
 pow(2, 10.0); //=> 1024.0
 ```
-##### [Infinity](https://en.cppreference.com/w/c/numeric/math/INFINITY)
+##### [`Infinity`](https://en.cppreference.com/w/c/numeric/math/INFINITY)
 `INFINITY` is a macro for numberic types supporting floating-point infinites.
 ```cpp
 int     inf_int = INFINITY; //=> 4196512 (unsupported)
@@ -616,7 +627,7 @@ float   inf_flt = INFINITY; //=> inf
 double  inf_dbl = INFINITY; //=> inf
 ```
 
-#### [numberic_limits](https://en.cppreference.com/w/cpp/types/numeric_limits/infinity)
+#### [`numberic_limits`](https://en.cppreference.com/w/cpp/types/numeric_limits/infinity)
 Example
 ```cpp
 #include <limits>
@@ -647,7 +658,7 @@ The C++ Standard Template Library (STL) is a set of template classes that provid
 
 
 
-### [Utility](https://en.cppreference.com/w/cpp/utility)
+### [`utility`](https://en.cppreference.com/w/cpp/utility)
 #### [`std::pair`](https://en.cppreference.com/w/cpp/utility/pair)
 ##### Import
 ```cpp
@@ -1194,7 +1205,7 @@ for (auto it = m.begin(); it != m.end(); it = m.upper_bound(*it))
 
 #### [Unordered associative containers](https://en.wikipedia.org/wiki/Unordered_associative_containers_(C%2B%2B))
 
-##### [`std:unordered_set`](https://en.cppreference.com/w/cpp/container/unordered_set), [`unordered_multiset`](https://en.cppreference.com/w/cpp/container/unordered_multiset)
+##### [`std:unordered_set`](https://en.cppreference.com/w/cpp/container/unordered_set), [`std::unordered_multiset`](https://en.cppreference.com/w/cpp/container/unordered_multiset)
 The STL Hash Table implementation for storing keys. `unordered_set` can only store a single occurence of a unique key whereas `unordered_multiset` can store multiple occurences of the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
 
 ###### Import
@@ -1252,7 +1263,7 @@ for (auto it = us.begin(); it != us.end(); it = us.equal_range(*it)->second)
   cout << *it << endl;
 ```
 
-##### [`std:unordered_map`](https://en.cppreference.com/w/cpp/container/unordered_map), [`unordered_multimap`](https://en.cppreference.com/w/cpp/container/unordered_multimap)
+##### [`std:unordered_map`](https://en.cppreference.com/w/cpp/container/unordered_map), [`std::unordered_multimap`](https://en.cppreference.com/w/cpp/container/unordered_multimap)
 The STL Hash Table implementation for storing (key, value) pairs. `unordered_map` can only store a single occurence of (key, value) pair for the given key whereas `unordered_multimap` can store multiple occurences of (key, value) pairs for the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
 
 ###### Import
@@ -1392,7 +1403,7 @@ assert(*it_max == 9); //=> assertion true
 auto it_abs_max = max_element(v.begin(), v.end(), [](int a, int b){ return abs(a) < abs(b); });
 assert(*it_abs_max == -14); //=> assertion true
 ```
-#### [`random_shuffle`](https://en.cppreference.com/w/cpp/algorithm/random_shuffle)
+#### [`std::random_shuffle`](https://en.cppreference.com/w/cpp/algorithm/random_shuffle)
 ```cpp
 vector<int> v = {1,2,3,4,5,6,7};
 srand(time(NULL));
@@ -1416,7 +1427,7 @@ reverse(v.begin(), v.end());
 vector<int> rv = {3,2,1};
 assert(v == rv);  //=> assertion true
 ```
-#### [`sort`](https://en.cppreference.com/w/cpp/algorithm/sort), [`stable_sort`](https://en.cppreference.com/w/cpp/algorithm/stable_sort)
+#### [`std::sort`](https://en.cppreference.com/w/cpp/algorithm/sort), [`std::stable_sort`](https://en.cppreference.com/w/cpp/algorithm/stable_sort)
 STL sorting functions are namely [`sort`](https://en.cppreference.com/w/cpp/algorithm/sort) and [`stable_sort`](https://en.cppreference.com/w/cpp/algorithm/stable_sort). As their names suggest, the former is not guaranteed to be stable while the latter is.
 ##### Sorting arrays
 ```cpp
@@ -1465,7 +1476,7 @@ struct {
 sort(s.begin(), s.end(), customComparator);
 ```
 
-#### [`lower_bound`](https://en.cppreference.com/w/cpp/algorithm/lower_bound)
+#### [`std::lower_bound`](https://en.cppreference.com/w/cpp/algorithm/lower_bound)
 Returns an iterator to the first item in container encountered that is greater or equal to given value. i.e. `>= val`. If no items qualify in the container, return iterator pointing to `.end()` of container. Performance is O(log N). Note that for this operation to be meangingful, the items should be sorted in some ordering.
 ```cpp
 vector<int>::iterator it;
@@ -1485,7 +1496,7 @@ it = lower_bound(vect2.begin(), vect2.end(), 7);
 assert(it == vect2.end());                        //=> assertion true
 ```
 
-#### [`upper_bound`](https://en.cppreference.com/w/cpp/algorithm/upper_bound)
+#### [`std::upper_bound`](https://en.cppreference.com/w/cpp/algorithm/upper_bound)
 Returns an iterator to the first item in container encountered that is **strictly greater than** than given value. i.e. `> val`. If no items qualify in the container, return iterator pointing to `.end()` of container. Performance is O(log N). Note that for this operation to be meangingful, the items should be sorted in some ordering.
 ```cpp
 vector<int>::iterator it;
@@ -1669,7 +1680,7 @@ scanf("%d %d", &l, &r);
 ```cpp
 #include <sstream>
 ```
-#### [`stringstream`](https://en.cppreference.com/w/cpp/io/basic_stringstream)
+#### [`std::stringstream`](https://en.cppreference.com/w/cpp/io/basic_stringstream)
 Output
 ```cpp
 stringstream ss;
@@ -1687,7 +1698,7 @@ while(ss >> word) {
   cout << word; //=> John, Doe, Johnson, Mary
 }
 ```
-#### [`istringstream`](https://en.cppreference.com/w/cpp/io/basic_istringstream)
+#### [`std::istringstream`](https://en.cppreference.com/w/cpp/io/basic_istringstream)
 ```cpp
 string line = "5 6 22 8";
 istringstream iss;
@@ -1697,7 +1708,7 @@ int num1, num2, num3, num4;
 iss >> num1 >> num2 >> num3 >> num4;
 ```
 
-#### [freopen](https://en.cppreference.com/w/cpp/io/c/freopen), [fclose](https://en.cppreference.com/w/cpp/io/c/fclose)
+#### [`freopen`](https://en.cppreference.com/w/cpp/io/c/freopen), [`fclose`](https://en.cppreference.com/w/cpp/io/c/fclose)
 ##### Reading
 ```cpp
 freopen("input.txt", "r", stdin);   // redirects standard input
