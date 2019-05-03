@@ -29,7 +29,7 @@ Unless otherwise specified, this is written for C++11.
     - [Selection](#selection)
     - [Repetition](#repetition)
   - [Math libraries](#math-libraries)
-    - [`cmathh`](#cmath)
+    - [`cmath`](#cmath)
     - [`numeric_limits`](#numberic_limits)
 - [STL](#stl)
   - [Utility](#utility)
@@ -597,9 +597,9 @@ while (loop_condition);
 ```
 
 ### Math libraries
-#### [`cmath.h`](https://en.cppreference.com/w/cpp/numeric/math)
+#### [`cmath`](https://en.cppreference.com/w/cpp/header/cmath)
 ```cpp
-#import <math.h>
+#include <cmath>
 ```
 ##### [`floor`](https://en.cppreference.com/w/cpp/numeric/math/floor)
 ```cpp
