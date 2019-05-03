@@ -77,6 +77,8 @@ Unless otherwise specified, this is written for C++11.
     - [`std::cin`](#stdcin)
     - [`std::cout`](#stdcout)
   - [`stdio.h`](#stdioh)
+    -[`printf`](#printf)
+    -[`scanf`](#scanf)
   - [`sstream`](#sstream)
     - [`std::stringstream`](#stdstringstream)
     - [`std::istringstream`](#stdistringstream)
