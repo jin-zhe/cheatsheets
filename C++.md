@@ -43,17 +43,17 @@ Unless otherwise specified, this is written for C++11.
       - [`std::array`](#stdarray)
       - [`std::vector`](#stdvector)
       - [`std::list`](#stdlist)
-      - [`std:deque`](#stddeque)
+      - [`std::deque`](#stddeque)
     - [Container adaptors](#container-adaptors)
       - [`std::queue`](#stdqueue)
-      - [`std:priority_queue`](#stdpriority_queue)
+      - [`std::priority_queue`](#stdpriority_queue)
       - [`std::stack`](#stdstack)
     - [Associative containers](#associative-containers)
-      - [`std:set`, `std:multiset`](#stdset-stdmultiset)
-      - [`std:map`, `std:multimap`](#stdmap-stdmultimap)
+      - [`std::set`, `std::multiset`](#stdset-stdmultiset)
+      - [`std::map`, `std::multimap`](#stdmap-stdmultimap)
     - [Unordered associative containers](#unordered-associative-containers)
-      - [`std:unordered_set`, `std::unordered_multiset`](#stdunordered_set-stdunordered_multiset)
-      - [`std:unordered_map`, `std::unordered_multimap`](#stdunordered_map-stdunordered_multimap)
+      - [`std::unordered_set`, `std::unordered_multiset`](#stdunordered_set-stdunordered_multiset)
+      - [`std::unordered_map`, `std::unordered_multimap`](#stdunordered_map-stdunordered_multimap)
   - [Algorithm](#algorithm)
     - [`std::binary_search`](#stdbinary_search)
     - [`std::copy`, `std::copy_if`](#stdcopy-stdcopy_if)
@@ -194,7 +194,7 @@ Array copy
 ```cpp
 copy(begin(src), end(src), begin(dest));
 ```
-Note that C-style arrays does not enjoy the convenience of C++11's foreach loop. Instead consider using `std:array`
+Note that C-style arrays does not enjoy the convenience of C++11's foreach loop. Instead consider using `std::array`
 
 #### Strings
 In C++ and C, a string is an array of `char` terminated with the null character `\0`.
@@ -925,7 +925,7 @@ list<int> lst3 = {1, 2, 3, 4, 5, 6};
 assert(lst1 == lst3); //=> assertion true
 ```
 
-##### [`std:deque`](https://en.cppreference.com/w/cpp/container/deque)
+##### [`std::deque`](https://en.cppreference.com/w/cpp/container/deque)
 ###### Import
 ```cpp
 #include <deque>
@@ -989,7 +989,7 @@ q.pop(item);  // dequeue item from front of queue
 print_queue(q);
 ```
 
-##### [`std:priority_queue`](https://en.cppreference.com/w/cpp/container/priority_queue)
+##### [`std::priority_queue`](https://en.cppreference.com/w/cpp/container/priority_queue)
 ###### Import
 ```cpp
 #include <queue>
@@ -1060,7 +1060,7 @@ stk.pop(item);  // Pop item off top of stack
 
 #### [Associative containers](https://en.wikipedia.org/wiki/Associative_containers)
 
-##### [`std:set`](https://en.cppreference.com/w/cpp/container/set), [`std:multiset`](https://en.cppreference.com/w/cpp/container/multiset)
+##### [`std::set`](https://en.cppreference.com/w/cpp/container/set), [`std::multiset`](https://en.cppreference.com/w/cpp/container/multiset)
 The STL BBST implementation for storing keys. `set` can only store a single occurence of a unique key whereas `multiset` can store multiple occurences of the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
 
 ###### Import
@@ -1143,7 +1143,7 @@ for (auto it = s.begin(); it != s.end(); it = s.upper_bound(*it))
   cout << *it << endl;
 ```
 
-##### [`std:map`](https://en.cppreference.com/w/cpp/container/map), [`std:multimap`](https://en.cppreference.com/w/cpp/container/multimap)
+##### [`std::map`](https://en.cppreference.com/w/cpp/container/map), [`std::multimap`](https://en.cppreference.com/w/cpp/container/multimap)
 The STL BBST implementation for storing (key, value) pairs. `map` can only store a single occurence of (key, value) for the given key whereas `multimap` can store multiple occurences of (key, value) pairs for the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
 ###### Import
 ```cpp
@@ -1237,7 +1237,7 @@ for (auto it = m.begin(); it != m.end(); it = m.upper_bound(*it))
 
 #### [Unordered associative containers](https://en.wikipedia.org/wiki/Unordered_associative_containers_(C%2B%2B))
 
-##### [`std:unordered_set`](https://en.cppreference.com/w/cpp/container/unordered_set), [`std::unordered_multiset`](https://en.cppreference.com/w/cpp/container/unordered_multiset)
+##### [`std::unordered_set`](https://en.cppreference.com/w/cpp/container/unordered_set), [`std::unordered_multiset`](https://en.cppreference.com/w/cpp/container/unordered_multiset)
 The STL Hash Table implementation for storing keys. `unordered_set` can only store a single occurence of a unique key whereas `unordered_multiset` can store multiple occurences of the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
 
 ###### Import
@@ -1312,7 +1312,7 @@ for (auto it = us.begin(); it != us.end(); it = us.equal_range(*it)->second)
   cout << *it << endl;
 ```
 
-##### [`std:unordered_map`](https://en.cppreference.com/w/cpp/container/unordered_map), [`std::unordered_multimap`](https://en.cppreference.com/w/cpp/container/unordered_multimap)
+##### [`std::unordered_map`](https://en.cppreference.com/w/cpp/container/unordered_map), [`std::unordered_multimap`](https://en.cppreference.com/w/cpp/container/unordered_multimap)
 The STL Hash Table implementation for storing (key, value) pairs. `unordered_map` can only store a single occurence of (key, value) pair for the given key whereas `unordered_multimap` can store multiple occurences of (key, value) pairs for the same key. As the functions for the 2 containers are identical, they shall be listed in the following subsections without the loss of generality.
 
 ###### Import
