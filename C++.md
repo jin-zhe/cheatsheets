@@ -739,6 +739,7 @@ a[i]++;
 vector<int> vect;               // Initialize empty vector
 vector<int> vect(n);            // Initialize vector of size n
 vector<int> vect(n, 10);        // Initialize vector of size n with all values being 10
+vector<int> vect{1, 2, 3};      // Initialize with items {1, 2, 3}
 vector<int> vect({1, 2, 3});    // Initialize with items {1, 2, 3}
 vector<int> vect = {1, 2, 3};   // Initialize with items {1, 2, 3}
 
@@ -806,6 +807,9 @@ lst.push_back(item);    // Appends item to the rear
 lst.push_front(item);   // Prepends item at head
 lst.insert(it, item);   // Inserts item before iterator position
 lst.pop_back();         // Removes last item
+lst.reverse();          // Reverses the entire list
+lst.remove(v);          // Removes all elements equal to v
+lst.remove_if([](int x){ return x > 10; }); // Removes all elements greater than 10
 ```
 [Splice](http://www.cplusplus.com/reference/list/list/splice/)
 ```cpp
@@ -1230,25 +1234,80 @@ Import:
 #include <algorithm>
 #include <functional> // if using lambda
 ```
+#### [`std::binary_search`](https://en.cppreference.com/w/cpp/algorithm/binary_search)
+Note: Caller is responsible of ensuring iterator range \[first, last\) is fully ordered prior to calling `binary_search`. Parital ordering is also possible if it meets certain criteria (see documentation page).
+```cpp
+vector<int> v = {1,2,4,5,9};
+bool found_4 = binary_search(v.begin(), v.end(), 4);  //=> true
+bool found_3 = binary_search(v.begin(), v.end(), 3);  //=> false
+```
+#### [`std::copy`, `std::copy_if`](https://en.cppreference.com/w/cpp/algorithm/copy)
+```cpp
+vector<int> v1{1,2,3,4,5};
+vector<int> v2(5);
+copy(v1.begin(), v1.end(), v2.begin());
+assert(v1 == v2);     //=> assertion true
 
-**TODO**
-* http://www.cplusplus.com/reference/algorithm/binary_search/
-* https://en.cppreference.com/w/cpp/algorithm/remove
-* https://en.cppreference.com/w/cpp/algorithm/copy
-* http://www.cplusplus.com/reference/algorithm/reverse/
-* https://en.cppreference.com/w/cpp/algorithm/count
-* max_element
-* equal_range
-* fill
+vector<int> v_geq3{3,4,5};
+vector<int> v3(3);
+copy_if(v1.begin(), v1.end(), v3.begin(), [](int i){ return i >= 3;});
+assert(v3 == v_geq3); //=> assertion true
+```
+#### [`std::count`, `std::count_if`](https://en.cppreference.com/w/cpp/algorithm/count)
+```cpp
+vector<int> v{1,2,1,3,1,4,1,5,1,6};
+int count_eq1   = count(v.begin(), v.end(), 1);                               //=> 5
+int count_geq3  = count_if(v.begin(), v.end(), [](int i){ return i >= 3; });  //=> 4
+```
+#### [`std::equal_range`](https://en.cppreference.com/w/cpp/algorithm/count)
+TODO
+#### [`std::fill`](https://en.cppreference.com/w/cpp/algorithm/count)
+TODO
+#### [`std::max`](https://en.cppreference.com/w/cpp/algorithm/max)
+```cpp
+max_xy = max(x, y);
+```
+The above is equivalent to:
+```cpp
+if (x > y)
+  max_xy = x;
+ else
+  max_xy = y;
+```
+#### [`std::max_element`](https://en.cppreference.com/w/cpp/algorithm/max_element)
+```cpp
+vector<int> v{3,1,-14,1,5,9};
+auto it_max = max_element(v.begin(), v.end());
+assert(*it_max == 9); //=> assertion true
+
+auto it_abs_max = max_element(v.begin(), v.end(), [](int a, int b){ return abs(a) < abs(b); });
+assert(*it_abs_max == -14); //=> assertion true
+```
 
 #### [`random_shuffle`](https://en.cppreference.com/w/cpp/algorithm/random_shuffle)
-Example:
 ```cpp
 vector<int> v = {1,2,3,4,5,6,7};
 srand(time(NULL));
 random_shuffle(v.begin(), v.end());
 ```
+#### [`std::remove`, `std::remove_if`](https://en.cppreference.com/w/cpp/algorithm/remove)
+Removes all elements satisfying specific criteria from the range \[first, last\) and returns a past-the-end iterator for the new end of the range.
+```cpp
+string str1 = "Hello   World!";
+str1.erase(remove(str1.begin(), str1.end(), ' '), str1.end());
+assert(str1 == "HelloWorld!");  //=> assertion true
 
+string str2 = " Hello \t World! \n";
+str2.erase(remove(str2.begin(), str2.end(), [](char x){ return isspace(x); }), str2.end());
+assert(str2 == "HelloWorld!");  //=> assertion true
+```
+#### [`std::reverse`](https://en.cppreference.com/w/cpp/algorithm/reverse)
+```cpp
+vector<int> v = {1,2,3};
+reverse(v.begin(), v.end());
+vector<int> rv = {3,2,1};
+assert(v == rv);  //=> assertion true
+```
 #### [`sort`](https://en.cppreference.com/w/cpp/algorithm/sort), [`stable_sort`](https://en.cppreference.com/w/cpp/algorithm/stable_sort)
 STL sorting functions are namely [`sort`](https://en.cppreference.com/w/cpp/algorithm/sort) and [`stable_sort`](https://en.cppreference.com/w/cpp/algorithm/stable_sort). As their names suggest, the former is not guaranteed to be stable while the latter is.
 ##### Sorting arrays
@@ -1407,7 +1466,10 @@ cout << index << endl;  //=> 2
 it += k;        // Advance iterator by k items. We can do this without worring about size of item
 advance(it, k); // Advance iterator by k items 
 ```
-
+##### Distance
+```cpp
+distance(it, it + 10);  //=> 10
+```
 ---
 
 ## I/O
