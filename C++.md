@@ -1,7 +1,99 @@
 # C++ Cheatsheet
-*This is a work in progress*
 
 Unless otherwise specified, this is written for C++11.
+
+---
+## Table of Contents
+- [General](#general)
+  - [Importing](#importing)
+  - [Primitive data types](#primitive-data-types)
+    - [Character](#character)
+    - [Type casting](#type-casting)
+  - [Other data types](#other-data-types)
+    - [C-Style Array](#c-style-array)
+    - [Strings](#strings)
+    - [Pointer](#pointer)
+    - [Reference](#reference)
+  - [Operators](#operators)
+    - [Assignment](#assignment)
+    - [Arithmetic](#arithmetic)
+    - [Compound Assignment](#compound-assignment)
+    - [Increment and Decrement](#increment-and-decrement)
+    - [Relational and comparison operators](#relational-and-comparison-operators)
+    - [Logical operators](#logical-operators)
+    - [Conditional ternary operator](#conditional-ternary-operator)
+    - [Bitwise operators](#bitwise-operators)
+  - [Type alias](#type-alias)
+  - [Macro definitions](#macro-definitions)
+  - [Control flow](#control-flow)
+    - [Selection](#selection)
+    - [Repetition](#repetition)
+  - [Math libraries](#math-libraries)
+    - [`cmath`](#cmath)
+    - [`numeric_limits`](#numberic_limits)
+- [STL](#stl)
+  - [Utility](#utility)
+    - [`std::pair`](#stdpair)
+    - [`std::tuple`](#stdtuple)
+  - [Containers](#containers)
+    - [Operators](#operators-1)
+    - [Structured bindings](#structured-bindings)
+    - [Common functions](#common-functions)
+    - [Sequence Containers](#sequence-containers)
+      - [`std::array`](#stdarray)
+      - [`std::vector`](#stdvector)
+      - [`std::list`](#stdlist)
+      - [`std:deque`](#stddeque)
+    - [Container adaptors](#container-adaptors)
+      - [`std::queue`](#stdqueue)
+      - [`std:priority_queue`](#stdpriority_queue)
+      - [`std::stack`](#stdstack)
+    - [Associative containers](#associative-containers)
+      - [`std:set`, `std:multiset`](#stdset-stdmultiset)
+      - [`std:map`, `std:multimap`](#stdmap-stdmultimap)
+    - [Unordered associative containers](#unordered-associative-containers)
+      - [`std:unordered_set`, `std::unordered_multiset`](#stdunordered_set-stdunordered_multiset)
+      - [`std:unordered_map`, `std::unordered_multimap`](#stdunordered_map-stdunordered_multimap)
+  - [Algorithm](#algorithm)
+    - [`std::binary_search`](#stdbinary_search)
+    - [`std::copy`, `std::copy_if`](#stdcopy-stdcopy_if)
+    - [`std::count`, `std::count_if`](#stdcount-stdcount_if)
+    - [`std::equal_range`](#stdequal_range)
+    - [`std::fill`](#stdfill)
+    - [`std::max`](#stdmax)
+    - [`std::max_element`](#stdmax_element)
+    - [`std::random_shuffle`](#stdrandom_shuffle)
+    - [`std::remove`, `std::remove_if`](#stdremove-stdremove_if)
+    - [`std::reverse`](#stdreverse)
+    - [`std::sort`, `std::stable_sort`](#stdsort-stdstable_sort)
+    - [`std::lower_bound`](#stdlower_bound)
+    - [`std::upper_bound`](#stdupper_bound)
+  - [Iterators](#iterators)
+    - [Iterating an iterable](#iterating-an-iterable)
+    - [Common manipulations](#common-manipulations)
+- [I/O](#io)
+  - [`iostream`](#iostream)
+    - [Optimization for competitive programming](#optimization-for-competitive-programming)
+    - [`std::cin`](#stdcin)
+    - [`std::cout`](#stdcout)
+  - [`stdio.h`](#stdioh)
+  - [`sstream`](#sstream)
+    - [`std::stringstream`](#stdstringstream)
+    - [`std::istringstream`](#stdistringstream)
+    - [`freopen`, `fclose`](#freopen-fclose)
+- [OOP](#oop)
+  - [Struct](#struct)
+- [Custom utils](#custom-utils)
+  - [String to char array](#string-to-char-array)
+  - [Substring](#substring)
+  - [Tokenize](#tokenize)
+  - [Reading until empty line](#reading-until-empty-line)
+  - [Reading 2D char array](#reading-2d-char-array)
+  - [Printing 1D int array](#printing-1d-int-array)
+  - [Index to iterator](#index-to-iterator)
+  - [Iterator to index](#iterator-to-index)
+  - [Binary search](#binary-search)
+
 
 ---
 
@@ -226,24 +318,24 @@ str.erase(it);                  // Erase a single character via iterator
 ##### [Replace](http://www.cplusplus.com/reference/string/string/replace/)
 Using positions
 ```cpp
-// Replace position range [start_pos_1, start_pos_1 + length_1 - 1] in str1 with str2
+// Replace position range [start_pos_1, start_pos_1 + length_1) in str1 with str2
 str1.replace(start_pos_1, length_1, str2); 
 
-// Replace position range [start_pos_1, start_pos_1 + length_1 - 1] in str1 with position range [0, length_2 - 1] in str2
+// Replace position range [start_pos_1, start_pos_1 + length_1) in str1 with position range [0, length_2) in str2
 str1.replace(start_pos_1, length_1, str2, length_2);
 
-// Replace position range [start_pos_1, start_pos_1 + length_1 - 1] in str1 with position range [start_pos_2, start_pos_2 + length_2 - 1] in str2
+// Replace position range [start_pos_1, start_pos_1 + length_1) in str1 with position range [start_pos_2, start_pos_2 + length_2) in str2
 str1.replace(start_pos_1, length_1, str2, start_pos_2, length_2);
 ```
 Using iterators
 ```cpp
-// Replace iterator range [it_start_1, it_end_1 - 1] in str1 with str2
+// Replace iterator range [it_start_1, it_end_1) in str1 with str2
 str1.replace(it_start_1, it_end_1, str2);
 
-// Replace iterator range [it_start_1, it_end_1 - 1] in str1 with position range [0, length_2 - 1] in str2
+// Replace iterator range [it_start_1, it_end_1) in str1 with position range [0, length_2) in str2
 str1.replace(it_start_1, it_end_1, str2, length_2);
 
-// Replace iterator range [it_start_1, it_end_1 - 1] in str1 with iterator range [it_start_2, it_end_2 - 1] in str2
+// Replace iterator range [it_start_1, it_end_1) in str1 with iterator range [it_start_2, it_end_2) in str2
 str1.replace(it_start_1, it_end_1, str2, it_start_2, it_end_2);
 ```
 
