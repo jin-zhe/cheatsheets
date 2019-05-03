@@ -1253,7 +1253,7 @@ unordered_set<int> us = {1,2,3};
 vector<int> v = {1,2,3};
 set<int> us(v.begin(), v.end());
 ```
-Using custom hash function:
+Use custom hash function:
 ```cpp
 // Method 1: Function object
 struct custom_hash
@@ -1328,7 +1328,7 @@ unordered_map<string, int> um = {{"John",25}, {"Alice",19}, {"Bob",30}};
 vector<pair<string, int>> v = {{"John",25}, {"Alice",19}, {"Bob",30}};
 unordered_map<string, int> um(v.begin(), v.end());
 ```
-Using custom hash function:
+Use custom hash function:
 ```cpp
 // Method 1: Function object
 struct custom_hash
