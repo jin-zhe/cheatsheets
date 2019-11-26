@@ -54,6 +54,15 @@ a = np.martix([[1,2,3], [4,5,6]])
 a * b           # only valid if b has as many columns as the row of a, else error will be thrown
 np.matmul(a,b)  # same as above
 ```
+### Arrays vs Matrices
+| Operation | Arrays                          | Matrices                  | Similar? |
+|-----------|:--------------------------------|:--------------------------|----------|
+| `+`       | element-wise addition           | element-wise addition     | yes      |
+| `-`       | element-wise subtraction        | element-wise subtraction  | yes      |
+| `*`       | **element-wise multiplication** | **matrix multiplication** | **no**   |
+| `/`       | element-wise division           | element-wise division     | yes      |
+| `[i,:]`   | returns a row                   | returns a row             | yes      |
+| `[:,j]`   | **returns a row**               | **returns a column**      | **no**   |
 
 ## Linear algebra
 ```py
