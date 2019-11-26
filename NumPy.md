@@ -74,6 +74,19 @@ import numpy.linalg as la
 al.inv(A)                   # inverse matrix A
 la.solve(A, b)              # solve for A x = b
 a, e, r, s = la.lstsq(M, b) # least squares for M a = b. a: least-square solution, e: residue or error, r: rank of a, s: singular values of a
+norm = la.norm(A, ord=None) # return one of eight different matrix norms specified by `ord` argument. Defaults to Frobenius
+```
+
+## I/O
+Reading
+```py
+with open("in.txt") as f:
+  data = np.genfromtxt(f, delimiter=",")
+```
+Writing
+```py
+with open("out.txt", "w") as f:
+  np.savetxt(f, result, "%f", ",")
 ```
 
 ## Statistics
