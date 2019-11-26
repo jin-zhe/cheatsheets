@@ -23,22 +23,21 @@ np.arange(3,7)                # generates [3,4,5,6]
 np.arange(4).reshape((2,2))   # creates [[0,1],[2,3]]
 ```
 
-## 1D array
+## Arrays
+### 1D array
 ```py
 a = np.array([1,2,3])
 ```
-## 2D array
+### 2D array
 ```py
 a = np.array([[1,2,3], [4,5,6]])
 a.shape           #=> (2, 3)
 a[1,2]            #=> 6 # get an element at row 1 col 2
 a[1,:]            #=> array([4, 5, 6]) # get row 1
 a[:,2]            #=> array([3, 6])    # get col 2
-b = np.matrix(a)  # cast a into a matrix
-np.transpose(a)   # transpose 2D array
 ```
 
-## Special arrays
+### Special arrays
 ```py
 np.empty([2, 3])    # 2 by 3 array with arbitrary random values
 np.eye(2, 3)        # matrix of given shape where diagonal entires are 1 and everything else 0
@@ -48,7 +47,19 @@ np.zeros([2, 3])    # array of given shape filled with zeros
 np.random.rand(2,3) # array of given shape filled with random values
 ```
 
+### Common operations
+```py
+a = np.array([[1, 2], [3, 4]])
+
+# Mean
+# Note: use dtype=np.float64 (double precision) as np.float32 can be inaccurate
+np.mean(a)          #=> 2.5 # Takes mean of all values
+np.mean(a, axis=0)  #=> array([ 2.,  3.])   # Mean along axis 0: [1, 3], [2, 4]
+np.mean(a, axis=1)  #=> array([ 1.5,  3.5]) # Mean along axis 1: [1, 2], [3, 4]
+```
+
 ## Matrices
+### Arrays vs Matrices
 Compare and contrast against 2D array
 ```py
 a = np.matrix([[1,2,3], [4,5,6]])
@@ -56,9 +67,7 @@ a[1,2]          #=> 6 # get an element at row 1 col 2
 a[1,:]          #=> matrix([[4, 5, 6]]) # get row 1
 a[:,2]          #=> matrix([[3], [6]])  # get col 2
 a * b           # only valid if b has as many columns as the row of a, else error will be thrown
-np.matmul(a,b)  # same as above
 ```
-### Arrays vs Matrices
 | Operation | Arrays                          | Matrices                  | Similar? |
 |-----------|:--------------------------------|:--------------------------|----------|
 | `+`       | element-wise addition           | element-wise addition     | yes      |
@@ -67,6 +76,13 @@ np.matmul(a,b)  # same as above
 | `/`       | element-wise division           | element-wise division     | yes      |
 | `[i,:]`   | returns a row                   | returns a row             | yes      |
 | `[:,j]`   | **returns a row**               | **returns a column**      | **no**   |
+
+### Common Operations
+```py
+b = np.matrix(arr)  # cast numpy array `arr` into np matrix
+np.matmul(a,b)      # same as a * b
+np.transpose(a)     # transpose 2D array
+```
 
 ## Linear algebra
 ```py
