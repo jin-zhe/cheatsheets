@@ -30,10 +30,10 @@ a = np.array([1,2,3])
 ## 2D array
 ```py
 a = np.array([[1,2,3], [4,5,6]])
-a.shape           # prints (2, 3)
-a[1,2]            # get an element at row 1 col 2
-a[1,:]            # get row 1
-a[:,2]            # get col 2
+a.shape           #=> (2, 3)
+a[1,2]            #=> 6 # get an element at row 1 col 2
+a[1,:]            #=> array([4, 5, 6]) # get row 1
+a[:,2]            #=> array([3, 6])    # get col 2
 b = np.matrix(a)  # cast a into a matrix
 np.transpose(a)   # transpose 2D array
 ```
@@ -49,8 +49,12 @@ np.random.rand(2,3) # array of given shape filled with random values
 ```
 
 ## Matrices
+Compare and contrast against 2D array
 ```py
-a = np.martix([[1,2,3], [4,5,6]])
+a = np.matrix([[1,2,3], [4,5,6]])
+a[1,2]          #=> 6 # get an element at row 1 col 2
+a[1,:]          #=> matrix([[4, 5, 6]]) # get row 1
+a[:,2]          #=> matrix([[3], [6]])  # get col 2
 a * b           # only valid if b has as many columns as the row of a, else error will be thrown
 np.matmul(a,b)  # same as above
 ```
