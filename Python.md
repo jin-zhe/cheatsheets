@@ -115,7 +115,7 @@ One way to do this is to close the file. **If you write to a file without closin
 print("Welcome to Python!")         # ends with newline
 print("Welcome to Python!", end='') # ends without the default ending newline
 print(str1, str2)                   # prints the 2 strings separated by a space
-print(arr)                          # prints an array
+print(lst)                          # prints an list
 ```
 
 ### User input
@@ -275,21 +275,21 @@ continue  # continues to next iteration in loop
 These are some common data structures used in Python
 
 ### List
-In python, list, array and stack are equivalent data structures. For the sake of consistency, they shall be referred to as *arrays* for the rest of this cheatsheet and our variable name for the array is `arr`.
+In python, lists are variable length arrays much like `ArrayList` in C++ and `Vector` in Java. Lists offer random access and has similar time complexities (see [here](https://wiki.python.org/moin/TimeComplexity)) as variable length arrays in other languages. For the sake of consistency, we shall reserve the variable `lst` to refer to a list in the given context.
 
 #### Declaration and initialization
-Single-dimensional array:
+Single-dimensional list:
 ```py
-arr = [5, 6, 7, 8]            #=> [5, 6, 7, 8] # explicit assignment
-arr = [1] * 4                 #=> [1, 1, 1, 1] # generative assignment
-arr = list(range(5,9))        #=> [5, 6, 7, 8] # generative assignment using range
-arr = [x for x in range(5,9)] #=> [5, 6, 7, 8] # generative assignment using range and list comprehension (see list comprehension section below)
+lst = [5, 6, 7, 8]            #=> [5, 6, 7, 8] # explicit assignment
+lst = [1] * 4                 #=> [1, 1, 1, 1] # generative assignment
+lst = list(range(5,9))        #=> [5, 6, 7, 8] # generative assignment using range
+lst = [x for x in range(5,9)] #=> [5, 6, 7, 8] # generative assignment using range and list comprehension (see list comprehension section below)
 ```
-Multi-dimensional array:
+Multi-dimensional lists:
 ```py
-arr = [[1,2,3],[4,5,6]]   #=> [[1, 2, 3], [4, 5, 6]]    # explicit assignment
-arr = [[1]*2]*3           #=> [[1, 1], [1, 1], [1, 1]]  # generative assignment
-# The methods using range and list comprehension for single-dimensional array works for multi-dimensions as expected and is left out for brevity
+lst = [[1,2,3],[4,5,6]]   #=> [[1, 2, 3], [4, 5, 6]]    # explicit assignment
+lst = [[1]*2]*3           #=> [[1, 1], [1, 1], [1, 1]]  # generative assignment
+# The methods using range and list comprehension for single-dimensional list works for multi-dimensions as expected and is left out for brevity
 ```
 #### Range
 `range(start, stop, step)` provides a convenient construct for generating an ordered list of numbers
@@ -305,13 +305,14 @@ range(10,-1,-1)     #=> [10,9,8,7,6,5,4,3,2,1,0]
 
 #### Membership
 ```py
-arr.count(item)         # counts the number of times item appears in array 
-arr.index(item)         # returns index of first occurence of the item
-arr.insert(index, item) # inserts item at position index, suceeding elements are pushed down | in-place | does not return
-arr.append(item)        # append item to end of list | in-place | does not return
-arr.remove(item)        # remove item | in-place | does not return
-arr.pop(index)          # removes object at index and returns it (if not index provided, will pop last) | in-place | returns popped item
-del(arr[index])         # same as pop exept it doesn't return the object
+lst.count(item)         # counts the number of times item appears in list 
+lst.index(item)         # returns index of first occurence of the item
+lst.insert(index, item) # inserts item at position index, suceeding elements are pushed down | in-place | does not return
+lst.append(item)        # append item to end of list | in-place | does not return
+lst.remove(item)        # remove item | in-place | does not return
+lst.pop(index)          # removes object at index and returns it (if not index provided, will pop last) | in-place | returns popped item
+del(lst[index])         # same as pop exept it doesn't return the object
+del lst[index]          # same as above
 ```
 #### Slicing
 Slicing is achieved with the `[start:end:stride]` operator
@@ -319,8 +320,8 @@ Slicing is achieved with the `[start:end:stride]` operator
 * `start` describes where the slice starts (inclusive)
   * If not provided, value defaults to *0*
 * `end` is where it ends (exclusive)
-  * If not provided, value defaults to *length of array*. I.E. Operation defaults to `[start:length:1]`
-  * If value is negative, Python interpreter will subtract that value off the length of array. For example `a[start:-x]` is translated to `arr[start:length-x]`
+  * If not provided, value defaults to *length of list*. I.E. Operation defaults to `[start:length:1]`
+  * If value is negative, Python interpreter will subtract that value off the length of list. For example `a[start:-x]` is translated to `lst[start:length-x]`
 * `stride` indicates the interval between items in the sliced list
   * If not provided, value defaults to *1*. I.E. Operation defaults to `[start:end:1]`
   * `start` and `end` defines the sequence for stride to traverse
@@ -328,19 +329,19 @@ Slicing is achieved with the `[start:end:stride]` operator
   * a positive stride length traverses the sequence in sequential order
   * a negative stride traverses the sequence in reverse order
 ```py
-arr = [0, 1, 2, 3, 4, 5, 6, 7, 8 ,9]
-arr[:2]   #=> [0, 1]
-arr[3:6]  #=> [2, 3, 4]
-arr[:-5]  #=> [0 ,1, 2, 3, 4] # Python interpreter translates to arr[0:5]
-arr[::2]  #=> [0, 2, 4, 6, 8]
-arr[::-1] #=> [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+lst = [0, 1, 2, 3, 4, 5, 6, 7, 8 ,9]
+lst[:2]   #=> [0, 1]
+lst[3:6]  #=> [2, 3, 4]
+lst[:-5]  #=> [0 ,1, 2, 3, 4] # Python interpreter translates to lst[0:5]
+lst[::2]  #=> [0, 2, 4, 6, 8]
+lst[::-1] #=> [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
 ```
 
 #### Concatenating
 ```py
-arr1 = [1, 2, 3]
-arr2 = [4, 5, 6]
-arr1 + arr2       #=> [1, 2, 3, 4, 5, 6]
+lst1 = [1, 2, 3]
+lst2 = [4, 5, 6]
+lst1 + lst2       #=> [1, 2, 3, 4, 5, 6]
 ```
 
 #### List comprehension
@@ -357,41 +358,41 @@ a = [1, 2, 3, 4]
 squared_a = [x**2 for x in a] #=> [1, 4, 9, 16]
 squared_even_a = [x**2 if x%2 == 0 else x for x in a] #=> [1, 4, 3, 16]
 ```
-We can also nest lists within the comprehension to iterate through multi-dimensional arrays. One application for this is to flatten out a multi-dimensional array:
+We can also nest lists within the comprehension to iterate through multi-dimensional lists. One application for this is to flatten out a multi-dimensional list:
 ```py
-arr_2d = [[1, 2, 3], [4, 5, 6]]
-flattened_arr = [x for row in arr_2d for x in row ] #=> [1, 2, 3, 4, 5, 6] 
+lst_2d = [[1, 2, 3], [4, 5, 6]]
+flattened_lst = [x for row in lst_2d for x in row ] #=> [1, 2, 3, 4, 5, 6] 
 ```
 
 #### Iterating
-To iterate over all items in the array:
+To iterate over all items in the list:
 ```py
-for item in arr:
+for item in lst:
   # do something with item
 ```
-To iterate over all indices for items in the array:
+To iterate over all indices for items in the list:
 ```py
-for index in range(len(arr)):
+for index in range(len(lst)):
   # do something with index
 ```
-To iterate over all indicies and their accompanying items in the array:
+To iterate over all indicies and their accompanying items in the list:
 ```py
-for index, item in enumerate(arr):
+for index, item in enumerate(lst):
   # do something with index, item
 ```
-To iterate all items in the array in reversed order (without using slice):
+To iterate all items in the list in reversed order (without using slice):
 ```py
-for item in reversed(arr):
+for item in reversed(lst):
   # do something with item
 ```
 use `zip` to iterate over multiple lists at once (terminating on the shorter list):
 ```py
-for item_1, item_2, item_3 in zip(arr_1, arr_2, arr_3):
+for item_1, item_2, item_3 in zip(lst_1, lst_2, lst_3):
   # do something with item_1, item_2, item_3
 ```
 #### Sorting
 ```py
-arr.sort()                          # in-place sorting
+lst.sort()                          # in-place sorting
 tuples = [(5,99), (4,54), (3,12), (2,44)]
 sorted(tuples)                      # returns (2,44), (3,12), (4,54), (5,99)
 sorted(tuples, key=lambda x: x[1])  # returns (3,12), (2,44), (4,54), (5,99)
@@ -424,9 +425,9 @@ del dic[key]      # delete (key, val) from dic
 ```
 Common methods to extract members:
 ```py
-dic.items()   # returns an array of (key, value) tuples, not in any order
-dic.keys()    # returns an array of keys, not in any order
-dic.values()  # return an array of values, not in any order
+dic.items()   # returns an list of (key, value) tuples, not in any order
+dic.keys()    # returns an list of keys, not in any order
+dic.values()  # return an list of values, not in any order
 ```
 #### Iterating
 ```py
@@ -457,14 +458,14 @@ from math import *            # import all functions from math module into globa
 ```
 Note of caution for `from math import *`: If you have a function of your very own named sqrt and you `import math`,      your function is safe: there is your `sqrt` and there is `math.sqrt`. However if you do from `math import *`, you have a problem, namely, two different functions with the exact same name.
 
-To return an array of strings listing all the function names in module:
+To return an list of strings listing all the function names in module:
 ```py
 dir(module)
 ```
 
 ### Common modules
 #### os
-```
+```py
 import os
 os.getcwd()                     # get current working directory
 os.chdir("d/jinzhe")            # change directory
@@ -619,8 +620,8 @@ def some_function(param_1, kwarg_1=default_kwarg_1_val):
 
 ### Lambda: anonymous functions
 ```py
-arr = [0, 1, 2, 3, 4, 5, 6]
-filter(lambda x: x % 3 == 0, arr) #=> [0, 3, 6]
+lst = [0, 1, 2, 3, 4, 5, 6]
+filter(lambda x: x % 3 == 0, lst) #=> [0, 3, 6]
 ```
 ## Class
 ### Declaration
