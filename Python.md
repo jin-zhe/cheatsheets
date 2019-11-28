@@ -302,7 +302,7 @@ lst = [[1,2,3],[4,5,6]] #=> [[0, 0], [0, 0], [0, 0]]
 cols = 2; rows = 3
 lst = [[0] * cols for i in range(rows)] #=> [[0, 0], [0, 0], [0, 0]] 
 ```
-Caveat (see [here]()):
+Caveat (see [here](https://stackoverflow.com/questions/17636567/python-initialize-multi-dimensional-list)):
 ```py
 cols = 2; rows = 3
 lst = [[0] * cols] * rows #=> [[0, 0], [0, 0], [0, 0]]
