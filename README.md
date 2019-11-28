@@ -12,6 +12,7 @@ Files in the repo not listed below are still work in progress.
 ---
 ### [NumPy](NumPy.md)
 ### [Python](Python.md)
+### [Matplotlib](https://colab.research.google.com/drive/1McbK8wp-hqoiZ8jchuLK3AIYjs6PPgCj)
 ### [PyTorch](PyTorch.md)
 ---
 ### [Regular expression](regex.md)
