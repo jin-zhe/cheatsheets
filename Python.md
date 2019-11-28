@@ -119,11 +119,17 @@ print(lst)                          # prints an list
 ```
 
 ### User input
+See [here](https://stackabuse.com/getting-user-input-in-python/) for more info.
+#### Python 2
 ```py
 name = raw_input("What is your name?")  # read in string
 num = int(raw_input("give a number"))   # read in number
 ```
-
+#### Python 3
+```py
+name = input("What is your name?")  # read in string
+num = float(input("give a number")) # read in number
+```
 ### Selection statement
 ```py
 if condition_1:
@@ -194,6 +200,8 @@ x % y   # remainder of x / y
 +x      # x unchanged
 x ** y  # x to the power y
 ```
+See [PEP 238](https://www.python.org/dev/peps/pep-0238/) regarding floor division operator.
+
 ### Math
 Python contains useful inbuilt math functions
 ```py
@@ -278,18 +286,28 @@ These are some common data structures used in Python
 In python, lists are variable length arrays much like `ArrayList` in C++ and `Vector` in Java. Lists offer random access and has similar time complexities (see [here](https://wiki.python.org/moin/TimeComplexity)) as variable length arrays in other languages. For the sake of consistency, we shall reserve the variable `lst` to refer to a list in the given context.
 
 #### Declaration and initialization
-Single-dimensional list:
+##### Single-dimensional list:
 ```py
 lst = [5, 6, 7, 8]            #=> [5, 6, 7, 8] # explicit assignment
 lst = [1] * 4                 #=> [1, 1, 1, 1] # generative assignment
 lst = list(range(5,9))        #=> [5, 6, 7, 8] # generative assignment using range
 lst = [x for x in range(5,9)] #=> [5, 6, 7, 8] # generative assignment using range and list comprehension (see list comprehension section below)
 ```
-Multi-dimensional lists:
+##### Multi-dimensional lists:
 ```py
-lst = [[1,2,3],[4,5,6]]   #=> [[1, 2, 3], [4, 5, 6]]    # explicit assignment
-lst = [[1]*2]*3           #=> [[1, 1], [1, 1], [1, 1]]  # generative assignment
-# The methods using range and list comprehension for single-dimensional list works for multi-dimensions as expected and is left out for brevity
+# Explicit assignment
+lst = [[1,2,3],[4,5,6]] #=> [[0, 0], [0, 0], [0, 0]] 
+
+# Generative assignment
+cols = 2; rows = 3
+lst = [[0] * cols for i in range(rows)] #=> [[0, 0], [0, 0], [0, 0]] 
+```
+Caveat (see [here]()):
+```py
+cols = 2; rows = 3
+lst = [[0] * cols] * rows #=> [[0, 0], [0, 0], [0, 0]]
+lst[0][1] = 1
+print(lst)                #=> [[0, 1], [0, 1], [0, 1]]
 ```
 #### Range
 `range(start, stop, step)` provides a convenient construct for generating an ordered list of numbers
