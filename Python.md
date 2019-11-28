@@ -799,37 +799,3 @@ class MyException(Exception):
 
 raise MyException("Truly exceptional!")
 ```
-
-## Other libraries
-### NLTK
-```py
-s = '''' Good muffins cost $3.88\nin New York.  Please buy me\n    ... two of them.\n\nThanks. '''
-[word_tokenize(t) for t in sent_tokenize(s)]  #=> [['Good', 'muffins', 'cost', '$', '3.88', 'in', 'New', 'York', '.'], ['Please', 'buy', 'me', 'two', 'of', 'them', '.'], ['Thanks', '.']]
-```
-
-### matplotlib
-#### Histogram
-```py
-import matplotlib.pyplot as plt
-import numpy as np
-values = np.random.randn(1000)
-plt.hist(values, cumulative=True, bins=256)
-plt.title("Cumulative distribution function")
-plt.xlabel("Value")
-plt.ylabel("Cumulative Frequency")
-plt.show()
-```
-### openCV
-```py
-import cv2
-# read image as np array
-cv2.imread(path, cv2.CV_LOAD_IMAGE_GRAYSCALE) # read image as grayscale
-
-# write np array as image
-cv2.imwrite(path, image)
-
-# display an image
-cv2.imshow('image',image)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-```
