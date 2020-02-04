@@ -9,6 +9,7 @@ Files in the repo not listed below are still work in progress.
 ### [jQuery](jQuery.md)
 ### [Java](Java.md)
 ### [JavaScript](JavaScript.md)
+### [LaTeX](https://www.overleaf.com/read/khsyfgmsbxzw)
 ---
 ### [NumPy](NumPy.md)
 ### [Python](Python.md)
