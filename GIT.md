@@ -164,6 +164,12 @@ git checkout <tag>                    # checkout to a given tag
 git push --tags                       # push tags. Need to be stated explicitly else tags will just remain locally
 ```
 
+## Submodules
+Add a submodule of a specific branch
+```sh
+git submodule add --branch extension-framework https://github.com/leongwaikay/OMRChecker.git
+```
+
 ## Log
 Look at commit logs i.e. all the changes committed so far via:
 ```sh
