@@ -1,9 +1,14 @@
 # Python Cheatsheet
 Unless specified otherwise, the following is written for Python 3.
 
+## TODO
+* `any() and all()`
+* `Pathlib`
+* Variable scope
+
 ## General
 * Python is indentation-based language i.e. indentation defines scope
-* Paramenters in Python function are **passed by reference** so modifying their attributes within the function will change them.
+* Arguments in Python function are **passed by reference** so modifying their attributes within the function will change them.
 
 ### Running Python
 ```py
