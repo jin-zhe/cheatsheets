@@ -738,11 +738,12 @@ class MyClass(object):
       # do something
 ```
 ### Inheritance example
+Note that the following calls `super` in Python 3 syntax. Click [here](https://powerfulpython.com/blog/main-difference-python-3/) for a comparison between the `super` syntax for Python 2 vs 3.
 ```py
 class MyOtherClass(MyClass):
   # new constructor
   def __init__(self, attr1, attr2, attr3, attr4):
-    super(MyOtherClass, self).__init__(attr1, attr2, attr3) # super method (don't have to include self)
+    super().__init__(attr1, attr2, attr3) # super method (don't have to include self)
     self.attr4 = attr4
 
   # override method_1 from MyClass
@@ -750,7 +751,7 @@ class MyOtherClass(MyClass):
     # do something new
 
   def old_method_1(self):
-    return super(MyOtherClass, self).method_1()  # super method. Note the return statement
+    return super().method_1()  # super method. Note the return statement
 ```
 
 ### kwargs
